@@ -19,6 +19,7 @@ let program = normalizeProgram();
 let liveProgram = normalizeProgram();
 let pendingAssets = new Map();
 let saveTimer;
+let rosterImportReport = null;
 
 function openAssetDb() {
   return new Promise((resolve, reject) => {
@@ -49,10 +50,14 @@ function getAt(path) {
   return path.reduce((value, key) => value?.[key], program);
 }
 
-function setAt(path, value) {
+function assignAt(path, value) {
   let cursor = program;
   path.slice(0, -1).forEach((key) => { cursor = cursor[key]; });
   cursor[path[path.length - 1]] = value;
+}
+
+function setAt(path, value) {
+  assignAt(path, value);
   queueSave();
 }
 
@@ -134,16 +139,25 @@ function safeAssetName(label) {
   return label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 42) || "image";
 }
 
+async function prepareImage(file, path, label) {
+  const dataUrl = await compressImage(file);
+  const oldPath = getAt(path);
+  const target = `assets/uploads/${safeAssetName(label)}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}.webp`;
+  if (oldPath && pendingAssets.has(oldPath)) {
+    pendingAssets.delete(oldPath);
+    await assetDb("delete", oldPath).catch(() => {});
+  }
+  pendingAssets.set(target, dataUrl);
+  await assetDb("put", { path: target, dataUrl });
+  assignAt(path, target);
+  return target;
+}
+
 async function selectImage(file, path, label) {
   saveState.textContent = "Preparing image…";
   try {
-    const dataUrl = await compressImage(file);
-    const oldPath = getAt(path);
-    const target = `assets/uploads/${safeAssetName(label)}-${Date.now()}.webp`;
-    if (oldPath && pendingAssets.has(oldPath)) pendingAssets.delete(oldPath);
-    pendingAssets.set(target, dataUrl);
-    await assetDb("put", { path: target, dataUrl });
-    setAt(path, target);
+    await prepareImage(file, path, label);
+    queueSave();
     renderEditor();
   } catch (error) {
     alert(error.message);
@@ -319,16 +333,349 @@ function renderStaffSection() {
   return wrap;
 }
 
+function csvValue(value) {
+  const text = String(value ?? "");
+  return /[",\r\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+}
+
+function downloadRosterTemplate() {
+  const rows = [["roster_order", "first_name", "last_name", "grade", "photo_filename"]];
+  for (let index = 1; index <= 80; index += 1) rows.push([index, "", "", "", ""]);
+  const csv = rows.map((row) => row.map(csvValue).join(",")).join("\r\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `kennedy-football-roster-${program.season}.csv`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let value = "";
+  let quoted = false;
+
+  for (let index = 0; index < text.length; index += 1) {
+    const character = text[index];
+    if (quoted) {
+      if (character === '"' && text[index + 1] === '"') {
+        value += '"';
+        index += 1;
+      } else if (character === '"') {
+        quoted = false;
+      } else {
+        value += character;
+      }
+    } else if (character === '"') {
+      quoted = true;
+    } else if (character === ",") {
+      row.push(value);
+      value = "";
+    } else if (character === "\n") {
+      row.push(value.replace(/\r$/, ""));
+      rows.push(row);
+      row = [];
+      value = "";
+    } else {
+      value += character;
+    }
+  }
+  if (quoted) throw new Error("The CSV contains an unfinished quoted value.");
+  if (value || row.length) {
+    row.push(value.replace(/\r$/, ""));
+    rows.push(row);
+  }
+  return rows;
+}
+
+function normalizedHeader(value) {
+  return String(value || "").replace(/^\uFEFF/, "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "");
+}
+
+function normalizedGrade(value) {
+  const grade = String(value || "").trim().toLowerCase();
+  if (["9", "9th", "fr", "frosh", "freshman", "freshmen"].includes(grade)) return "freshman";
+  if (["10", "10th", "so", "soph", "sophomore", "sophomores"].includes(grade)) return "sophomore";
+  if (["11", "11th", "jr", "junior", "juniors"].includes(grade)) return "junior";
+  if (["12", "12th", "sr", "senior", "seniors"].includes(grade)) return "senior";
+  return "";
+}
+
+function photoKey(value) {
+  const filename = String(value || "").split(/[\\/]/).pop().replace(/\.[^.]+$/, "");
+  return filename.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+function playerSlug(player) {
+  return safeAssetName(`${player.firstName || "player"}-${player.lastName || ""}`);
+}
+
+function automaticPhotoFilename(player, index) {
+  return `${String(index + 1).padStart(3, "0")}-${playerSlug(player)}.jpg`;
+}
+
+function playerPhotoKeys(player, index) {
+  return [...new Set([
+    player.photoFilename,
+    automaticPhotoFilename(player, index),
+    `${player.firstName || ""}-${player.lastName || ""}`,
+    `${player.lastName || ""}-${player.firstName || ""}`,
+  ].map(photoKey).filter(Boolean))];
+}
+
+function parseRosterFile(text) {
+  const rows = parseCsv(text).filter((row) => row.some((value) => String(value).trim()));
+  if (rows.length < 2) throw new Error("The roster CSV does not contain any player rows.");
+
+  const headers = rows[0].map(normalizedHeader);
+  const aliases = {
+    order: ["roster_order", "player_number", "order", "number"],
+    firstName: ["first_name", "firstname", "first"],
+    lastName: ["last_name", "lastname", "last"],
+    grade: ["grade", "class", "class_year"],
+    photoFilename: ["photo_filename", "photo_file", "photo", "image_filename"],
+  };
+  const columns = Object.fromEntries(Object.entries(aliases).map(([key, choices]) => [key, choices.map((choice) => headers.indexOf(choice)).find((index) => index >= 0) ?? -1]));
+  const missing = ["firstName", "lastName", "grade"].filter((key) => columns[key] < 0);
+  if (missing.length) throw new Error("The CSV must include first_name, last_name, and grade columns. Download the template and copy your roster into it.");
+
+  const invalidGrades = [];
+  const duplicateOrders = [];
+  const seenOrders = new Set();
+  const players = rows.slice(1).map((row, sourceIndex) => {
+    const firstName = String(row[columns.firstName] || "").trim();
+    const lastName = String(row[columns.lastName] || "").trim();
+    const rawGrade = String(row[columns.grade] || "").trim();
+    const parsedOrder = columns.order >= 0 ? Number.parseInt(row[columns.order], 10) : Number.NaN;
+    const order = Number.isFinite(parsedOrder) && parsedOrder > 0 ? parsedOrder : sourceIndex + 1;
+    if (seenOrders.has(order)) duplicateOrders.push(String(order));
+    seenOrders.add(order);
+    if (rawGrade && !normalizedGrade(rawGrade)) invalidGrades.push(`${firstName} ${lastName}`.trim() || `row ${sourceIndex + 2}`);
+    return {
+      order,
+      sourceIndex,
+      firstName,
+      lastName,
+      grade: normalizedGrade(rawGrade),
+      photo: "",
+      photoFilename: columns.photoFilename >= 0 ? String(row[columns.photoFilename] || "").trim() : "",
+    };
+  }).filter((player) => player.firstName || player.lastName);
+
+  if (!players.length) throw new Error("No player names were found in the CSV.");
+  if (players.length > 150) throw new Error("The roster is limited to 150 players.");
+  players.sort((a, b) => a.order - b.order || a.sourceIndex - b.sourceIndex);
+  players.forEach((player, index) => {
+    if (!player.photoFilename) player.photoFilename = automaticPhotoFilename(player, index);
+    delete player.order;
+    delete player.sourceIndex;
+  });
+  return { players, invalidGrades, duplicateOrders: [...new Set(duplicateOrders)] };
+}
+
+function currentPhotoMap() {
+  const matches = new Map();
+  program.players.forEach((player, index) => {
+    if (!player.photo) return;
+    playerPhotoKeys(player, index).forEach((key) => {
+      if (!matches.has(key)) matches.set(key, new Set());
+      matches.get(key).add(player.photo);
+    });
+  });
+  return matches;
+}
+
+async function importRosterCsv(file) {
+  try {
+    const result = parseRosterFile(await file.text());
+    const hasExistingRoster = program.players.some((player) => player.firstName || player.lastName || player.photo);
+    if (hasExistingRoster && !confirm("Importing this CSV will replace the current roster names and order. Existing photos will be kept when their filenames match. Continue?")) return;
+
+    const existingPhotos = currentPhotoMap();
+    result.players.forEach((player, index) => {
+      const photos = new Set();
+      playerPhotoKeys(player, index).forEach((key) => existingPhotos.get(key)?.forEach((photo) => photos.add(photo)));
+      if (photos.size === 1) [player.photo] = photos;
+    });
+    program.players = result.players;
+    const missingPhotos = program.players.map((player, index) => player.photo ? "" : player.photoFilename || automaticPhotoFilename(player, index)).filter(Boolean);
+    rosterImportReport = {
+      heading: "Roster CSV imported",
+      summary: `${program.players.length} players are ready. Select the player photo folder to match the pictures automatically.`,
+      stats: [
+        `${program.players.filter((player) => player.photo).length} photos already matched`,
+        `${missingPhotos.length} photos still needed`,
+      ],
+      details: [
+        ["Grades that need review", result.invalidGrades],
+        ["Duplicate roster-order numbers", result.duplicateOrders],
+        ["Photos still needed", missingPhotos],
+      ],
+    };
+    queueSave();
+    renderEditor();
+  } catch (error) {
+    rosterImportReport = { heading: "Roster import stopped", summary: error.message, stats: [], details: [] };
+    renderEditor();
+  }
+}
+
+function rosterMatchMap() {
+  const matches = new Map();
+  program.players.forEach((player, index) => {
+    playerPhotoKeys(player, index).forEach((key) => {
+      if (!matches.has(key)) matches.set(key, new Set());
+      matches.get(key).add(index);
+    });
+  });
+  return matches;
+}
+
+async function importRosterPhotos(fileList) {
+  if (!program.players.length) {
+    rosterImportReport = { heading: "Import the roster first", summary: "Add player names with the CSV before selecting the photo folder.", stats: [], details: [] };
+    renderEditor();
+    return;
+  }
+
+  const files = [...fileList].filter((file) => file.type.startsWith("image/") || /\.(jpe?g|png|webp)$/i.test(file.name));
+  if (!files.length) {
+    rosterImportReport = { heading: "No photos found", summary: "Choose a folder containing JPG, PNG, or WebP images.", stats: [], details: [] };
+    renderEditor();
+    return;
+  }
+
+  const matches = rosterMatchMap();
+  const fileCounts = new Map();
+  files.forEach((file) => fileCounts.set(photoKey(file.name), (fileCounts.get(photoKey(file.name)) || 0) + 1));
+  const usedPlayers = new Set();
+  const matched = [];
+  const unmatched = [];
+  const duplicates = [];
+  const ambiguous = [];
+  const failed = [];
+
+  for (let index = 0; index < files.length; index += 1) {
+    const file = files[index];
+    const key = photoKey(file.name);
+    saveState.textContent = `Preparing player photo ${index + 1} of ${files.length}…`;
+    if (fileCounts.get(key) > 1) {
+      duplicates.push(file.name);
+      continue;
+    }
+    const candidates = [...(matches.get(key) || [])];
+    if (!candidates.length) {
+      unmatched.push(file.name);
+      continue;
+    }
+    if (candidates.length > 1 || usedPlayers.has(candidates[0])) {
+      ambiguous.push(file.name);
+      continue;
+    }
+
+    const playerIndex = candidates[0];
+    const player = program.players[playerIndex];
+    try {
+      await prepareImage(file, ["players", playerIndex, "photo"], `player-${playerIndex + 1}-${player.firstName}-${player.lastName}`);
+      usedPlayers.add(playerIndex);
+      matched.push(`${player.firstName} ${player.lastName}`.trim());
+    } catch (error) {
+      failed.push(`${file.name}: ${error.message}`);
+    }
+  }
+
+  const missingPhotos = program.players.map((player, index) => player.photo ? "" : player.photoFilename || automaticPhotoFilename(player, index)).filter(Boolean);
+  rosterImportReport = {
+    heading: "Photo matching complete",
+    summary: `${matched.length} new photos matched. Review anything listed below before publishing.`,
+    stats: [
+      `${program.players.filter((player) => player.photo).length} of ${program.players.length} players have photos`,
+      `${missingPhotos.length} players still need photos`,
+      `${unmatched.length + duplicates.length + ambiguous.length + failed.length} files need review`,
+    ],
+    details: [
+      ["Players matched in this upload", matched],
+      ["Players still missing a photo", missingPhotos],
+      ["Files with no roster match", unmatched],
+      ["Duplicate filenames", [...new Set(duplicates)]],
+      ["Files matching more than one player", ambiguous],
+      ["Files that could not be prepared", failed],
+    ],
+  };
+  queueSave();
+  renderEditor();
+}
+
+function bulkFileButton(label, accept, onFiles, directory = false) {
+  const control = h("label", "button secondary bulk-file-button", label);
+  const input = h("input");
+  input.type = "file";
+  input.accept = accept;
+  if (directory) input.setAttribute("webkitdirectory", "");
+  if (directory) input.setAttribute("directory", "");
+  input.multiple = directory;
+  input.addEventListener("change", () => {
+    if (input.files?.length) onFiles(input.files);
+    input.value = "";
+  });
+  control.append(input);
+  return control;
+}
+
+function renderRosterReport() {
+  if (!rosterImportReport) return null;
+  const report = h("div", "bulk-roster-report");
+  report.append(h("strong", "", rosterImportReport.heading), h("p", "", rosterImportReport.summary));
+  if (rosterImportReport.stats.length) {
+    const stats = h("div", "bulk-roster-stats");
+    rosterImportReport.stats.forEach((stat) => stats.append(h("span", "", stat)));
+    report.append(stats);
+  }
+  rosterImportReport.details.filter(([, items]) => items.length).forEach(([label, items]) => {
+    const details = h("details", "bulk-roster-details");
+    details.append(h("summary", "", `${label} (${items.length})`));
+    const list = h("ul");
+    items.slice(0, 100).forEach((item) => list.append(h("li", "", item)));
+    details.append(list);
+    report.append(details);
+  });
+  return report;
+}
+
 function resizeRoster(size) {
   const target = Math.max(0, Math.min(150, Number.parseInt(size, 10) || 0));
-  while (program.players.length < target) program.players.push({ firstName: "", lastName: "", grade: "", photo: "" });
+  while (program.players.length < target) program.players.push({ firstName: "", lastName: "", grade: "", photo: "", photoFilename: "" });
   if (program.players.length > target) program.players.length = target;
+  rosterImportReport = null;
   queueSave();
   renderEditor();
 }
 
 function renderRosterSection() {
-  const wrap = section("roster", "Player roster", "The program automatically creates one roster page for every 15 players. The display number is the player's position in this list—not a jersey number.", "Dynamic pages beginning at page 8");
+  const wrap = section("roster", "Player roster", "The program automatically creates one roster page for every 15 players. The display number is the player's position in this list—not a jersey number.", "15 players per page");
+  const bulk = h("div", "bulk-roster-tools");
+  bulk.append(
+    h("strong", "", "Bulk roster setup"),
+    h("p", "", "Download the 80-row template, enter the roster, and import it. Then select the complete player-photo folder. Photos match by filename and are compressed automatically."),
+  );
+  const bulkActions = h("div", "bulk-roster-actions");
+  const download = h("button", "button secondary", "Download CSV template");
+  download.type = "button";
+  download.addEventListener("click", downloadRosterTemplate);
+  bulkActions.append(
+    download,
+    bulkFileButton("Import roster CSV", ".csv,text/csv", (files) => importRosterCsv(files[0])),
+    bulkFileButton("Select photo folder", "image/jpeg,image/png,image/webp", importRosterPhotos, true),
+  );
+  bulk.append(bulkActions);
+  const naming = h("p", "bulk-roster-note");
+  naming.innerHTML = "Use grades <strong>Freshman, Sophomore, Junior, or Senior</strong> (9–12 also work). If the photo_filename column is blank, name photos like <strong>001-first-last.jpg</strong>. The simpler <strong>first-last.jpg</strong> format also matches when names are unique.";
+  bulk.append(naming);
+  const report = renderRosterReport();
+  if (report) bulk.append(report);
+  wrap.append(bulk);
+
   const tools = h("div", "roster-tools");
   const sizeField = h("label", "field");
   sizeField.append(h("span", "", "Total players"));
