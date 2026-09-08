@@ -11,6 +11,7 @@ A responsive, print-ready digital program for Bloomington Kennedy Football. The 
 - Optional sponsor website and phone-number links
 - Coaches, schedule, captains, seniors, managers, and cheerleaders sections
 - Dynamic player pages at 15 players per page
+- Bulk CSV roster import and automatic photo-folder matching for large teams
 - “Not Pictured” list on the final roster page
 - Two action-photo pages
 - Automatic sponsor-page packing and image scaling without cropping
@@ -65,3 +66,5 @@ The admin page asks for the token each time you publish. It does not save the to
 5. Confirm the public program after GitHub Pages finishes updating.
 
 Uploaded images are resized to a maximum dimension of 2400 pixels and converted to WebP before publication. They are stored in `assets/uploads/` and served from the same `jfkbooster.org` domain as the program.
+
+For a large roster, use **Download CSV template** in the Player roster section, enter the names and grades, and import the completed file. Then select the player-photo folder. The editor matches images using `photo_filename`, `001-first-last.jpg`, or `first-last.jpg`, and reports missing, unmatched, or duplicate files before publication.
