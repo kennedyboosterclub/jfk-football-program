@@ -72,6 +72,12 @@
 .layout-chip { padding: 5px 7px; color: #735900; border-radius: 4px; background: #fff0ad; font-size: 9px; font-weight: 800; }
 .sponsor-slot-editor { display: grid; gap: 9px; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e1e6ec; }
 .sponsor-slot-editor:first-of-type { margin-top: 0; padding-top: 0; border-top: 0; }
+.sponsor-page-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.sponsor-page-summary span { padding: 9px 10px; color: #425a72; border-radius: 6px; background: #eef3f8; font-size: 10px; font-weight: 700; }
+.sponsor-order-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.sponsor-order-actions button:disabled { opacity: .4; cursor: not-allowed; }
+.sponsor-settings { margin-bottom: 11px; }
+.sponsor-contact-fields { margin-top: 11px; }
 
 .roster-tools { display: flex; align-items: end; gap: 10px; margin-bottom: 15px; padding: 12px; border-radius: 8px; background: #eef3f8; }
 .roster-tools .field { width: 125px; }
@@ -90,7 +96,7 @@
 .preview-toolbar strong { font-size: 12px; }
 .preview-toolbar span { margin-top: 2px; color: #bdcada; font-size: 9px; }
 .preview-toolbar a { color: var(--gold); font-size: 10px; font-weight: 800; text-decoration: none; }
-.preview-stage { display: grid; height: calc(100vh - 126px); justify-items: center; gap: 28px; overflow: auto; padding: 24px; }
+.preview-stage { display: flex; height: calc(100vh - 126px); flex-direction: column; align-items: center; gap: 28px; overflow: auto; padding: 24px; }
 .preview-stage .program-page { width: min(100%, 570px); flex: 0 0 auto; box-shadow: 0 12px 35px rgba(7,29,60,.24); }
 
 .publish-dialog { width: min(690px, calc(100vw - 40px)); padding: 0; border: 0; border-radius: 13px; box-shadow: 0 24px 70px rgba(0,0,0,.38); }

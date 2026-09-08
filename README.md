@@ -6,12 +6,14 @@ A responsive, print-ready digital program for Bloomington Kennedy Football. The 
 
 - US Letter page proportions with print-to-PDF support
 - Cover photo and game details
-- Four fixed sponsor layouts matching the supplied 2025 template
+- Unlimited sponsors with full-, half-, or quarter-page sizing
+- Sponsor placement before team photos or after photos and before action shots
+- Optional sponsor website and phone-number links
 - Coaches, schedule, captains, seniors, managers, and cheerleaders sections
 - Dynamic player pages at 15 players per page
 - “Not Pictured” list on the final roster page
 - Two action-photo pages
-- Unlimited additional sponsor pages with selectable layouts
+- Automatic sponsor-page packing and image scaling without cropping
 - Local drafts, image compression, live preview, JSON backups, and GitHub publishing
 
 ## Initial GitHub Pages setup

@@ -205,7 +205,18 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 .cover-page::after { display: none; }
 .cover-page .page-number { display: none; }
 
-.cover-title { position: relative; z-index: 3; text-align: center; text-transform: uppercase; }
+.cover-title {
+  position: relative;
+  z-index: 3;
+  margin: -3% -2% 0;
+  padding: 3% 3% 3.5%;
+  border: 2px solid rgba(244, 197, 66, .8);
+  border-bottom-width: clamp(5px, .8vw, 9px);
+  background: rgba(7, 29, 60, .96);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .35);
+  text-align: center;
+  text-transform: uppercase;
+}
 .cover-kicker { color: var(--gold); font: 800 clamp(12px, 2.2vw, 24px)/1 "Barlow Condensed", sans-serif; letter-spacing: .17em; }
 .cover-title h1 { max-width: 90%; margin: 1.5% auto 0; font: 900 clamp(42px, 8vw, 86px)/0.82 "Barlow Condensed", sans-serif; letter-spacing: -0.02em; text-shadow: 0 3px 16px rgba(0,0,0,.5); }
 .cover-opponent { margin: 2% 0 0; color: white; font: 800 clamp(16px, 3vw, 30px)/1 "Barlow Condensed", sans-serif; letter-spacing: .08em; }
@@ -234,19 +245,21 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 
 /* Sponsors */
 .sponsor-page { padding: 3.5%; background: linear-gradient(180deg, white, #faf8f1); }
-.sponsor-grid { display: grid; width: 100%; height: 100%; gap: 2.2%; }
-.sponsor-slot { display: grid; min-width: 0; min-height: 0; place-content: center; overflow: hidden; padding: 3%; color: var(--navy); border: 2px dashed rgba(7,29,60,.28); border-radius: 4px; background: white; text-align: center; text-decoration: none; }
-.sponsor-slot img { display: block; width: 100%; height: 100%; object-fit: contain; }
-.sponsor-slot strong { font: 800 clamp(12px, 2.4vw, 25px)/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+.sponsor-grid { display: grid; width: 100%; height: 100%; grid-template: repeat(2, minmax(0, 1fr)) / repeat(2, minmax(0, 1fr)); grid-auto-flow: row dense; gap: 2.2%; }
+.sponsor-slot { display: flex; min-width: 0; min-height: 0; flex-direction: column; overflow: hidden; color: var(--navy); border: 2px solid rgba(7,29,60,.18); border-radius: 4px; background: white; text-align: center; }
+.sponsor-size-full { grid-column: span 2; grid-row: span 2; }
+.sponsor-size-half { grid-column: span 2; }
+.sponsor-size-quarter { grid-column: span 1; }
+.sponsor-creative { display: grid; min-width: 0; min-height: 0; flex: 1 1 auto; place-content: center; overflow: hidden; padding: 3%; }
+.sponsor-creative img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.sponsor-creative strong { font: 800 clamp(12px, 2.4vw, 25px)/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
 .sponsor-placeholder-mark { display: inline-block; margin: 0 auto 2%; padding: .5em .8em; color: var(--navy); background: var(--gold); font: 900 clamp(9px, 1.4vw, 14px)/1 "Barlow Condensed", sans-serif; letter-spacing: .12em; }
-.sponsor-layout-full .sponsor-grid { grid-template: 1fr / 1fr; }
-.sponsor-layout-halves .sponsor-grid { grid-template: 1fr 1fr / 1fr; }
-.sponsor-layout-two-top-one-bottom .sponsor-grid { grid-template: 1fr 1fr / 1fr 1fr; }
-.sponsor-layout-two-top-one-bottom .sponsor-slot:last-child { grid-column: 1 / -1; }
-.sponsor-layout-one-top-four-bottom .sponsor-grid { grid-template: 1fr .5fr .5fr / 1fr 1fr; }
-.sponsor-layout-one-top-four-bottom .sponsor-slot:first-child { grid-column: 1 / -1; }
-.sponsor-layout-four-grid .sponsor-grid { grid-template: 1fr 1fr / 1fr 1fr; }
-.sponsor-layout-six-grid .sponsor-grid { grid-template: 1fr 1fr 1fr / 1fr 1fr; }
+.sponsor-info { display: flex; align-items: center; justify-content: space-between; gap: 2%; min-height: 8%; padding: 1.2% 2%; color: white; border-top: 4px solid var(--gold); background: var(--navy); text-align: left; }
+.sponsor-name { overflow: hidden; font: 800 clamp(9px, 1.5vw, 16px)/1 "Barlow Condensed", sans-serif; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.sponsor-contacts { display: flex; justify-content: flex-end; gap: .8em; min-width: 0; }
+.sponsor-contacts a { overflow: hidden; color: white; font-size: clamp(7px, 1vw, 11px); font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.sponsor-size-quarter .sponsor-info { display: grid; align-content: center; }
+.sponsor-size-quarter .sponsor-contacts { justify-content: start; }
 
 /* Coaches, captains, seniors */
 .coaches-page, .features-page, .people-page { display: grid; grid-template-rows: 1fr 1fr; padding: 3.4%; gap: 2%; }

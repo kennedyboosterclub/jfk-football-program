@@ -1,11 +1,4 @@
-const LAYOUT_COUNTS = {
-  full: 1,
-  halves: 2,
-  "two-top-one-bottom": 3,
-  "one-top-four-bottom": 5,
-  "four-grid": 4,
-  "six-grid": 6,
-};
+const SPONSOR_UNITS = { full: 4, half: 2, quarter: 1 };
 
 const GRADE_LABELS = {
   freshman: "Freshman",
@@ -14,20 +7,66 @@ const GRADE_LABELS = {
   senior: "Senior",
 };
 
-export const layoutOptions = [
-  ["full", "1 full-page sponsor"],
-  ["halves", "2 half-page sponsors"],
-  ["two-top-one-bottom", "2 top + 1 bottom"],
-  ["one-top-four-bottom", "1 top + 4 bottom"],
-  ["four-grid", "4 equal sponsors"],
-  ["six-grid", "6 equal sponsors"],
+export const sponsorSizeOptions = [
+  ["full", "Full page"],
+  ["half", "Half page"],
+  ["quarter", "Quarter page"],
 ];
 
-export function sponsorSlotCount(layout) {
-  return LAYOUT_COUNTS[layout] || 1;
+function legacySponsorSize(layout, index) {
+  if (layout === "full") return "full";
+  if (layout === "halves") return "half";
+  if (layout === "two-top-one-bottom") return index === 2 ? "half" : "quarter";
+  if (layout === "one-top-four-bottom") return index === 0 ? "half" : "quarter";
+  return "quarter";
+}
+
+function migrateLegacySponsors(input) {
+  const genericName = /^(full-page sponsor|top(-left|-right)? sponsor|bottom sponsor( \d+)?|sponsor spot \d+|sponsor \d+)$/i;
+  const convert = (pages, placement) => (Array.isArray(pages) ? pages : []).flatMap((page) =>
+    (Array.isArray(page.slots) ? page.slots : [])
+      .filter((slot) => slot.image || slot.url || slot.phone || (slot.name && !genericName.test(slot.name)))
+      .map((slot, index) => ({
+        id: `legacy-${placement}-${page.id || "page"}-${index}`,
+        name: slot.name || "Sponsor",
+        image: slot.image || "",
+        url: slot.url || "",
+        phone: slot.phone || "",
+        size: legacySponsorSize(page.layout, index),
+        placement,
+      })),
+  );
+  return [
+    ...convert(input.sponsorPages, "before-team"),
+    ...convert(input.extraSponsorPages, "after-team"),
+  ];
+}
+
+export function packSponsors(sponsors, placement) {
+  const pages = [];
+  let current = [];
+  let remaining = 4;
+
+  const finishPage = () => {
+    if (current.length) pages.push(current);
+    current = [];
+    remaining = 4;
+  };
+
+  sponsors.filter((sponsor) => sponsor.placement === placement).forEach((sponsor) => {
+    const size = SPONSOR_UNITS[sponsor.size] ? sponsor.size : "quarter";
+    const units = SPONSOR_UNITS[size];
+    if ((size === "full" && current.length) || units > remaining) finishPage();
+    current.push({ ...sponsor, size });
+    remaining -= units;
+    if (remaining === 0) finishPage();
+  });
+  finishPage();
+  return pages;
 }
 
 export function normalizeProgram(input = {}) {
+  const sourceSponsors = Array.isArray(input.sponsors) ? input.sponsors : migrateLegacySponsors(input);
   return {
     season: String(input.season || new Date().getFullYear()),
     programTitle: input.programTitle || "Bloomington Kennedy Football",
@@ -35,7 +74,15 @@ export function normalizeProgram(input = {}) {
     opponent: input.opponent || "",
     gameDate: input.gameDate || "",
     teamPhoto: input.teamPhoto || "",
-    sponsorPages: Array.isArray(input.sponsorPages) ? input.sponsorPages : [],
+    sponsors: sourceSponsors.map((sponsor, index) => ({
+      id: sponsor.id || `sponsor-${index + 1}`,
+      name: sponsor.name || "",
+      image: sponsor.image || "",
+      url: sponsor.url || "",
+      phone: sponsor.phone || "",
+      size: SPONSOR_UNITS[sponsor.size] ? sponsor.size : "quarter",
+      placement: sponsor.placement === "after-team" ? "after-team" : "before-team",
+    })),
     coaches: { image: "", names: "", ...(input.coaches || {}) },
     schedule: { image: "", ...(input.schedule || {}) },
     captains: { image: "", names: "", ...(input.captains || {}) },
@@ -45,7 +92,6 @@ export function normalizeProgram(input = {}) {
     managers: { image: "", names: "", ...(input.managers || {}) },
     cheerleaders: { image: "", names: "", ...(input.cheerleaders || {}) },
     actionShots: Array.isArray(input.actionShots) ? input.actionShots : [],
-    extraSponsorPages: Array.isArray(input.extraSponsorPages) ? input.extraSponsorPages : [],
   };
 }
 
@@ -114,29 +160,59 @@ function renderCover(program, number, options) {
   return page;
 }
 
-function renderSponsorPage(config, number, options) {
-  const layout = LAYOUT_COUNTS[config.layout] ? config.layout : "full";
-  const page = pageShell(`sponsor-page sponsor-layout-${layout}`, number);
-  const grid = el("div", "sponsor-grid");
-  const count = sponsorSlotCount(layout);
-  const slots = Array.from({ length: count }, (_, index) => config.slots?.[index] || {});
+function safeWebsite(value) {
+  if (!value) return "";
+  const candidate = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+  try {
+    const url = new URL(candidate);
+    return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+  } catch {
+    return "";
+  }
+}
 
-  slots.forEach((slot, index) => {
-    const card = slot.url ? el("a", "sponsor-slot") : el("div", "sponsor-slot");
-    if (slot.url) {
-      card.href = slot.url;
-      card.target = "_blank";
-      card.rel = "noopener noreferrer";
-    }
-    if (slot.image) {
+function websiteLabel(value) {
+  try { return new URL(value).hostname.replace(/^www\./, ""); }
+  catch { return "Website"; }
+}
+
+function renderSponsorPage(sponsors, number, options) {
+  const page = pageShell("sponsor-page", number);
+  const grid = el("div", "sponsor-grid");
+  sponsors.forEach((sponsor, index) => {
+    const card = el("article", `sponsor-slot sponsor-size-${sponsor.size}`);
+    const creative = el("div", "sponsor-creative");
+    if (sponsor.image) {
       const image = el("img");
-      image.src = resolveAsset(slot.image, options);
-      image.alt = slot.name || `Sponsor ${index + 1}`;
+      image.src = resolveAsset(sponsor.image, options);
+      image.alt = sponsor.name || `Sponsor ${index + 1}`;
       image.loading = "lazy";
-      card.append(image);
+      creative.append(image);
     } else {
-      card.append(el("span", "sponsor-placeholder-mark", "SPONSOR"));
-      card.append(el("strong", "", slot.name || `Sponsor spot ${index + 1}`));
+      creative.append(el("span", "sponsor-placeholder-mark", "SPONSOR"));
+      creative.append(el("strong", "", sponsor.name || `Sponsor ${index + 1}`));
+    }
+    card.append(creative);
+
+    const website = safeWebsite(sponsor.url);
+    if (sponsor.name || sponsor.phone || website) {
+      const info = el("footer", "sponsor-info");
+      if (sponsor.name) info.append(el("strong", "sponsor-name", sponsor.name));
+      const contacts = el("span", "sponsor-contacts");
+      if (sponsor.phone) {
+        const phone = el("a", "", sponsor.phone);
+        phone.href = `tel:${sponsor.phone.replace(/[^+\d]/g, "")}`;
+        contacts.append(phone);
+      }
+      if (website) {
+        const link = el("a", "", websiteLabel(website));
+        link.href = website;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        contacts.append(link);
+      }
+      if (contacts.children.length) info.append(contacts);
+      card.append(info);
     }
     grid.append(card);
   });
@@ -238,7 +314,7 @@ export function renderProgram(input, container, options = {}) {
   let pageNumber = 1;
 
   fragment.append(renderCover(program, pageNumber++, options));
-  program.sponsorPages.forEach((page) => fragment.append(renderSponsorPage(page, pageNumber++, options)));
+  packSponsors(program.sponsors, "before-team").forEach((sponsors) => fragment.append(renderSponsorPage(sponsors, pageNumber++, options)));
   fragment.append(renderCoaches(program, pageNumber++, options));
   fragment.append(renderCaptainsAndSeniors(program, pageNumber++, options));
 
@@ -247,9 +323,9 @@ export function renderProgram(input, container, options = {}) {
   pageNumber += rosterPages.length;
 
   fragment.append(renderManagersCheer(program, pageNumber++, options));
+  packSponsors(program.sponsors, "after-team").forEach((sponsors) => fragment.append(renderSponsorPage(sponsors, pageNumber++, options)));
   const actionShots = program.actionShots.length ? program.actionShots : [{}, {}];
   actionShots.forEach((shot, index) => fragment.append(renderActionPage(shot, index, pageNumber++, options)));
-  program.extraSponsorPages.forEach((page) => fragment.append(renderSponsorPage(page, pageNumber++, options)));
 
   container.replaceChildren(fragment);
   return pageNumber - 1;

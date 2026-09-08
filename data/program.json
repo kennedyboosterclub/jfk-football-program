@@ -5,46 +5,7 @@
   "opponent": "",
   "gameDate": "",
   "teamPhoto": "",
-  "sponsorPages": [
-    {
-      "id": "sponsor-page-2",
-      "layout": "full",
-      "lockedLayout": true,
-      "slots": [{ "name": "Full-page sponsor", "image": "", "url": "" }]
-    },
-    {
-      "id": "sponsor-page-3",
-      "layout": "two-top-one-bottom",
-      "lockedLayout": true,
-      "slots": [
-        { "name": "Top-left sponsor", "image": "", "url": "" },
-        { "name": "Top-right sponsor", "image": "", "url": "" },
-        { "name": "Bottom sponsor", "image": "", "url": "" }
-      ]
-    },
-    {
-      "id": "sponsor-page-4",
-      "layout": "two-top-one-bottom",
-      "lockedLayout": true,
-      "slots": [
-        { "name": "Top-left sponsor", "image": "", "url": "" },
-        { "name": "Top-right sponsor", "image": "", "url": "" },
-        { "name": "Bottom sponsor", "image": "", "url": "" }
-      ]
-    },
-    {
-      "id": "sponsor-page-5",
-      "layout": "one-top-four-bottom",
-      "lockedLayout": true,
-      "slots": [
-        { "name": "Top sponsor", "image": "", "url": "" },
-        { "name": "Bottom sponsor 1", "image": "", "url": "" },
-        { "name": "Bottom sponsor 2", "image": "", "url": "" },
-        { "name": "Bottom sponsor 3", "image": "", "url": "" },
-        { "name": "Bottom sponsor 4", "image": "", "url": "" }
-      ]
-    }
-  ],
+  "sponsors": [],
   "coaches": { "image": "", "names": "" },
   "schedule": { "image": "" },
   "captains": { "image": "", "names": "" },
@@ -56,6 +17,5 @@
   "actionShots": [
     { "image": "", "caption": "" },
     { "image": "", "caption": "" }
-  ],
-  "extraSponsorPages": []
+  ]
 }

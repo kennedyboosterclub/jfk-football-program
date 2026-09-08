@@ -1,4 +1,4 @@
-import { layoutOptions, normalizeProgram, renderProgram, sponsorSlotCount } from "../program-renderer.js";
+import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
@@ -200,58 +200,65 @@ function textInput(label, value, onInput, placeholder = "") {
   return field;
 }
 
-function imageControlForObject(label, object, key, path, rerender = true) {
-  return imageField(label, [...path, key]);
+function selectField(label, value, choices, onChange) {
+  const field = h("label", "field");
+  field.append(h("span", "", label));
+  const select = h("select");
+  choices.forEach(([optionValue, optionLabel]) => {
+    const option = h("option", "", optionLabel);
+    option.value = optionValue;
+    option.selected = optionValue === value;
+    select.append(option);
+  });
+  select.addEventListener("change", () => onChange(select.value));
+  field.append(select);
+  return field;
 }
 
-function layoutLabel(value) {
-  return layoutOptions.find(([key]) => key === value)?.[1] || value;
-}
-
-function normalizeSponsorSlots(page) {
-  const count = sponsorSlotCount(page.layout);
-  page.slots ||= [];
-  while (page.slots.length < count) page.slots.push({ name: `Sponsor ${page.slots.length + 1}`, image: "", url: "" });
-  page.slots = page.slots.slice(0, count);
-}
-
-function sponsorPageEditor(page, pageIndex, collectionName, removable) {
-  normalizeSponsorSlots(page);
+function sponsorEditor(sponsor, index) {
   const card = h("div", "subcard");
   const header = h("div", "subcard-header");
-  header.append(h("strong", "", removable ? `Additional sponsor page ${pageIndex + 1}` : `Program page ${pageIndex + 2}`));
-  if (page.lockedLayout) {
-    header.append(h("span", "layout-chip", layoutLabel(page.layout)));
-  } else {
-    const select = h("select");
-    layoutOptions.forEach(([value, label]) => {
-      const option = h("option", "", label);
-      option.value = value;
-      option.selected = page.layout === value;
-      select.append(option);
-    });
-    select.addEventListener("change", () => { page.layout = select.value; normalizeSponsorSlots(page); queueSave(); renderEditor(); });
-    header.append(select);
-  }
-  if (removable) {
-    const remove = h("button", "danger-button", "Remove page");
-    remove.type = "button";
-    remove.addEventListener("click", () => { program[collectionName].splice(pageIndex, 1); queueSave(); renderEditor(); });
-    header.append(remove);
-  }
+  header.append(h("strong", "", sponsor.name || `Sponsor ${index + 1}`));
+  const actions = h("div", "sponsor-order-actions");
+  const moveUp = h("button", "text-button", "Move up");
+  moveUp.type = "button";
+  moveUp.disabled = index === 0;
+  moveUp.addEventListener("click", () => {
+    [program.sponsors[index - 1], program.sponsors[index]] = [program.sponsors[index], program.sponsors[index - 1]];
+    queueSave(); renderEditor();
+  });
+  const moveDown = h("button", "text-button", "Move down");
+  moveDown.type = "button";
+  moveDown.disabled = index === program.sponsors.length - 1;
+  moveDown.addEventListener("click", () => {
+    [program.sponsors[index], program.sponsors[index + 1]] = [program.sponsors[index + 1], program.sponsors[index]];
+    queueSave(); renderEditor();
+  });
+  const remove = h("button", "danger-button", "Remove");
+  remove.type = "button";
+  remove.addEventListener("click", () => { program.sponsors.splice(index, 1); queueSave(); renderEditor(); });
+  actions.append(moveUp, moveDown, remove);
+  header.append(actions);
   card.append(header);
 
-  page.slots.forEach((slot, slotIndex) => {
-    const slotEditor = h("div", "sponsor-slot-editor");
-    slotEditor.append(imageField(`Sponsor image ${slotIndex + 1}`, [collectionName, pageIndex, "slots", slotIndex, "image"]));
-    const fields = h("div", "field-grid two-columns");
-    fields.append(
-      textInput("Sponsor name", slot.name, (value) => { slot.name = value; }, `Sponsor ${slotIndex + 1}`),
-      textInput("Website link (optional)", slot.url, (value) => { slot.url = value; }, "https://"),
-    );
-    slotEditor.append(fields);
-    card.append(slotEditor);
-  });
+  const settings = h("div", "field-grid two-columns sponsor-settings");
+  settings.append(
+    selectField("Sponsor size", sponsor.size, sponsorSizeOptions, (value) => { sponsor.size = value; queueSave(); renderEditor(); }),
+    selectField("Position in program", sponsor.placement, [
+      ["before-team", "Before team and player photos"],
+      ["after-team", "After photos, before action shots"],
+    ], (value) => { sponsor.placement = value; queueSave(); renderEditor(); }),
+  );
+  card.append(settings);
+  card.append(imageField("Sponsor advertisement or logo", ["sponsors", index, "image"]));
+
+  const fields = h("div", "field-grid two-columns sponsor-contact-fields");
+  fields.append(
+    textInput("Sponsor name", sponsor.name, (value) => { sponsor.name = value; }, `Sponsor ${index + 1}`),
+    textInput("Phone number (optional)", sponsor.phone, (value) => { sponsor.phone = value; }, "(612) 555-0123"),
+    textInput("Website link (optional)", sponsor.url, (value) => { sponsor.url = value; }, "https://example.com"),
+  );
+  card.append(fields);
   return card;
 }
 
@@ -269,13 +276,30 @@ function renderGameSection() {
 }
 
 function renderSponsorsSection() {
-  const wrap = section("sponsors", "Sponsor pages", "These four layouts match pages 2–5 of the supplied program template.", "Pages 2–5");
-  program.sponsorPages.forEach((page, index) => wrap.append(sponsorPageEditor(page, index, "sponsorPages", false)));
+  const beforePages = packSponsors(program.sponsors, "before-team").length;
+  const afterPages = packSponsors(program.sponsors, "after-team").length;
+  const wrap = section("sponsors", "Sponsors", "Add any number of sponsors. Full-page ads fill a page, half-page ads share a page in two rows, and quarter-page ads fill a 2 × 2 grid. Images scale automatically without being cropped.", "Dynamic sponsor pages");
+  const add = h("button", "button secondary", "Add sponsor");
+  add.type = "button";
+  add.addEventListener("click", () => {
+    program.sponsors.push({ id: `sponsor-${Date.now()}`, name: "", image: "", url: "", phone: "", size: "full", placement: "before-team" });
+    queueSave(); renderEditor();
+  });
+  wrap.querySelector(".section-title-row").append(add);
+
+  const summary = h("div", "sponsor-page-summary");
+  summary.append(
+    h("span", "", `${program.sponsors.filter((sponsor) => sponsor.placement === "before-team").length} sponsors before photos • ${beforePages} pages`),
+    h("span", "", `${program.sponsors.filter((sponsor) => sponsor.placement === "after-team").length} sponsors after photos • ${afterPages} pages`),
+  );
+  wrap.append(summary);
+  if (!program.sponsors.length) wrap.append(h("div", "empty-list", "No sponsors have been added yet."));
+  program.sponsors.forEach((sponsor, index) => wrap.append(sponsorEditor(sponsor, index)));
   return wrap;
 }
 
 function renderStaffSection() {
-  const wrap = section("staff", "Staff & team groups", "Names can be separated by commas or placed on separate lines.", "Pages 6–7 and after roster");
+  const wrap = section("staff", "Staff & team groups", "Names can be separated by commas or placed on separate lines.", "Positions adjust automatically");
   const groups = [
     ["Coaches", "coaches", true],
     ["Season schedule", "schedule", false],
@@ -345,7 +369,7 @@ function renderRosterSection() {
 }
 
 function renderGallerySection() {
-  const wrap = section("gallery", "Action shots", "Each action image receives its own full-page feature after the managers and cheerleaders page.", "Two pages by default");
+  const wrap = section("gallery", "Action shots", "Each action image receives its own full-page feature after the team photos and any sponsors placed after them.", "Two pages by default");
   while (program.actionShots.length < 2) program.actionShots.push({ image: "", caption: "" });
   program.actionShots.forEach((shot, index) => {
     const card = h("div", "subcard");
@@ -357,24 +381,10 @@ function renderGallerySection() {
   return wrap;
 }
 
-function renderExtraSponsorsSection() {
-  const wrap = section("extra-sponsors", "Extra sponsor pages", "Add as many pages as needed and choose the sponsor arrangement for each page.", "Final pages");
-  const add = h("button", "button secondary", "Add sponsor page");
-  add.type = "button";
-  add.addEventListener("click", () => {
-    program.extraSponsorPages.push({ id: `extra-${Date.now()}`, layout: "full", slots: [{ name: "Full-page sponsor", image: "", url: "" }] });
-    queueSave(); renderEditor();
-  });
-  wrap.querySelector(".section-title-row").append(add);
-  if (!program.extraSponsorPages.length) wrap.append(h("div", "empty-list", "No extra sponsor pages yet."));
-  program.extraSponsorPages.forEach((page, index) => wrap.append(sponsorPageEditor(page, index, "extraSponsorPages", true)));
-  return wrap;
-}
-
 function renderEditor() {
   const intro = h("p", "editor-intro");
   intro.innerHTML = "Changes are saved as a <strong>draft on this computer</strong>. Visitors will not see them until you select <strong>Publish to GitHub</strong>.";
-  editor.replaceChildren(intro, renderGameSection(), renderSponsorsSection(), renderStaffSection(), renderRosterSection(), renderGallerySection(), renderExtraSponsorsSection());
+  editor.replaceChildren(intro, renderGameSection(), renderSponsorsSection(), renderStaffSection(), renderRosterSection(), renderGallerySection());
 }
 
 function renderPreview() {
