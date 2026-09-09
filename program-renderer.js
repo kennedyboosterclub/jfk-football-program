@@ -225,7 +225,11 @@ function safeWebsite(value) {
 }
 
 function websiteLabel(value) {
-  try { return new URL(value).hostname.replace(/^www\./, ""); }
+  try {
+    const url = new URL(value);
+    const path = url.pathname === "/" ? "" : url.pathname.replace(/\/$/, "");
+    return `${url.hostname.replace(/^www\./, "")}${path}${url.search}${url.hash}`;
+  }
   catch { return "Website"; }
 }
 
@@ -233,6 +237,7 @@ function sponsorCard(sponsor, index, options) {
   const card = el("article", `sponsor-slot sponsor-size-${sponsor.size}`);
   const creative = el("div", "sponsor-creative");
   if (sponsor.image) {
+    creative.classList.add("has-image");
     const image = el("img");
     image.src = resolveAsset(sponsor.image, options);
     image.alt = sponsor.name || `Sponsor ${index + 1}`;
