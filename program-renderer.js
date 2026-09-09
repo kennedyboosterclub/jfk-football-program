@@ -68,7 +68,12 @@ export function packSponsors(sponsors, placement) {
 export function normalizeProgram(input = {}) {
   const sourceSponsors = Array.isArray(input.sponsors) ? input.sponsors : migrateLegacySponsors(input);
   const season = String(input.season || new Date().getFullYear());
-  const defaultSeniorClassYear = /^\d{4}$/.test(season) ? String(Number(season) + 1) : season;
+  const seasonYears = season.match(/\d{4}/g) || [];
+  const defaultSeniorClassYear = seasonYears.length > 1
+    ? seasonYears.at(-1)
+    : seasonYears.length === 1
+      ? String(Number(seasonYears[0]) + 1)
+      : season;
   return {
     season,
     programTitle: input.programTitle || "Bloomington Kennedy Football",
