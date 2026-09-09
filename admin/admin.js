@@ -755,9 +755,8 @@ function apiHeaders(token) {
   return { Accept: "application/vnd.github+json", Authorization: `Bearer ${token}`, "X-GitHub-Api-Version": API_VERSION, "Content-Type": "application/json" };
 }
 
-function apiPath(owner, repo, path) {
-  const encoded = path.split("/").map(encodeURIComponent).join("/");
-  return `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${encoded}`;
+function repositoryApiPath(settings, path) {
+  return `https://api.github.com/repos/${encodeURIComponent(settings.owner)}/${encodeURIComponent(settings.repo)}/${path}`;
 }
 
 async function githubRequest(url, options, allowed = []) {
@@ -765,20 +764,65 @@ async function githubRequest(url, options, allowed = []) {
   if (allowed.includes(response.status)) return response;
   if (!response.ok) {
     let detail = `GitHub returned ${response.status}`;
-    try { detail = (await response.json()).message || detail; } catch {}
+    try {
+      const body = await response.json();
+      detail = body.message || detail;
+      const reasons = Array.isArray(body.errors) ? body.errors.map((error) => error.message || error.code).filter(Boolean) : [];
+      if (reasons.length) detail += `: ${reasons.join("; ")}`;
+    } catch {}
     throw new Error(detail);
   }
   return response;
 }
 
-async function publishFile(settings, token, path, content, message) {
-  const url = apiPath(settings.owner, settings.repo, path);
-  const existing = await githubRequest(`${url}?ref=${encodeURIComponent(settings.branch)}`, { headers: apiHeaders(token) }, [404]);
-  let sha;
-  if (existing.status !== 404) sha = (await existing.json()).sha;
-  const body = { message, content, branch: settings.branch };
-  if (sha) body.sha = sha;
-  await githubRequest(url, { method: "PUT", headers: apiHeaders(token), body: JSON.stringify(body) });
+async function githubJson(url, options) {
+  const response = await githubRequest(url, options);
+  return response.status === 204 ? {} : response.json();
+}
+
+async function publishBatch(settings, token, files, onProgress) {
+  const headers = apiHeaders(token);
+  const branchPath = settings.branch.split("/").map(encodeURIComponent).join("/");
+  const ref = await githubJson(repositoryApiPath(settings, `git/ref/heads/${branchPath}`), { headers });
+  const headSha = ref.object?.sha;
+  if (!headSha) throw new Error("GitHub could not find the selected branch.");
+  const headCommit = await githubJson(repositoryApiPath(settings, `git/commits/${encodeURIComponent(headSha)}`), { headers });
+  const baseTreeSha = headCommit.tree?.sha;
+  if (!baseTreeSha) throw new Error("GitHub could not prepare the current program version.");
+
+  const tree = [];
+  const batchSize = 5;
+  for (let offset = 0; offset < files.length; offset += batchSize) {
+    const batch = files.slice(offset, offset + batchSize);
+    const blobs = await Promise.all(batch.map((file) => githubJson(repositoryApiPath(settings, "git/blobs"), {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ content: file.content, encoding: "base64" }),
+    })));
+    batch.forEach((file, index) => tree.push({ path: file.path, mode: "100644", type: "blob", sha: blobs[index].sha }));
+    onProgress(Math.min(offset + batch.length, files.length), files.length);
+  }
+
+  const newTree = await githubJson(repositoryApiPath(settings, "git/trees"), {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ base_tree: baseTreeSha, tree }),
+  });
+  const commit = await githubJson(repositoryApiPath(settings, "git/commits"), {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      message: `Update ${program.season} game-day program${pendingAssets.size ? ` and ${pendingAssets.size} images` : ""}`,
+      tree: newTree.sha,
+      parents: [headSha],
+    }),
+  });
+  await githubJson(repositoryApiPath(settings, `git/refs/heads/${branchPath}`), {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify({ sha: commit.sha, force: false }),
+  });
+  return commit.sha;
 }
 
 function readSettings() {
@@ -792,7 +836,7 @@ function fillPublishDialog() {
   document.querySelector("#github-repo").value = settings.repo || "jfk-football-program";
   document.querySelector("#github-branch").value = settings.branch || "main";
   document.querySelector("#github-token").value = "";
-  document.querySelector("#publish-summary").textContent = `${pendingAssets.size} new image${pendingAssets.size === 1 ? "" : "s"} and the program data file will be published. The public site normally updates within a few minutes.`;
+  document.querySelector("#publish-summary").textContent = `${pendingAssets.size} new image${pendingAssets.size === 1 ? "" : "s"} and the program data will be published together in one GitHub update. The public site normally refreshes within a few minutes.`;
   publishMessage.textContent = "";
   publishMessage.className = "publish-message";
   publishProgress.hidden = true;
@@ -816,16 +860,17 @@ async function publish() {
   button.disabled = true;
   publishProgress.hidden = false;
   const bar = publishProgress.querySelector("span");
-  const files = [...pendingAssets.entries()].map(([path, dataUrl]) => ({ path, content: dataUrlBase64(dataUrl), message: `Add program image: ${path.split("/").pop()}` }));
-  files.push({ path: "data/program.json", content: textBase64(`${JSON.stringify(program, null, 2)}\n`), message: `Update ${program.season} game-day program` });
+  const files = [...pendingAssets.entries()].map(([path, dataUrl]) => ({ path, content: dataUrlBase64(dataUrl) }));
+  files.push({ path: "data/program.json", content: textBase64(`${JSON.stringify(program, null, 2)}\n`) });
 
   try {
-    for (let index = 0; index < files.length; index += 1) {
-      const file = files[index];
-      publishMessage.textContent = `Publishing ${index + 1} of ${files.length}: ${file.path}`;
-      bar.style.width = `${Math.round((index / files.length) * 100)}%`;
-      await publishFile(settings, token, file.path, file.content, file.message);
-    }
+    publishMessage.textContent = "Preparing one GitHub update…";
+    bar.style.width = "3%";
+    await publishBatch(settings, token, files, (completed, total) => {
+      publishMessage.textContent = `Preparing files ${completed} of ${total}…`;
+      bar.style.width = `${Math.max(5, Math.round((completed / total) * 85))}%`;
+    });
+    publishMessage.textContent = "Finalizing the program update…";
     bar.style.width = "100%";
     pendingAssets.clear();
     await assetDb("clear");
