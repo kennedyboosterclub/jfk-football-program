@@ -95,6 +95,11 @@ export function normalizeProgram(input = {}) {
       photoFilename: player.photoFilename || "",
     })),
     notPictured: input.notPictured || "",
+    lowerLevelTeams: {
+      ninthGrade: { image: "", ...(input.lowerLevelTeams?.ninthGrade || {}) },
+      bSquad: { image: "", ...(input.lowerLevelTeams?.bSquad || {}) },
+      juniorVarsity: { image: "", ...(input.lowerLevelTeams?.juniorVarsity || {}) },
+    },
     managers: { image: "", names: "", ...(input.managers || {}) },
     cheerleaders: { image: "", names: "", ...(input.cheerleaders || {}) },
     actionShots: Array.isArray(input.actionShots) ? input.actionShots : [],
@@ -306,6 +311,15 @@ function renderManagersCheer(program, number, options) {
   return page;
 }
 
+function renderTeamPhotoPage(title, item, season, number, options) {
+  const page = pageShell("team-photo-page", number);
+  page.append(sectionTitle(title, `${season} Kennedy Football`));
+  const photo = mediaFrame(item.image, `${season} Kennedy football ${title}`, options, `${title} photograph`);
+  photo.classList.add("full-team-photo");
+  page.append(photo);
+  return page;
+}
+
 function renderActionPage(item, index, number, options) {
   const page = pageShell("action-page", number);
   page.append(sectionTitle("Friday Night Lights", `Action gallery • ${String(index + 1).padStart(2, "0")}`));
@@ -329,6 +343,14 @@ export function renderProgram(input, container, options = {}) {
   const rosterPages = renderRoster(program, pageNumber, options);
   rosterPages.forEach((page) => fragment.append(page));
   pageNumber += rosterPages.length;
+
+  [
+    ["9th Grade Team", program.lowerLevelTeams.ninthGrade],
+    ["B Squad Team", program.lowerLevelTeams.bSquad],
+    ["JV Team", program.lowerLevelTeams.juniorVarsity],
+  ].filter(([, team]) => team.image).forEach(([title, team]) => {
+    fragment.append(renderTeamPhotoPage(title, team, program.season, pageNumber++, options));
+  });
 
   fragment.append(renderManagersCheer(program, pageNumber++, options));
   packSponsors(program.sponsors, "after-team").forEach((sponsors) => fragment.append(renderSponsorPage(sponsors, pageNumber++, options)));

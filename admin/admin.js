@@ -113,7 +113,7 @@ function assetPreviewUrl(path) {
 
 function compressionProfile(path) {
   if (path[0] === "players") return { maximum: 900, quality: 0.74, minimumQuality: 0.5, targetBytes: 280 * 1024 };
-  if (["teamPhoto", "coaches", "captains", "seniors", "managers", "cheerleaders"].includes(path[0])) {
+  if (["teamPhoto", "coaches", "captains", "seniors", "lowerLevelTeams", "managers", "cheerleaders"].includes(path[0])) {
     return { maximum: 1800, quality: 0.78, minimumQuality: 0.54, targetBytes: 950 * 1024 };
   }
   return { maximum: 2000, quality: 0.8, minimumQuality: 0.56, targetBytes: 1200 * 1024 };
@@ -357,6 +357,27 @@ function renderStaffSection() {
     card.firstChild.append(h("strong", "", label));
     card.append(imageField(`${label} image`, [key, "image"]));
     if (hasNames) card.append(inputField(`${label} names`, [key, "names"], "textarea"));
+    wrap.append(card);
+  });
+  return wrap;
+}
+
+function renderAdditionalTeamsSection() {
+  const wrap = section(
+    "team-photos",
+    "Additional team photographs",
+    "Each uploaded photograph receives a full page immediately after the individual player roster. Empty team pages stay hidden.",
+    "9th Grade • B Squad • JV",
+  );
+  [
+    ["9th Grade Team", "ninthGrade"],
+    ["B Squad Team", "bSquad"],
+    ["JV Team", "juniorVarsity"],
+  ].forEach(([label, key]) => {
+    const card = h("div", "subcard");
+    card.append(h("div", "subcard-header", ""));
+    card.firstChild.append(h("strong", "", label));
+    card.append(imageField(`${label} photograph`, ["lowerLevelTeams", key, "image"]));
     wrap.append(card);
   });
   return wrap;
@@ -760,7 +781,7 @@ function renderGallerySection() {
 function renderEditor() {
   const intro = h("p", "editor-intro");
   intro.innerHTML = "Changes are saved as a <strong>draft on this computer</strong>. Visitors will not see them until you select <strong>Publish to GitHub</strong>.";
-  editor.replaceChildren(intro, renderGameSection(), renderSponsorsSection(), renderStaffSection(), renderRosterSection(), renderGallerySection());
+  editor.replaceChildren(intro, renderGameSection(), renderSponsorsSection(), renderStaffSection(), renderRosterSection(), renderAdditionalTeamsSection(), renderGallerySection());
 }
 
 function renderPreview() {

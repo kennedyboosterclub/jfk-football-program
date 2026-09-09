@@ -11,6 +11,7 @@ A responsive, print-ready digital program for Bloomington Kennedy Football. The 
 - Optional sponsor website and phone-number links
 - Coaches, schedule, captains, seniors, managers, and cheerleaders sections
 - Dynamic player pages at 15 players per page
+- Full-page 9th Grade, B Squad, and JV team photographs after the player roster
 - Bulk CSV roster import and automatic photo-folder matching for large teams
 - “Not Pictured” list on the final roster page
 - Two action-photo pages

@@ -283,13 +283,22 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 .player-photo { min-height: 0; }
 .player-label { display: grid; grid-template-columns: auto 1fr; align-items: center; min-width: 0; color: white; background: var(--navy); }
 .player-index { display: grid; align-self: stretch; min-width: 2.2em; place-items: center; color: var(--navy); background: var(--gold); font: 900 clamp(10px, 1.8vw, 19px)/1 "Barlow Condensed", sans-serif; }
-.player-name { min-width: 0; padding: 5% 6%; }
-.player-name strong, .player-name span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.player-name strong { font: 800 clamp(8px, 1.35vw, 14px)/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+.player-name { display: grid; min-width: 0; align-content: center; padding: 4% 5%; }
+.player-name strong, .player-name span { display: block; }
+.player-name strong { overflow-wrap: anywhere; font: 800 clamp(8px, 1.22vw, 13px)/1.05 "Barlow Condensed", sans-serif; text-transform: uppercase; white-space: normal; }
 .player-name span { margin-top: 3px; color: #cad7e5; font-size: clamp(6px, .95vw, 10px); }
 .not-pictured { display: flex; align-items: baseline; gap: 2%; padding: 1.2% 2%; color: var(--navy); background: var(--gold); }
 .not-pictured strong { flex: 0 0 auto; font: 900 clamp(10px, 1.5vw, 16px)/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
 .not-pictured p { margin: 0; font-size: clamp(7px, 1vw, 11px); }
+
+/* Additional team photographs */
+.team-photo-page { display: grid; min-height: 0; grid-template-rows: auto minmax(0, 1fr); gap: 1.8%; padding: 3.2%; color: white; background: var(--navy); }
+.team-photo-page::before { border-color: var(--gold); }
+.team-photo-page::after { display: none; }
+.team-photo-page .section-heading { color: var(--navy); background: var(--gold); }
+.team-photo-page .section-kicker { color: var(--navy); }
+.full-team-photo { min-height: 0; border: clamp(6px, 1vw, 12px) solid white; background: white; box-shadow: 0 12px 34px rgba(0,0,0,.35); }
+.full-team-photo img { object-fit: contain; object-position: center; }
 
 /* Action */
 .action-page { display: grid; grid-template-rows: auto 1fr auto; padding: 3.2%; gap: 1.4%; background: var(--navy); }
