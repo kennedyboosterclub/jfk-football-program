@@ -65,25 +65,6 @@ export function packSponsors(sponsors, placement) {
   return pages;
 }
 
-export function splitAfterTeamSponsors(sponsors) {
-  const cheerPage = [];
-  const remaining = [];
-  let availableUnits = 2;
-
-  sponsors.filter((sponsor) => sponsor.placement === "after-team").forEach((sponsor) => {
-    const size = SPONSOR_UNITS[sponsor.size] ? sponsor.size : "quarter";
-    const units = SPONSOR_UNITS[size];
-    if (size !== "full" && units <= availableUnits) {
-      cheerPage.push({ ...sponsor, size });
-      availableUnits -= units;
-    } else {
-      remaining.push({ ...sponsor, size });
-    }
-  });
-
-  return { cheerPage, remaining };
-}
-
 export function normalizeProgram(input = {}) {
   const sourceSponsors = Array.isArray(input.sponsors) ? input.sponsors : migrateLegacySponsors(input);
   return {
@@ -376,18 +357,9 @@ function renderBSquadAndNinth(program, number, options) {
   return page;
 }
 
-function renderCheerleaders(program, sponsors, number, options) {
-  const page = pageShell("people-page cheer-sponsor-page", number);
+function renderCheerleaders(program, number, options) {
+  const page = pageShell("cheer-page", number);
   page.append(featureHalf("Cheerleaders", "Kennedy spirit", program.cheerleaders, "Kennedy cheerleaders", options));
-  if (sponsors.length) {
-    const grid = el("section", "sponsor-grid cheer-sponsor-grid");
-    sponsors.forEach((sponsor, index) => grid.append(sponsorCard(sponsor, index, options)));
-    page.append(grid);
-  } else {
-    const filler = el("section", "cheer-sponsor-filler");
-    filler.append(jfkPattern());
-    page.append(filler);
-  }
   return page;
 }
 
@@ -420,9 +392,8 @@ export function renderProgram(input, container, options = {}) {
     fragment.append(renderBSquadAndNinth(program, pageNumber++, options));
   }
 
-  const afterTeamSponsors = splitAfterTeamSponsors(program.sponsors);
-  fragment.append(renderCheerleaders(program, afterTeamSponsors.cheerPage, pageNumber++, options));
-  packSponsors(afterTeamSponsors.remaining, "after-team").forEach((sponsors) => fragment.append(renderSponsorPage(sponsors, pageNumber++, options)));
+  fragment.append(renderCheerleaders(program, pageNumber++, options));
+  packSponsors(program.sponsors, "after-team").forEach((sponsors) => fragment.append(renderSponsorPage(sponsors, pageNumber++, options)));
   const actionShots = program.actionShots.length ? program.actionShots : [{}, {}];
   actionShots.forEach((shot, index) => fragment.append(renderActionPage(shot, index, pageNumber++, options)));
 

@@ -1,4 +1,4 @@
-import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions, splitAfterTeamSponsors } from "../program-renderer.js?v=20260909-sponsor7";
+import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260909-sponsor8";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
@@ -289,7 +289,7 @@ function sponsorEditor(sponsor, index) {
     selectField("Sponsor size", sponsor.size, sponsorSizeOptions, (value) => { sponsor.size = value; queueSave(); renderEditor(); }),
     selectField("Position in program", sponsor.placement, [
       ["before-team", "Before team and player photos"],
-      ["after-team", "After team photos (can share the cheer page)"],
+      ["after-team", "After the cheerleader page"],
     ], (value) => { sponsor.placement = value; queueSave(); renderEditor(); }),
   );
   card.append(settings);
@@ -321,8 +321,7 @@ function renderGameSection() {
 
 function renderSponsorsSection() {
   const beforePages = packSponsors(program.sponsors, "before-team").length;
-  const afterTeam = splitAfterTeamSponsors(program.sponsors);
-  const afterPages = packSponsors(afterTeam.remaining, "after-team").length;
+  const afterPages = packSponsors(program.sponsors, "after-team").length;
   const wrap = section("sponsors", "Sponsors", "Add any number of sponsors. Full-page ads fill a page, half-page ads share a page in two rows, and quarter-page ads fill a 2 × 2 grid. Images scale automatically without being cropped.", "Dynamic sponsor pages");
   const add = h("button", "button secondary", "Add sponsor");
   add.type = "button";
@@ -335,7 +334,7 @@ function renderSponsorsSection() {
   const summary = h("div", "sponsor-page-summary");
   summary.append(
     h("span", "", `${program.sponsors.filter((sponsor) => sponsor.placement === "before-team").length} sponsors before photos • ${beforePages} pages`),
-    h("span", "", `${program.sponsors.filter((sponsor) => sponsor.placement === "after-team").length} sponsors after photos • ${afterTeam.cheerPage.length} on cheer page • ${afterPages} additional pages`),
+    h("span", "", `${program.sponsors.filter((sponsor) => sponsor.placement === "after-team").length} sponsors after cheerleaders • ${afterPages} pages`),
   );
   wrap.append(summary);
   if (!program.sponsors.length) wrap.append(h("div", "empty-list", "No sponsors have been added yet."));

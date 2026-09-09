@@ -330,17 +330,14 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 .not-pictured strong { flex: 0 0 auto; font: 900 clamp(10px, 1.5vw, 16px)/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
 .not-pictured p { margin: 0; font-size: clamp(7px, 1vw, 11px); }
 
-/* Additional team photographs and cheer/sponsor sharing */
+/* Additional team photographs and cheerleaders */
 .team-photo-half { grid-template-rows: auto minmax(0, 1fr); }
 .team-photo-half .media-frame { min-height: 0; }
 .team-photo-half .media-frame img { object-fit: contain; object-position: center; }
-.cheer-sponsor-grid { grid-template: minmax(0, 1fr) / repeat(2, minmax(0, 1fr)); gap: 2.2%; }
-.cheer-sponsor-filler { position: relative; min-height: 0; overflow: hidden; border: 1px solid var(--line); background: var(--navy); }
-.cheer-sponsor-filler .jfk-pattern { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); }
-.cheer-sponsor-filler .jfk-pattern span { opacity: .72; }
-.cheer-sponsor-page { grid-template-rows: 3fr 2fr; padding: 1.2%; gap: .8%; }
-.cheer-sponsor-page > .feature-half { border-width: 0; }
-.cheer-sponsor-page > .feature-half .name-strip { padding-block: .8%; }
+.cheer-page { display: grid; min-height: 0; grid-template-rows: minmax(0, 1fr); padding: 1.2%; }
+.cheer-page > .feature-half { min-height: 0; border-width: 0; }
+.cheer-page > .feature-half .media-frame img { object-fit: contain; object-position: center; }
+.cheer-page > .feature-half .name-strip { padding-block: .8%; }
 
 /* Action */
 .action-page { display: grid; grid-template-rows: auto 1fr auto; padding: 3.2%; gap: 1.4%; background: var(--navy); }
