@@ -57,6 +57,8 @@ The admin page publishes through GitHub's repository contents API.
 
 The admin page asks for the token each time you publish. It does not save the token in local storage or the repository. Treat the token like a password and revoke it immediately if it is ever exposed.
 
+The publisher prepares uploaded images and `data/program.json` as one GitHub commit, so large player-photo batches do not create dozens of separate repository updates.
+
 ## Editing workflow
 
 1. Visit `https://jfkbooster.org/admin/` from the designated editing computer.
