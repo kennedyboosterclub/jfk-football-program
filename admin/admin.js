@@ -1,4 +1,4 @@
-import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions, splitAfterTeamSponsors } from "../program-renderer.js?v=20260909-sponsor6";
+import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions, splitAfterTeamSponsors } from "../program-renderer.js?v=20260909-sponsor7";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
