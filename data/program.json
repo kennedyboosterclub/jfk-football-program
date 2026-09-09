@@ -4,18 +4,532 @@
   "gameLabel": "Game Day Program",
   "opponent": "",
   "gameDate": "",
-  "teamPhoto": "",
+  "teamPhoto": "assets/uploads/team-photograph-1788957487746-txugj.webp",
   "sponsors": [],
-  "coaches": { "image": "", "names": "" },
-  "schedule": { "image": "" },
-  "captains": { "image": "", "names": "" },
-  "seniors": { "image": "", "names": "" },
-  "players": [],
+  "coaches": {
+    "image": "assets/uploads/coaches-image-1788957398287-z2nxs.webp",
+    "names": ""
+  },
+  "schedule": {
+    "image": ""
+  },
+  "captains": {
+    "image": "assets/uploads/team-captains-image-1788957183242-7rucz.webp",
+    "names": "Joshua Amadi, Xavier Boyd, Ethan Besch"
+  },
+  "seniors": {
+    "image": "assets/uploads/seniors-image-1788957239226-3npjp.webp",
+    "names": "Joshua Amadi, Damari Neal, Xavier Boyd, Ayite Michael Dalmeida, Derek Metcalf, Ethan Besch, Rayden Rasmussen, Joseph Lange, Aaron Buchanan Jr, Daniel(Shamarr) Johnson-Fleming, Lamarion Lewis, Chigozie Onuzulike"
+  },
+  "players": [
+    {
+      "firstName": "Amadi",
+      "lastName": "Joshua",
+      "grade": "senior",
+      "photo": "assets/uploads/player-1-amadi-joshua-1788956654001-6ti6m.webp",
+      "photoFilename": "20260828_0Z8_0369.jpg"
+    },
+    {
+      "firstName": "Neal",
+      "lastName": "Damari",
+      "grade": "senior",
+      "photo": "assets/uploads/player-2-neal-damari-1788956657471-z3fkk.webp",
+      "photoFilename": "20260828_0Z8_0307.jpg"
+    },
+    {
+      "firstName": "Boyd",
+      "lastName": "Xavier",
+      "grade": "senior",
+      "photo": "assets/uploads/player-3-boyd-xavier-1788956656093-ip09p.webp",
+      "photoFilename": "20260828_0Z8_0349.jpg"
+    },
+    {
+      "firstName": "Dalmeida",
+      "lastName": "Ayite Michael",
+      "grade": "senior",
+      "photo": "",
+      "photoFilename": "004-dalmeida-ayite-michael.jpg"
+    },
+    {
+      "firstName": "Metcalf",
+      "lastName": "Derek",
+      "grade": "senior",
+      "photo": "assets/uploads/player-5-metcalf-derek-1788956648087-aasnh.webp",
+      "photoFilename": "20260828_0Z8_0325.jpg"
+    },
+    {
+      "firstName": "Besch",
+      "lastName": "Ethan",
+      "grade": "senior",
+      "photo": "assets/uploads/player-6-besch-ethan-1788956649888-7huu7.webp",
+      "photoFilename": "20260828_0Z8_0337.jpg"
+    },
+    {
+      "firstName": "Rasmussen",
+      "lastName": "Rayden",
+      "grade": "senior",
+      "photo": "assets/uploads/player-7-rasmussen-rayden-1788956654735-8bi7k.webp",
+      "photoFilename": "20260828_0Z8_0342.jpg"
+    },
+    {
+      "firstName": "Lange",
+      "lastName": "Joseph",
+      "grade": "senior",
+      "photo": "assets/uploads/player-8-lange-joseph-1788956648756-nwdyc.webp",
+      "photoFilename": "20260828_0Z8_0330.jpg"
+    },
+    {
+      "firstName": "Buchanan Jr",
+      "lastName": "Aaron",
+      "grade": "senior",
+      "photo": "assets/uploads/player-9-buchanan-jr-aaron-1788956656288-nd5un.webp",
+      "photoFilename": "20260828_0Z8_0361.jpg"
+    },
+    {
+      "firstName": "Johnson-Fleming",
+      "lastName": "Daniel(Shamarr)",
+      "grade": "senior",
+      "photo": "assets/uploads/player-10-johnson-fleming-daniel-shamarr-1788956653788-h0qgh.webp",
+      "photoFilename": "20260828_0Z8_0355.jpg"
+    },
+    {
+      "firstName": "Lewis",
+      "lastName": "Lamarion",
+      "grade": "senior",
+      "photo": "assets/uploads/player-11-lewis-lamarion-1788956656885-56sg3.webp",
+      "photoFilename": "20260828_0Z8_0376.jpg"
+    },
+    {
+      "firstName": "Onuzulike",
+      "lastName": "Chigozie",
+      "grade": "senior",
+      "photo": "",
+      "photoFilename": "012-onuzulike-chigozie.jpg"
+    },
+    {
+      "firstName": "Wertz Copeland",
+      "lastName": "Khalil",
+      "grade": "junior",
+      "photo": "assets/uploads/player-13-wertz-copeland-khalil-1788956651808-8etop.webp",
+      "photoFilename": "20260828__8JM0091.jpg"
+    },
+    {
+      "firstName": "Kremer",
+      "lastName": "Zachary",
+      "grade": "junior",
+      "photo": "assets/uploads/player-14-kremer-zachary-1788956651475-8rhyc.webp",
+      "photoFilename": "20260828__8JM0087.jpg"
+    },
+    {
+      "firstName": "Morales Estrada",
+      "lastName": "Ryan",
+      "grade": "junior",
+      "photo": "assets/uploads/player-15-morales-estrada-ryan-1788956658789-mwco6.webp",
+      "photoFilename": "20260828__8JM0071.jpg"
+    },
+    {
+      "firstName": "Ingram",
+      "lastName": "Jordan",
+      "grade": "junior",
+      "photo": "",
+      "photoFilename": "016-ingram-jordan.jpg"
+    },
+    {
+      "firstName": "Borbor",
+      "lastName": "Jeremiah",
+      "grade": "junior",
+      "photo": "assets/uploads/player-17-borbor-jeremiah-1788956657246-szeoe.webp",
+      "photoFilename": "20260828__8JM0062.jpg"
+    },
+    {
+      "firstName": "Castro Torres",
+      "lastName": "Alvin",
+      "grade": "junior",
+      "photo": "assets/uploads/player-18-castro-torres-alvin-1788956659400-e8p74.webp",
+      "photoFilename": "20260828__8JM0066.jpg"
+    },
+    {
+      "firstName": "Elmustafa",
+      "lastName": "Azzam",
+      "grade": "junior",
+      "photo": "assets/uploads/player-19-elmustafa-azzam-1788956651649-o9f19.webp",
+      "photoFilename": "20260828__8JM0052.jpg"
+    },
+    {
+      "firstName": "Pehrson",
+      "lastName": "Dane",
+      "grade": "junior",
+      "photo": "assets/uploads/player-23-ross-jecori-1788956651956-owhww.webp",
+      "photoFilename": "20260828__8JM0047.jpg"
+    },
+    {
+      "firstName": "Miller",
+      "lastName": "Brody",
+      "grade": "junior",
+      "photo": "assets/uploads/player-21-miller-brody-1788956647874-qyjqg.webp",
+      "photoFilename": "20260828__8JM0043.jpg"
+    },
+    {
+      "firstName": "Rasmusson",
+      "lastName": "Eldon",
+      "grade": "junior",
+      "photo": "assets/uploads/player-22-rasmusson-eldon-1788956648949-24bid.webp",
+      "photoFilename": "20260828__8JM0095.jpg"
+    },
+    {
+      "firstName": "Ross",
+      "lastName": "Jecori",
+      "grade": "junior",
+      "photo": "assets/uploads/player-23-ross-jecori-1788956651956-owhww.webp",
+      "photoFilename": "20260828__8JM0047.jpg"
+    },
+    {
+      "firstName": "Carlson",
+      "lastName": "Austin",
+      "grade": "junior",
+      "photo": "assets/uploads/player-24-carlson-austin-1788956649129-uphp1.webp",
+      "photoFilename": "20260828__8JM0054.jpg"
+    },
+    {
+      "firstName": "Zahn",
+      "lastName": "Joshua",
+      "grade": "junior",
+      "photo": "assets/uploads/player-25-zahn-joshua-1788956658232-soj8w.webp",
+      "photoFilename": "20260828__8JM0058.jpg"
+    },
+    {
+      "firstName": "Vergara Juarez",
+      "lastName": "Christopher",
+      "grade": "junior",
+      "photo": "assets/uploads/player-26-vergara-juarez-christopher-1788956658057-z80r5.webp",
+      "photoFilename": "20260828__8JM0074.jpg"
+    },
+    {
+      "firstName": "Hernandez Cruz",
+      "lastName": "Daniel",
+      "grade": "junior",
+      "photo": "",
+      "photoFilename": "027-hernandez-cruz-daniel.jpg"
+    },
+    {
+      "firstName": "Workcuff",
+      "lastName": "Omear",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-28-workcuff-omear-1788956655160-88pm9.webp",
+      "photoFilename": "20260828_0Z8_0401.jpg"
+    },
+    {
+      "firstName": "Benjamin",
+      "lastName": "Cleavonte",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-29-benjamin-cleavonte-1788956649672-gzr71.webp",
+      "photoFilename": "20260828_0Z8_0455.jpg"
+    },
+    {
+      "firstName": "Zemple",
+      "lastName": "Archer",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-30-zemple-archer-1788956655550-19a9c.webp",
+      "photoFilename": "20260828_0Z8_0414.jpg"
+    },
+    {
+      "firstName": "Jensen",
+      "lastName": "Jacksen",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-31-jensen-jacksen-1788956648308-mlulw.webp",
+      "photoFilename": "20260828_0Z8_0443.jpg"
+    },
+    {
+      "firstName": "Stewart",
+      "lastName": "Phenix",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-32-stewart-phenix-1788956652148-r8h03.webp",
+      "photoFilename": "20260828_0Z8_0434.jpg"
+    },
+    {
+      "firstName": "Borbor",
+      "lastName": "Tamba",
+      "grade": "sophomore",
+      "photo": "",
+      "photoFilename": "033-borbor-tamba.jpg"
+    },
+    {
+      "firstName": "Delaney Jr",
+      "lastName": "Aaron",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-34-delaney-jr-aaron-1788956650105-s8gcg.webp",
+      "photoFilename": "20260828_0Z8_0445.jpg"
+    },
+    {
+      "firstName": "Jones",
+      "lastName": "Deandre",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-35-jones-deandre-1788956653215-y9y85.webp",
+      "photoFilename": "20260828_0Z8_0426.jpg"
+    },
+    {
+      "firstName": "Washington Jr",
+      "lastName": "Jonathan",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-36-washington-jr-jonathan-1788956654949-nlr0r.webp",
+      "photoFilename": "20260828_0Z8_0418.jpg"
+    },
+    {
+      "firstName": "Abdi",
+      "lastName": "Yonis",
+      "grade": "sophomore",
+      "photo": "",
+      "photoFilename": "037-abdi-yonis.jpg"
+    },
+    {
+      "firstName": "Bawek",
+      "lastName": "Camdan",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-38-bawek-camdan-1788956654528-rfmp7.webp",
+      "photoFilename": "20260828_0Z8_0430.jpg"
+    },
+    {
+      "firstName": "Saville",
+      "lastName": "Caleb",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-39-saville-caleb-1788956657865-34cdm.webp",
+      "photoFilename": "20260828_0Z8_0312.jpg"
+    },
+    {
+      "firstName": "Ramirez",
+      "lastName": "Adrian",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-40-ramirez-adrian-1788956656671-3e7mu.webp",
+      "photoFilename": "20260828_0Z8_0438.jpg"
+    },
+    {
+      "firstName": "Garcia Portillo",
+      "lastName": "Alexis",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-41-garcia-portillo-alexis-1788956658595-qxwwx.webp",
+      "photoFilename": "20260828_0Z8_0459.jpg"
+    },
+    {
+      "firstName": "Sifuentes",
+      "lastName": "Alonzo",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-42-sifuentes-alonzo-1788956652517-2saa9.webp",
+      "photoFilename": "20260828_0Z8_0421.jpg"
+    },
+    {
+      "firstName": "Fanniel",
+      "lastName": "Gianni",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-43-fanniel-gianni-1788956650647-yfk5i.webp",
+      "photoFilename": "20260828_0Z8_0450.jpg"
+    },
+    {
+      "firstName": "Geyen",
+      "lastName": "Colten",
+      "grade": "sophomore",
+      "photo": "",
+      "photoFilename": "044-geyen-colten.jpg"
+    },
+    {
+      "firstName": "Powell",
+      "lastName": "Juelz",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-45-powell-juelz-1788956650476-pg00y.webp",
+      "photoFilename": "20260828__8JM0119.jpg"
+    },
+    {
+      "firstName": "Broadway",
+      "lastName": "Jamichael",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-46-broadway-jamichael-1788956648536-vfsah.webp",
+      "photoFilename": "20260828__8JM0122.jpg"
+    },
+    {
+      "firstName": "Harris",
+      "lastName": "Legend",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-47-harris-legend-1788956657672-yhby9.webp",
+      "photoFilename": "20260828__8JM0128.jpg"
+    },
+    {
+      "firstName": "Adullah",
+      "lastName": "Xion",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-48-adullah-xion-1788956650305-bwrf2.webp",
+      "photoFilename": "20260828__8JM0131.jpg"
+    },
+    {
+      "firstName": "Schlueter",
+      "lastName": "Henry",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-49-schlueter-henry-1788956649491-j96ck.webp",
+      "photoFilename": "20260828__8JM0135.jpg"
+    },
+    {
+      "firstName": "Seck",
+      "lastName": "Diane",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-50-seck-diane-1788956658399-m6o9c.webp",
+      "photoFilename": "20260828__8JM0139.jpg"
+    },
+    {
+      "firstName": "Bothern",
+      "lastName": "Emmett",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-51-bothern-emmett-1788956652712-vuaiz.webp",
+      "photoFilename": "20260828__8JM0143.jpg"
+    },
+    {
+      "firstName": "Dahlberg",
+      "lastName": "Malik",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-52-dahlberg-malik-1788956653585-tzuok.webp",
+      "photoFilename": "20260828__8JM0147.jpg"
+    },
+    {
+      "firstName": "Floberg",
+      "lastName": "Derek",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-53-floberg-derek-1788956654190-wwrga.webp",
+      "photoFilename": "20260828__8JM0151.jpg"
+    },
+    {
+      "firstName": "Clubbs Jr",
+      "lastName": "Charles",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-54-clubbs-jr-charles-1788956653045-mc2fj.webp",
+      "photoFilename": "20260828__8JM0156.jpg"
+    },
+    {
+      "firstName": "Lewis",
+      "lastName": "Trayjuan",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-55-lewis-trayjuan-1788956655354-5ksvk.webp",
+      "photoFilename": "20260828__8JM0160.jpg"
+    },
+    {
+      "firstName": "Jayden",
+      "lastName": "Rose",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-56-jayden-rose-1788956657076-3rf8t.webp",
+      "photoFilename": "20260828__8JM0164.jpg"
+    },
+    {
+      "firstName": "Lewis",
+      "lastName": "Elijah",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-57-lewis-elijah-1788956652328-bgmrz.webp",
+      "photoFilename": "20260828__8JM0169.jpg"
+    },
+    {
+      "firstName": "Tate",
+      "lastName": "Damari",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-58-tate-damari-1788956656481-cbni2.webp",
+      "photoFilename": "20260828__8JM0172.jpg"
+    },
+    {
+      "firstName": "Sakara",
+      "lastName": "Emery",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-59-sakara-emery-1788956655911-rtn5c.webp",
+      "photoFilename": "20260828__8JM0177.jpg"
+    },
+    {
+      "firstName": "Strohl",
+      "lastName": "Kaleb",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-60-strohl-kaleb-1788956652889-hiv77.webp",
+      "photoFilename": "20260828__8JM0181.jpg"
+    },
+    {
+      "firstName": "Keegan",
+      "lastName": "Maxton",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-61-keegan-maxton-1788956653402-fqa9y.webp",
+      "photoFilename": "20260828__8JM0185.jpg"
+    },
+    {
+      "firstName": "Koumodji",
+      "lastName": "Deo Joseph Arsen",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-62-koumodji-deo-joseph-arsen-1788956655737-lu8q3.webp",
+      "photoFilename": "20260828__8JM0188.jpg"
+    },
+    {
+      "firstName": "Taylor",
+      "lastName": "Joseph",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-63-taylor-joseph-1788956654355-20fmk.webp",
+      "photoFilename": "20260828__8JM0193.jpg"
+    },
+    {
+      "firstName": "Mahamud",
+      "lastName": "Hamsa",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-64-mahamud-hamsa-1788956658982-wkp1c.webp",
+      "photoFilename": "20260828_0Z8_0467.jpg"
+    },
+    {
+      "firstName": "Kim",
+      "lastName": "Ollie",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-65-kim-ollie-1788956659197-92pl5.webp",
+      "photoFilename": "20260828_0Z8_0472.jpg"
+    },
+    {
+      "firstName": "Mapson-Kropp",
+      "lastName": "Edward",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-66-mapson-kropp-edward-1788956650856-artl2.webp",
+      "photoFilename": "20260828_0Z8_0478.jpg"
+    },
+    {
+      "firstName": "Harriott",
+      "lastName": "Ishaan",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-67-harriott-ishaan-1788956649314-zvk33.webp",
+      "photoFilename": "20260828_0Z8_0483.jpg"
+    },
+    {
+      "firstName": "Aguliar Torres",
+      "lastName": "Jeremy",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-68-aguliar-torres-jeremy-1788956651078-fo8y1.webp",
+      "photoFilename": "20260828_0Z8_0487.jpg"
+    },
+    {
+      "firstName": "Laney",
+      "lastName": "Liam",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-69-laney-liam-1788956651296-2v2ay.webp",
+      "photoFilename": "20260828_0Z8_0493.jpg"
+    },
+    {
+      "firstName": "Thomas-Criner",
+      "lastName": "Skyler",
+      "grade": "freshman",
+      "photo": "assets/uploads/player-64-thomas-criner-skyler-1788956361063-89b6l.webp",
+      "photoFilename": "20260828__8JM0197.jpg"
+    }
+  ],
   "notPictured": "",
-  "managers": { "image": "", "names": "" },
-  "cheerleaders": { "image": "", "names": "" },
+  "managers": {
+    "image": "assets/uploads/team-managers-image-1788956792670-3in2i.webp",
+    "names": "Eddie"
+  },
+  "cheerleaders": {
+    "image": "",
+    "names": ""
+  },
   "actionShots": [
-    { "image": "", "caption": "" },
-    { "image": "", "caption": "" }
+    {
+      "image": "",
+      "caption": ""
+    },
+    {
+      "image": "",
+      "caption": ""
+    }
   ]
 }
