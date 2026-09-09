@@ -67,6 +67,8 @@ The publisher prepares uploaded images and `data/program.json` as one GitHub com
 4. Select **Publish to GitHub**, enter the repository details and token, and publish.
 5. Confirm the public program after GitHub Pages finishes updating.
 
-Uploaded images are resized to a maximum dimension of 2400 pixels and converted to WebP before publication. They are stored in `assets/uploads/` and served from the same `jfkbooster.org` domain as the program.
+Uploaded images are resized for how they appear in the program and converted to WebP before publication. Player portraits are limited to 900 pixels, while larger group and page images retain more resolution. They are stored in `assets/uploads/` and served from the same `jfkbooster.org` domain as the program.
+
+The **Optimize program images** GitHub Actions workflow can be run manually if an older image set needs to be reduced again. It rewrites the image files in place, so the program's image links do not change.
 
 For a large roster, use **Download CSV template** in the Player roster section, enter the names and grades, and import the completed file. Then select the player-photo folder. The editor matches images using `photo_filename`, `001-first-last.jpg`, or `first-last.jpg`, and reports missing, unmatched, or duplicate files before publication.

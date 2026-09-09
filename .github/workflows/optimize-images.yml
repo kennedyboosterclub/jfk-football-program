@@ -1,0 +1,42 @@
+name: Optimize program images
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/optimize-images.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out program
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install image optimizer
+        run: npm install --no-save --no-package-lock sharp@0.34.3
+
+      - name: Optimize uploaded images
+        run: node scripts/optimize-images.mjs
+
+      - name: Save optimized images
+        run: |
+          if git diff --quiet -- assets/uploads; then
+            echo "Images are already optimized."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/uploads
+          git commit -m "Optimize program images for faster loading"
+          git push

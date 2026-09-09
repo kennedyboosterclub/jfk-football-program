@@ -115,13 +115,15 @@ function resolveAsset(path, options) {
   return `${options.assetBase || "./"}${path}`;
 }
 
-function mediaFrame(source, alt, options, placeholder = "Upload image") {
+function mediaFrame(source, alt, options, placeholder = "Upload image", priority = "lazy") {
   const frame = el("div", "media-frame");
   if (source) {
     const image = el("img");
     image.src = resolveAsset(source, options);
     image.alt = alt;
-    image.loading = "lazy";
+    image.loading = priority !== "lazy" || options.eagerImages ? "eager" : "lazy";
+    image.decoding = "async";
+    if (priority === "high") image.fetchPriority = "high";
     frame.append(image);
   } else {
     const empty = el("div", "image-placeholder");
@@ -155,7 +157,7 @@ function renderCover(program, number, options) {
   if (program.opponent) title.append(el("p", "cover-opponent", `vs. ${program.opponent}`));
   page.append(title);
 
-  const photo = mediaFrame(program.teamPhoto, `${program.season} Kennedy football team`, options, "Team photograph");
+  const photo = mediaFrame(program.teamPhoto, `${program.season} Kennedy football team`, options, "Team photograph", "high");
   photo.classList.add("team-photo");
   page.append(photo);
 
@@ -230,20 +232,20 @@ function renderCoaches(program, number, options) {
   const page = pageShell("coaches-page", number);
   const coaches = el("section", "half-section coaches-block");
   coaches.append(sectionTitle("Coaches", "Meet the staff"));
-  coaches.append(mediaFrame(program.coaches.image, "Kennedy football coaching staff", options, "Coaches photograph"));
+  coaches.append(mediaFrame(program.coaches.image, "Kennedy football coaching staff", options, "Coaches photograph", "eager"));
   coaches.append(el("p", "name-strip", program.coaches.names || "Coach names"));
 
   const schedule = el("section", "half-section schedule-block");
   schedule.append(sectionTitle("Season Schedule", program.season));
-  schedule.append(mediaFrame(program.schedule.image, `${program.season} Kennedy football schedule`, options, "Schedule image"));
+  schedule.append(mediaFrame(program.schedule.image, `${program.season} Kennedy football schedule`, options, "Schedule image", "eager"));
   page.append(coaches, schedule);
   return page;
 }
 
-function featureHalf(title, kicker, item, alt, options) {
+function featureHalf(title, kicker, item, alt, options, priority = "lazy") {
   const section = el("section", "feature-half");
   section.append(sectionTitle(title, kicker));
-  section.append(mediaFrame(item.image, alt, options, `${title} photograph`));
+  section.append(mediaFrame(item.image, alt, options, `${title} photograph`, priority));
   section.append(el("p", "name-strip", item.names || `${title} names`));
   return section;
 }
@@ -251,8 +253,8 @@ function featureHalf(title, kicker, item, alt, options) {
 function renderCaptainsAndSeniors(program, number, options) {
   const page = pageShell("features-page", number);
   page.append(
-    featureHalf("Team Captains", "Leadership", program.captains, "Kennedy football captains", options),
-    featureHalf("Seniors", "Class of " + program.season, program.seniors, "Kennedy football seniors", options),
+    featureHalf("Team Captains", "Leadership", program.captains, "Kennedy football captains", options, "eager"),
+    featureHalf("Seniors", "Class of " + program.season, program.seniors, "Kennedy football seniors", options, "eager"),
   );
   return page;
 }

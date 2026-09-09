@@ -192,8 +192,9 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 /* Cover */
 .cover-page {
   display: grid;
-  grid-template-rows: auto 1fr auto;
-  padding: 9% 8% 7%;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 2%;
+  padding: 4.5% 4.5% 3.5%;
   color: white;
   background:
     linear-gradient(to bottom, rgba(2, 14, 33, 0.35), rgba(2, 14, 33, 0.92)),
@@ -208,8 +209,8 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 .cover-title {
   position: relative;
   z-index: 3;
-  margin: -3% -2% 0;
-  padding: 3% 3% 3.5%;
+  margin: 0;
+  padding: 2.3% 3% 2.8%;
   border: 2px solid rgba(244, 197, 66, .8);
   border-bottom-width: clamp(5px, .8vw, 9px);
   background: rgba(7, 29, 60, .96);
@@ -223,12 +224,16 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 
 .team-photo {
   z-index: 3;
-  align-self: center;
+  align-self: stretch;
   width: 100%;
-  height: 64%;
+  height: auto;
+  min-height: 0;
   border: clamp(6px, 1vw, 12px) solid white;
+  background: rgba(7, 29, 60, .92);
   box-shadow: 0 12px 34px rgba(0,0,0,.4);
 }
+
+.team-photo img { object-fit: contain; object-position: center; }
 
 .cover-footer {
   position: relative;
@@ -262,9 +267,11 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 .sponsor-size-quarter .sponsor-contacts { justify-content: start; }
 
 /* Coaches, captains, seniors */
-.coaches-page, .features-page, .people-page { display: grid; grid-template-rows: 1fr 1fr; padding: 3.4%; gap: 2%; }
+.coaches-page, .features-page, .people-page { display: grid; grid-template-rows: 1fr 1fr; padding: 2.4%; gap: 1.4%; }
 .half-section, .feature-half { display: grid; min-height: 0; grid-template-rows: auto 1fr auto; overflow: hidden; border: 1px solid var(--line); background: white; }
 .half-section .media-frame, .feature-half .media-frame { min-height: 0; }
+.coaches-block .media-frame, .feature-half .media-frame { background: white; }
+.coaches-block .media-frame img, .feature-half .media-frame img { object-fit: contain; object-position: center; }
 .name-strip { min-height: 6.2%; margin: 0; padding: 1.3% 2%; color: var(--navy); border-top: 4px solid var(--gold); background: var(--cream); font: 700 clamp(9px, 1.45vw, 15px)/1.25 "Barlow Condensed", sans-serif; text-align: center; white-space: pre-line; }
 .schedule-block .media-frame { background: white; }
 .schedule-block .media-frame img { object-fit: contain; }

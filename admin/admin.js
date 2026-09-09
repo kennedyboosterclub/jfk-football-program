@@ -111,7 +111,30 @@ function assetPreviewUrl(path) {
   return `../${path}`;
 }
 
-async function compressImage(file) {
+function compressionProfile(path) {
+  if (path[0] === "players") return { maximum: 900, quality: 0.74, minimumQuality: 0.5, targetBytes: 280 * 1024 };
+  if (["teamPhoto", "coaches", "captains", "seniors", "managers", "cheerleaders"].includes(path[0])) {
+    return { maximum: 1800, quality: 0.78, minimumQuality: 0.54, targetBytes: 950 * 1024 };
+  }
+  return { maximum: 2000, quality: 0.8, minimumQuality: 0.56, targetBytes: 1200 * 1024 };
+}
+
+function canvasBlob(canvas, quality) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error("The image could not be compressed.")), "image/webp", quality);
+  });
+}
+
+function blobDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error("The compressed image could not be saved."));
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function compressImage(file, profile) {
   if (!file.type.startsWith("image/")) throw new Error("Please choose an image file.");
   const sourceUrl = URL.createObjectURL(file);
   try {
@@ -121,7 +144,7 @@ async function compressImage(file) {
       img.onerror = () => reject(new Error("That image could not be read."));
       img.src = sourceUrl;
     });
-    const maximum = 2400;
+    const { maximum, minimumQuality, targetBytes } = profile;
     const ratio = Math.min(1, maximum / Math.max(image.naturalWidth, image.naturalHeight));
     const canvas = document.createElement("canvas");
     canvas.width = Math.round(image.naturalWidth * ratio);
@@ -129,7 +152,13 @@ async function compressImage(file) {
     const context = canvas.getContext("2d");
     context.imageSmoothingQuality = "high";
     context.drawImage(image, 0, 0, canvas.width, canvas.height);
-    return canvas.toDataURL("image/webp", 0.86);
+    let quality = profile.quality;
+    let compressed = await canvasBlob(canvas, quality);
+    while (compressed.size > targetBytes && quality > minimumQuality) {
+      quality = Math.max(minimumQuality, quality - 0.06);
+      compressed = await canvasBlob(canvas, quality);
+    }
+    return blobDataUrl(compressed);
   } finally {
     URL.revokeObjectURL(sourceUrl);
   }
@@ -140,7 +169,7 @@ function safeAssetName(label) {
 }
 
 async function prepareImage(file, path, label) {
-  const dataUrl = await compressImage(file);
+  const dataUrl = await compressImage(file, compressionProfile(path));
   const oldPath = getAt(path);
   const target = `assets/uploads/${safeAssetName(label)}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}.webp`;
   if (oldPath && pendingAssets.has(oldPath)) {
