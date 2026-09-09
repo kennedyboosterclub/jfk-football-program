@@ -65,6 +65,25 @@ export function packSponsors(sponsors, placement) {
   return pages;
 }
 
+export function splitAfterTeamSponsors(sponsors) {
+  const cheerPage = [];
+  const remaining = [];
+  let availableUnits = 2;
+
+  sponsors.filter((sponsor) => sponsor.placement === "after-team").forEach((sponsor) => {
+    const size = SPONSOR_UNITS[sponsor.size] ? sponsor.size : "quarter";
+    const units = SPONSOR_UNITS[size];
+    if (size !== "full" && units <= availableUnits) {
+      cheerPage.push({ ...sponsor, size });
+      availableUnits -= units;
+    } else {
+      remaining.push({ ...sponsor, size });
+    }
+  });
+
+  return { cheerPage, remaining };
+}
+
 export function normalizeProgram(input = {}) {
   const sourceSponsors = Array.isArray(input.sponsors) ? input.sponsors : migrateLegacySponsors(input);
   return {
@@ -138,6 +157,20 @@ function mediaFrame(source, alt, options, placeholder = "Upload image", priority
   return frame;
 }
 
+function jfkPattern() {
+  const pattern = el("div", "jfk-pattern");
+  pattern.setAttribute("aria-hidden", "true");
+  for (let index = 0; index < 24; index += 1) pattern.append(el("span", "", "JFK"));
+  return pattern;
+}
+
+function brandedMediaFrame(source, alt, options, placeholder = "Upload image", priority = "lazy") {
+  const frame = mediaFrame(source, alt, options, placeholder, priority);
+  frame.classList.add("branded-media");
+  frame.prepend(jfkPattern());
+  return frame;
+}
+
 function pageShell(kind, number) {
   const page = el("section", `program-page ${kind}`);
   page.dataset.page = String(number);
@@ -162,7 +195,7 @@ function renderCover(program, number, options) {
   if (program.opponent) title.append(el("p", "cover-opponent", `vs. ${program.opponent}`));
   page.append(title);
 
-  const photo = mediaFrame(program.teamPhoto, `${program.season} Kennedy football team`, options, "Team photograph", "high");
+  const photo = brandedMediaFrame(program.teamPhoto, `${program.season} Kennedy football team`, options, "Team photograph", "high");
   photo.classList.add("team-photo");
   page.append(photo);
 
@@ -189,46 +222,48 @@ function websiteLabel(value) {
   catch { return "Website"; }
 }
 
+function sponsorCard(sponsor, index, options) {
+  const card = el("article", `sponsor-slot sponsor-size-${sponsor.size}`);
+  const creative = el("div", "sponsor-creative");
+  if (sponsor.image) {
+    const image = el("img");
+    image.src = resolveAsset(sponsor.image, options);
+    image.alt = sponsor.name || `Sponsor ${index + 1}`;
+    image.loading = "lazy";
+    creative.append(image);
+  } else {
+    creative.append(el("span", "sponsor-placeholder-mark", "SPONSOR"));
+    creative.append(el("strong", "", sponsor.name || `Sponsor ${index + 1}`));
+  }
+  card.append(creative);
+
+  const website = safeWebsite(sponsor.url);
+  if (sponsor.name || sponsor.phone || website) {
+    const info = el("footer", "sponsor-info");
+    if (sponsor.name) info.append(el("strong", "sponsor-name", sponsor.name));
+    const contacts = el("span", "sponsor-contacts");
+    if (sponsor.phone) {
+      const phone = el("a", "", sponsor.phone);
+      phone.href = `tel:${sponsor.phone.replace(/[^+\d]/g, "")}`;
+      contacts.append(phone);
+    }
+    if (website) {
+      const link = el("a", "", websiteLabel(website));
+      link.href = website;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      contacts.append(link);
+    }
+    if (contacts.children.length) info.append(contacts);
+    card.append(info);
+  }
+  return card;
+}
+
 function renderSponsorPage(sponsors, number, options) {
   const page = pageShell("sponsor-page", number);
   const grid = el("div", "sponsor-grid");
-  sponsors.forEach((sponsor, index) => {
-    const card = el("article", `sponsor-slot sponsor-size-${sponsor.size}`);
-    const creative = el("div", "sponsor-creative");
-    if (sponsor.image) {
-      const image = el("img");
-      image.src = resolveAsset(sponsor.image, options);
-      image.alt = sponsor.name || `Sponsor ${index + 1}`;
-      image.loading = "lazy";
-      creative.append(image);
-    } else {
-      creative.append(el("span", "sponsor-placeholder-mark", "SPONSOR"));
-      creative.append(el("strong", "", sponsor.name || `Sponsor ${index + 1}`));
-    }
-    card.append(creative);
-
-    const website = safeWebsite(sponsor.url);
-    if (sponsor.name || sponsor.phone || website) {
-      const info = el("footer", "sponsor-info");
-      if (sponsor.name) info.append(el("strong", "sponsor-name", sponsor.name));
-      const contacts = el("span", "sponsor-contacts");
-      if (sponsor.phone) {
-        const phone = el("a", "", sponsor.phone);
-        phone.href = `tel:${sponsor.phone.replace(/[^+\d]/g, "")}`;
-        contacts.append(phone);
-      }
-      if (website) {
-        const link = el("a", "", websiteLabel(website));
-        link.href = website;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        contacts.append(link);
-      }
-      if (contacts.children.length) info.append(contacts);
-      card.append(info);
-    }
-    grid.append(card);
-  });
+  sponsors.forEach((sponsor, index) => grid.append(sponsorCard(sponsor, index, options)));
   page.append(grid);
   return page;
 }
@@ -237,12 +272,12 @@ function renderCoaches(program, number, options) {
   const page = pageShell("coaches-page", number);
   const coaches = el("section", "half-section coaches-block");
   coaches.append(sectionTitle("Coaches", "Meet the staff"));
-  coaches.append(mediaFrame(program.coaches.image, "Kennedy football coaching staff", options, "Coaches photograph", "eager"));
+  coaches.append(brandedMediaFrame(program.coaches.image, "Kennedy football coaching staff", options, "Coaches photograph", "eager"));
   coaches.append(el("p", "name-strip", program.coaches.names || "Coach names"));
 
   const schedule = el("section", "half-section schedule-block");
   schedule.append(sectionTitle("Season Schedule", program.season));
-  schedule.append(mediaFrame(program.schedule.image, `${program.season} Kennedy football schedule`, options, "Schedule image", "eager"));
+  schedule.append(brandedMediaFrame(program.schedule.image, `${program.season} Kennedy football schedule`, options, "Schedule image", "eager"));
   page.append(coaches, schedule);
   return page;
 }
@@ -250,7 +285,7 @@ function renderCoaches(program, number, options) {
 function featureHalf(title, kicker, item, alt, options, priority = "lazy") {
   const section = el("section", "feature-half");
   section.append(sectionTitle(title, kicker));
-  section.append(mediaFrame(item.image, alt, options, `${title} photograph`, priority));
+  section.append(brandedMediaFrame(item.image, alt, options, `${title} photograph`, priority));
   section.append(el("p", "name-strip", item.names || `${title} names`));
   return section;
 }
@@ -302,21 +337,43 @@ function renderRoster(program, startNumber, options) {
   return pages;
 }
 
-function renderManagersCheer(program, number, options) {
-  const page = pageShell("people-page", number);
+function teamPhotoHalf(title, item, season, options) {
+  const section = el("section", "feature-half team-photo-half");
+  section.append(sectionTitle(title, `${season} Kennedy Football`));
+  section.append(brandedMediaFrame(item.image, `${season} Kennedy football ${title}`, options, `${title} photograph`));
+  return section;
+}
+
+function renderManagersAndJv(program, number, options) {
+  const page = pageShell("people-page people-team-page", number);
   page.append(
     featureHalf("Team Managers", "Behind the team", program.managers, "Kennedy football team managers", options),
-    featureHalf("Cheerleaders", "Kennedy spirit", program.cheerleaders, "Kennedy cheerleaders", options),
+    teamPhotoHalf("JV Team", program.lowerLevelTeams.juniorVarsity, program.season, options),
   );
   return page;
 }
 
-function renderTeamPhotoPage(title, item, season, number, options) {
-  const page = pageShell("team-photo-page", number);
-  page.append(sectionTitle(title, `${season} Kennedy Football`));
-  const photo = mediaFrame(item.image, `${season} Kennedy football ${title}`, options, `${title} photograph`);
-  photo.classList.add("full-team-photo");
-  page.append(photo);
+function renderBSquadAndNinth(program, number, options) {
+  const page = pageShell("people-page people-team-page", number);
+  page.append(
+    teamPhotoHalf("B Squad Team", program.lowerLevelTeams.bSquad, program.season, options),
+    teamPhotoHalf("9th Grade Team", program.lowerLevelTeams.ninthGrade, program.season, options),
+  );
+  return page;
+}
+
+function renderCheerleaders(program, sponsors, number, options) {
+  const page = pageShell("people-page cheer-sponsor-page", number);
+  page.append(featureHalf("Cheerleaders", "Kennedy spirit", program.cheerleaders, "Kennedy cheerleaders", options));
+  if (sponsors.length) {
+    const grid = el("section", "sponsor-grid cheer-sponsor-grid");
+    sponsors.forEach((sponsor, index) => grid.append(sponsorCard(sponsor, index, options)));
+    page.append(grid);
+  } else {
+    const filler = el("section", "cheer-sponsor-filler");
+    filler.append(jfkPattern());
+    page.append(filler);
+  }
   return page;
 }
 
@@ -344,16 +401,14 @@ export function renderProgram(input, container, options = {}) {
   rosterPages.forEach((page) => fragment.append(page));
   pageNumber += rosterPages.length;
 
-  [
-    ["9th Grade Team", program.lowerLevelTeams.ninthGrade],
-    ["B Squad Team", program.lowerLevelTeams.bSquad],
-    ["JV Team", program.lowerLevelTeams.juniorVarsity],
-  ].filter(([, team]) => team.image).forEach(([title, team]) => {
-    fragment.append(renderTeamPhotoPage(title, team, program.season, pageNumber++, options));
-  });
+  fragment.append(renderManagersAndJv(program, pageNumber++, options));
+  if (program.lowerLevelTeams.bSquad.image || program.lowerLevelTeams.ninthGrade.image) {
+    fragment.append(renderBSquadAndNinth(program, pageNumber++, options));
+  }
 
-  fragment.append(renderManagersCheer(program, pageNumber++, options));
-  packSponsors(program.sponsors, "after-team").forEach((sponsors) => fragment.append(renderSponsorPage(sponsors, pageNumber++, options)));
+  const afterTeamSponsors = splitAfterTeamSponsors(program.sponsors);
+  fragment.append(renderCheerleaders(program, afterTeamSponsors.cheerPage, pageNumber++, options));
+  packSponsors(afterTeamSponsors.remaining, "after-team").forEach((sponsors) => fragment.append(renderSponsorPage(sponsors, pageNumber++, options)));
   const actionShots = program.actionShots.length ? program.actionShots : [{}, {}];
   actionShots.forEach((shot, index) => fragment.append(renderActionPage(shot, index, pageNumber++, options)));
 
