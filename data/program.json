@@ -47,7 +47,7 @@
       "firstName": "Dalmeida",
       "lastName": "Ayite Michael",
       "grade": "senior",
-      "photo": "",
+      "photo": "assets/uploads/player-4-dalmeida-ayite-michael-1788963507978-7x9mp.webp",
       "photoFilename": "004-dalmeida-ayite-michael.jpg"
     },
     {
@@ -103,7 +103,7 @@
       "firstName": "Onuzulike",
       "lastName": "Chigozie",
       "grade": "senior",
-      "photo": "",
+      "photo": "assets/uploads/player-12-onuzulike-chigozie-1788963516164-r2hu8.webp",
       "photoFilename": "012-onuzulike-chigozie.jpg"
     },
     {
@@ -131,7 +131,7 @@
       "firstName": "Ingram",
       "lastName": "Jordan",
       "grade": "junior",
-      "photo": "",
+      "photo": "assets/uploads/player-16-ingram-jordan-1788963522978-wdf9s.webp",
       "photoFilename": "016-ingram-jordan.jpg"
     },
     {
@@ -208,7 +208,7 @@
       "firstName": "Hernandez Cruz",
       "lastName": "Daniel",
       "grade": "junior",
-      "photo": "",
+      "photo": "assets/uploads/player-27-hernandez-cruz-daniel-1788963530793-cqj9d.webp",
       "photoFilename": "027-hernandez-cruz-daniel.jpg"
     },
     {
@@ -250,7 +250,7 @@
       "firstName": "Borbor",
       "lastName": "Tamba",
       "grade": "sophomore",
-      "photo": "",
+      "photo": "assets/uploads/player-33-borbor-tamba-1788963537824-4f49o.webp",
       "photoFilename": "033-borbor-tamba.jpg"
     },
     {
@@ -278,7 +278,7 @@
       "firstName": "Abdi",
       "lastName": "Yonis",
       "grade": "sophomore",
-      "photo": "",
+      "photo": "assets/uploads/player-37-abdi-yonis-1788963542895-dbrx2.webp",
       "photoFilename": "037-abdi-yonis.jpg"
     },
     {
@@ -327,7 +327,7 @@
       "firstName": "Geyen",
       "lastName": "Colten",
       "grade": "sophomore",
-      "photo": "",
+      "photo": "assets/uploads/player-44-geyen-colten-1788963547868-srytn.webp",
       "photoFilename": "044-geyen-colten.jpg"
     },
     {
@@ -514,6 +514,17 @@
     }
   ],
   "notPictured": "",
+  "lowerLevelTeams": {
+    "ninthGrade": {
+      "image": "assets/uploads/9th-grade-team-photograph-1788961390840-1tcdh.webp"
+    },
+    "bSquad": {
+      "image": "assets/uploads/b-squad-team-photograph-1788961398189-tdmh1.webp"
+    },
+    "juniorVarsity": {
+      "image": "assets/uploads/jv-team-photograph-1788961404113-ojjxk.webp"
+    }
+  },
   "managers": {
     "image": "assets/uploads/team-managers-image-1788956792670-3in2i.webp",
     "names": "Eddie"
