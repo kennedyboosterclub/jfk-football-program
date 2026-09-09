@@ -67,8 +67,10 @@ export function packSponsors(sponsors, placement) {
 
 export function normalizeProgram(input = {}) {
   const sourceSponsors = Array.isArray(input.sponsors) ? input.sponsors : migrateLegacySponsors(input);
+  const season = String(input.season || new Date().getFullYear());
+  const defaultSeniorClassYear = /^\d{4}$/.test(season) ? String(Number(season) + 1) : season;
   return {
-    season: String(input.season || new Date().getFullYear()),
+    season,
     programTitle: input.programTitle || "Bloomington Kennedy Football",
     gameLabel: input.gameLabel || "Game Day Program",
     opponent: input.opponent || "",
@@ -87,7 +89,12 @@ export function normalizeProgram(input = {}) {
     coaches: { image: "", names: "", ...(input.coaches || {}) },
     schedule: { image: "", ...(input.schedule || {}) },
     captains: { image: "", names: "", ...(input.captains || {}) },
-    seniors: { image: "", names: "", ...(input.seniors || {}) },
+    seniors: {
+      image: "",
+      names: "",
+      ...(input.seniors || {}),
+      classYear: String(input.seniors?.classYear || defaultSeniorClassYear),
+    },
     players: (Array.isArray(input.players) ? input.players : []).map((player) => ({
       firstName: player.firstName || "",
       lastName: player.lastName || "",
@@ -287,7 +294,7 @@ function renderCaptainsAndSeniors(program, number, options) {
   const page = pageShell("features-page", number);
   page.append(
     featureHalf("Team Captains", "Leadership", program.captains, "Kennedy football captains", options, "eager"),
-    featureHalf("Seniors", "Class of " + program.season, program.seniors, "Kennedy football seniors", options, "eager"),
+    featureHalf("Seniors", "Class of " + program.seniors.classYear, program.seniors, "Kennedy football seniors", options, "eager"),
   );
   return page;
 }

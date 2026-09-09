@@ -1,4 +1,4 @@
-import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260909-sponsor8";
+import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260909-seniors1";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
@@ -358,6 +358,9 @@ function renderStaffSection() {
     card.firstChild.append(h("strong", "", label));
     card.append(imageField(`${label} image`, [key, "image"]));
     if (hasNames) card.append(inputField(`${label} names`, [key, "names"], "textarea"));
+    if (key === "seniors") {
+      card.append(inputField("Senior class year", ["seniors", "classYear"], "text", { placeholder: "2027" }));
+    }
     wrap.append(card);
   });
   return wrap;
