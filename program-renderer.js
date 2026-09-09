@@ -92,6 +92,7 @@ export function normalizeProgram(input = {}) {
     gameLabel: input.gameLabel || "Game Day Program",
     opponent: input.opponent || "",
     gameDate: input.gameDate || "",
+    gameTime: input.gameTime || "",
     teamPhoto: input.teamPhoto || "",
     sponsors: sourceSponsors.map((sponsor, index) => ({
       id: sponsor.id || `sponsor-${index + 1}`,
@@ -193,6 +194,12 @@ function renderCover(program, number, options) {
   title.append(el("span", "cover-kicker", program.programTitle));
   title.append(el("h1", "", program.gameLabel));
   if (program.opponent) title.append(el("p", "cover-opponent", `vs. ${program.opponent}`));
+  if (program.gameDate || program.gameTime) {
+    const details = el("div", "cover-game-details");
+    if (program.gameDate) details.append(el("span", "cover-game-date", program.gameDate));
+    if (program.gameTime) details.append(el("strong", "cover-game-time", program.gameTime));
+    title.append(details);
+  }
   page.append(title);
 
   const photo = brandedMediaFrame(program.teamPhoto, `${program.season} Kennedy football team`, options, "Team photograph", "high");
@@ -200,7 +207,7 @@ function renderCover(program, number, options) {
   page.append(photo);
 
   const footer = el("div", "cover-footer");
-  footer.append(el("span", "", program.gameDate || "Kennedy Eagles Football"));
+  footer.append(el("span", "", "Kennedy Eagles Football"));
   footer.append(el("strong", "", program.season));
   page.append(footer);
   return page;

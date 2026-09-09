@@ -1,4 +1,4 @@
-import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions, splitAfterTeamSponsors } from "../program-renderer.js?v=20260909-roster3";
+import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions, splitAfterTeamSponsors } from "../program-renderer.js?v=20260909-cover4";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
@@ -306,13 +306,14 @@ function sponsorEditor(sponsor, index) {
 }
 
 function renderGameSection() {
-  const wrap = section("game", "Game & cover", "Update the season, matchup, date, and cover photograph.", "Page 1");
+  const wrap = section("game", "Game & cover", "Update the season, matchup, date, time, and cover photograph.", "Page 1");
   const fields = h("div", "field-grid two-columns");
   fields.append(
     inputField("Season", ["season"]),
     inputField("Game label", ["gameLabel"], "text", { placeholder: "Game Day Program" }),
     inputField("Opponent (optional)", ["opponent"], "text", { placeholder: "Jefferson" }),
     inputField("Game date (optional)", ["gameDate"], "text", { placeholder: "Friday, September 18" }),
+    inputField("Game time (optional)", ["gameTime"], "text", { placeholder: "7:00 PM" }),
   );
   wrap.append(fields, imageField("Team photograph", ["teamPhoto"]));
   return wrap;

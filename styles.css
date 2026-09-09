@@ -254,6 +254,9 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 .cover-kicker { color: var(--gold); font: 800 clamp(12px, 2.2vw, 24px)/1 "Barlow Condensed", sans-serif; letter-spacing: .17em; }
 .cover-title h1 { max-width: 90%; margin: 1.5% auto 0; font: 900 clamp(42px, 8vw, 86px)/0.82 "Barlow Condensed", sans-serif; letter-spacing: -0.02em; text-shadow: 0 3px 16px rgba(0,0,0,.5); }
 .cover-opponent { margin: 2% 0 0; color: white; font: 800 clamp(16px, 3vw, 30px)/1 "Barlow Condensed", sans-serif; letter-spacing: .08em; }
+.cover-game-details { display: flex; align-items: center; justify-content: center; gap: 3%; width: fit-content; max-width: 94%; margin: 2.2% auto 0; padding: 1.2% 3%; color: var(--navy); border-radius: 4px; background: var(--gold); box-shadow: 0 4px 12px rgba(0,0,0,.22); }
+.cover-game-date { font: 900 clamp(14px, 2.7vw, 29px)/1 "Barlow Condensed", sans-serif; letter-spacing: .05em; }
+.cover-game-time { padding-left: 3%; border-left: 2px solid rgba(7,29,60,.35); font: 900 clamp(16px, 3.1vw, 34px)/1 "Barlow Condensed", sans-serif; white-space: nowrap; }
 
 .team-photo {
   z-index: 3;
@@ -312,15 +315,15 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 /* Roster */
 .roster-page { display: grid; grid-template-rows: auto 1fr auto; padding: 3.2%; gap: 1.5%; }
 .player-grid { display: grid; min-height: 0; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 1.2%; }
-.player-card { display: grid; min-width: 0; min-height: 0; grid-template-rows: minmax(0, 1fr) 28%; overflow: hidden; border: 1px solid rgba(7,29,60,.25); background: white; box-shadow: 0 3px 8px rgba(7,29,60,.1); }
+.player-card { display: grid; min-width: 0; min-height: 0; grid-template-rows: minmax(0, 1fr) 24%; overflow: hidden; border: 1px solid rgba(7,29,60,.25); background: white; box-shadow: 0 3px 8px rgba(7,29,60,.1); }
 .player-photo { min-height: 0; }
 .player-label { display: grid; grid-template-columns: clamp(22px, 26%, 30px) minmax(0, 1fr); align-items: stretch; min-width: 0; min-height: 0; overflow: hidden; color: white; background: var(--navy); }
 .player-index { display: grid; min-width: 0; place-items: center; color: var(--navy); background: var(--gold); font: 900 clamp(10px, 1.65vw, 18px)/1 "Barlow Condensed", sans-serif; }
 .player-name { display: grid; min-width: 0; min-height: 0; height: 100%; grid-template-rows: minmax(0, 1fr) auto; overflow: hidden; padding: 3% 5% 2.5%; }
 .player-name strong, .player-name span { display: block; }
 .player-name strong { align-self: center; overflow-wrap: anywhere; font: 800 clamp(8px, 1.18vw, 12.5px)/1 "Barlow Condensed", sans-serif; text-transform: uppercase; white-space: normal; }
-.player-name.is-long strong { font-size: clamp(7px, 1.02vw, 10.75px); line-height: .96; }
-.player-name.is-extra-long strong { font-size: clamp(6.4px, .9vw, 9.5px); line-height: .92; }
+.player-name.is-long strong { font-size: clamp(6.8px, .98vw, 10.25px); line-height: .94; }
+.player-name.is-extra-long strong { font-size: clamp(6px, .84vw, 8.8px); line-height: .9; }
 .player-name span { align-self: end; margin-top: 1px; color: #cad7e5; font-size: clamp(6px, .9vw, 9.5px); line-height: 1; }
 .not-pictured { display: flex; align-items: baseline; gap: 2%; padding: 1.2% 2%; color: var(--navy); background: var(--gold); }
 .not-pictured strong { flex: 0 0 auto; font: 900 clamp(10px, 1.5vw, 16px)/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
@@ -334,6 +337,9 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 .cheer-sponsor-filler { position: relative; min-height: 0; overflow: hidden; border: 1px solid var(--line); background: var(--navy); }
 .cheer-sponsor-filler .jfk-pattern { grid-template-columns: repeat(6, minmax(0, 1fr)); grid-template-rows: repeat(4, minmax(0, 1fr)); }
 .cheer-sponsor-filler .jfk-pattern span { opacity: .72; }
+.cheer-sponsor-page { grid-template-rows: 3fr 2fr; padding: 1.2%; gap: .8%; }
+.cheer-sponsor-page > .feature-half { border-width: 0; }
+.cheer-sponsor-page > .feature-half .name-strip { padding-block: .8%; }
 
 /* Action */
 .action-page { display: grid; grid-template-rows: auto 1fr auto; padding: 3.2%; gap: 1.4%; background: var(--navy); }
