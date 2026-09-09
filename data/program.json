@@ -6,7 +6,44 @@
   "gameDate": "Thursday, September 10",
   "gameTime": "6:00PM",
   "teamPhoto": "assets/uploads/team-photograph-1788957487746-txugj.webp",
-  "sponsors": [],
+  "sponsors": [
+    {
+      "id": "sponsor-1788988811295",
+      "name": "Sports Page",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1788988846564-6ac48.webp",
+      "url": "https://sportspagebloomington.com",
+      "phone": "952-887-0046",
+      "size": "quarter",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1788988883366",
+      "name": "Applebee's",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1788988960452-shhli.webp",
+      "url": "",
+      "phone": "952-948-0010",
+      "size": "quarter",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1788988939855",
+      "name": "Raising Canes",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1788988968213-k0854.webp",
+      "url": "https://www.raisingcanes.com/",
+      "phone": "",
+      "size": "quarter",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1788989016438",
+      "name": "Pepsi",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1788989035909-dzesq.webp",
+      "url": "",
+      "phone": "",
+      "size": "full",
+      "placement": "before-team"
+    }
+  ],
   "coaches": {
     "image": "assets/uploads/coaches-image-1788957398287-z2nxs.webp",
     "names": ""
