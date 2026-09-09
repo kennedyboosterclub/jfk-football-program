@@ -1,4 +1,4 @@
-import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js";
+import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions, splitAfterTeamSponsors } from "../program-renderer.js?v=20260909-layout2";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
@@ -289,7 +289,7 @@ function sponsorEditor(sponsor, index) {
     selectField("Sponsor size", sponsor.size, sponsorSizeOptions, (value) => { sponsor.size = value; queueSave(); renderEditor(); }),
     selectField("Position in program", sponsor.placement, [
       ["before-team", "Before team and player photos"],
-      ["after-team", "After photos, before action shots"],
+      ["after-team", "After team photos (can share the cheer page)"],
     ], (value) => { sponsor.placement = value; queueSave(); renderEditor(); }),
   );
   card.append(settings);
@@ -320,7 +320,8 @@ function renderGameSection() {
 
 function renderSponsorsSection() {
   const beforePages = packSponsors(program.sponsors, "before-team").length;
-  const afterPages = packSponsors(program.sponsors, "after-team").length;
+  const afterTeam = splitAfterTeamSponsors(program.sponsors);
+  const afterPages = packSponsors(afterTeam.remaining, "after-team").length;
   const wrap = section("sponsors", "Sponsors", "Add any number of sponsors. Full-page ads fill a page, half-page ads share a page in two rows, and quarter-page ads fill a 2 × 2 grid. Images scale automatically without being cropped.", "Dynamic sponsor pages");
   const add = h("button", "button secondary", "Add sponsor");
   add.type = "button";
@@ -333,7 +334,7 @@ function renderSponsorsSection() {
   const summary = h("div", "sponsor-page-summary");
   summary.append(
     h("span", "", `${program.sponsors.filter((sponsor) => sponsor.placement === "before-team").length} sponsors before photos • ${beforePages} pages`),
-    h("span", "", `${program.sponsors.filter((sponsor) => sponsor.placement === "after-team").length} sponsors after photos • ${afterPages} pages`),
+    h("span", "", `${program.sponsors.filter((sponsor) => sponsor.placement === "after-team").length} sponsors after photos • ${afterTeam.cheerPage.length} on cheer page • ${afterPages} additional pages`),
   );
   wrap.append(summary);
   if (!program.sponsors.length) wrap.append(h("div", "empty-list", "No sponsors have been added yet."));
@@ -366,7 +367,7 @@ function renderAdditionalTeamsSection() {
   const wrap = section(
     "team-photos",
     "Additional team photographs",
-    "Each uploaded photograph receives a full page immediately after the individual player roster. Empty team pages stay hidden.",
+    "Each photograph uses one-half page after the individual player roster. Team Managers share with JV; B Squad shares with 9th Grade. Empty B Squad and 9th Grade pages stay hidden.",
     "9th Grade • B Squad • JV",
   );
   [
@@ -886,7 +887,14 @@ function fillPublishDialog() {
   document.querySelector("#github-repo").value = settings.repo || "jfk-football-program";
   document.querySelector("#github-branch").value = settings.branch || "main";
   document.querySelector("#github-token").value = "";
-  document.querySelector("#publish-summary").textContent = `${pendingAssets.size} new image${pendingAssets.size === 1 ? "" : "s"} and the program data will be published together in one GitHub update. The public site normally refreshes within a few minutes.`;
+  const lowerTeams = [
+    ["9th Grade", program.lowerLevelTeams.ninthGrade.image],
+    ["B Squad", program.lowerLevelTeams.bSquad.image],
+    ["JV", program.lowerLevelTeams.juniorVarsity.image],
+  ];
+  const includedTeams = lowerTeams.filter(([, image]) => image).map(([label, image]) => `${label}${pendingAssets.has(image) ? " (new upload)" : ""}`);
+  const teamSummary = includedTeams.length ? ` Included lower-level teams: ${includedTeams.join(", ")}.` : " No lower-level team photos are currently selected.";
+  document.querySelector("#publish-summary").textContent = `${pendingAssets.size} new image${pendingAssets.size === 1 ? "" : "s"} and the program data will be published together in one GitHub update.${teamSummary} The public site normally refreshes within a few minutes.`;
   publishMessage.textContent = "";
   publishMessage.className = "publish-message";
   publishProgress.hidden = true;
