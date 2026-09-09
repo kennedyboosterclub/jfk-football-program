@@ -301,14 +301,16 @@ function renderCaptainsAndSeniors(program, number, options) {
 
 function renderPlayerCard(player, index, options) {
   const card = el("article", "player-card");
-  const photo = mediaFrame(player.photo, `${player.firstName || ""} ${player.lastName || ""}`.trim() || `Player ${index + 1}`, options, "Player photo");
+  const displayName = `${player.firstName || "First"} ${player.lastName || "Last"}`.trim();
+  const photo = mediaFrame(player.photo, displayName || `Player ${index + 1}`, options, "Player photo");
   photo.classList.add("player-photo");
   card.append(photo);
 
   const label = el("div", "player-label");
   label.append(el("span", "player-index", String(index + 1).padStart(2, "0")));
-  const name = el("div", "player-name");
-  name.append(el("strong", "", `${player.firstName || "First"} ${player.lastName || "Last"}`));
+  const nameLengthClass = displayName.length > 24 ? " is-extra-long" : displayName.length > 17 ? " is-long" : "";
+  const name = el("div", `player-name${nameLengthClass}`);
+  name.append(el("strong", "", displayName));
   name.append(el("span", "", GRADE_LABELS[player.grade] || player.grade || "Grade"));
   label.append(name);
   card.append(label);
