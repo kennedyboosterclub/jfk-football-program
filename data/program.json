@@ -28,7 +28,7 @@
     {
       "id": "sponsor-1788988939855",
       "name": "Raising Canes",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1788988968213-k0854.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789015532493-buogf.webp",
       "url": "https://www.raisingcanes.com/",
       "phone": "",
       "size": "quarter",
@@ -64,7 +64,7 @@
     {
       "id": "sponsor-1789011744742",
       "name": "Cub Foods",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011920007-nl0av.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789015539889-681yy.webp",
       "url": "https://www.cub.com/store/cub/pages/lyndale-store-details",
       "phone": "(952) 881-4299",
       "size": "quarter",
@@ -111,7 +111,8 @@
   },
   "seniors": {
     "image": "assets/uploads/seniors-image-1788957239226-3npjp.webp",
-    "names": "Joshua Amadi, Damari Neal, Xavier Boyd, Ayite Michael Dalmeida, Derek Metcalf, Ethan Besch, Rayden Rasmussen, Joseph Lange, Aaron Buchanan Jr, Daniel(Shamarr) Johnson-Fleming, Lamarion Lewis, Chigozie Onuzulike"
+    "names": "Joshua Amadi, Damari Neal, Xavier Boyd, Ayite Michael Dalmeida, Derek Metcalf, Ethan Besch, Rayden Rasmussen, Joseph Lange, Aaron Buchanan Jr, Daniel(Shamarr) Johnson-Fleming, Lamarion Lewis, Chigozie Onuzulike",
+    "classYear": "2027"
   },
   "players": [
     {
@@ -377,7 +378,7 @@
       "firstName": "Bawek",
       "lastName": "Camdan",
       "grade": "sophomore",
-      "photo": "assets/uploads/player-38-bawek-camdan-1789068166788-hztmr.webp",
+      "photo": "assets/uploads/player-38-bawek-camdan-1788956654528-rfmp7.webp",
       "photoFilename": "20260828_0Z8_0430.jpg"
     },
     {
@@ -619,7 +620,7 @@
   },
   "managers": {
     "image": "assets/uploads/team-managers-image-1788956792670-3in2i.webp",
-    "names": "Eddie"
+    "names": "Eddie Jacobson"
   },
   "cheerleaders": {
     "image": "assets/uploads/cheerleaders-image-1788971056614-h61e4.webp",
