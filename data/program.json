@@ -12,7 +12,7 @@
       "name": "Sports Page",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1788988846564-6ac48.webp",
       "url": "https://sportspagebloomington.com",
-      "phone": "952-887-0046",
+      "phone": "(952) 887-0046",
       "size": "quarter",
       "placement": "before-team"
     },
@@ -21,7 +21,7 @@
       "name": "Applebee's",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011475228-toaui.webp",
       "url": "",
-      "phone": "952-948-0010",
+      "phone": "(952) 948-0010",
       "size": "quarter",
       "placement": "before-team"
     },
@@ -56,8 +56,8 @@
       "id": "sponsor-1789011738024",
       "name": "Chiefs Towing",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011935594-06eug.webp",
-      "url": "",
-      "phone": "",
+      "url": "https://www.chiefstowing.com",
+      "phone": "(952) 888-2201",
       "size": "quarter",
       "placement": "before-team"
     },
@@ -65,8 +65,8 @@
       "id": "sponsor-1789011744742",
       "name": "Cub Foods",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011920007-nl0av.webp",
-      "url": "",
-      "phone": "",
+      "url": "https://www.cub.com/",
+      "phone": "(952) 881-4299",
       "size": "quarter",
       "placement": "before-team"
     },
@@ -74,8 +74,8 @@
       "id": "sponsor-1789011745687",
       "name": "Rise Up Nutrition",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011915003-bt7wq.webp",
-      "url": "",
-      "phone": "",
+      "url": "https://www.facebook.com/fb-answers/rise-up-nutrition-bloomington-menu/",
+      "phone": " (952) 888-4539",
       "size": "quarter",
       "placement": "before-team"
     },
@@ -83,8 +83,8 @@
       "id": "sponsor-1789011815362",
       "name": "Alloy Fitness",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011908725-ppvfe.webp",
-      "url": "",
-      "phone": "",
+      "url": "https://bloomington.alloypersonaltraining.com",
+      "phone": "(952) 254-4147",
       "size": "half",
       "placement": "before-team"
     },
@@ -92,8 +92,8 @@
       "id": "sponsor-1789011837772",
       "name": "My Mn Credit Union",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011897474-82qce.webp",
-      "url": "",
-      "phone": "",
+      "url": "https://www.mymncu.org/locations/bloomington-lyndale-ave",
+      "phone": "(612) 798-7100",
       "size": "half",
       "placement": "before-team"
     }
