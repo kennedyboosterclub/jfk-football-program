@@ -38,9 +38,63 @@
       "id": "sponsor-1788989016438",
       "name": "Pepsi",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1788989035909-dzesq.webp",
+      "url": "https://www.gatorade.com",
+      "phone": "",
+      "size": "quarter",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1789011733435",
+      "name": "BJC Remodeling",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011940750-3x773.webp",
       "url": "",
       "phone": "",
       "size": "quarter",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1789011738024",
+      "name": "Chiefs Towing",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011935594-06eug.webp",
+      "url": "",
+      "phone": "",
+      "size": "quarter",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1789011744742",
+      "name": "Cub Foods",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011920007-nl0av.webp",
+      "url": "",
+      "phone": "",
+      "size": "quarter",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1789011745687",
+      "name": "Rise Up Nutrition",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011915003-bt7wq.webp",
+      "url": "",
+      "phone": "",
+      "size": "quarter",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1789011815362",
+      "name": "Alloy Fitness",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011908725-ppvfe.webp",
+      "url": "",
+      "phone": "",
+      "size": "half",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1789011837772",
+      "name": "My Mn Credit Union",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011897474-82qce.webp",
+      "url": "",
+      "phone": "",
+      "size": "half",
       "placement": "before-team"
     }
   ],
