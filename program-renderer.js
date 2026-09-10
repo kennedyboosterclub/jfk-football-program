@@ -312,7 +312,6 @@ function renderPlayerCard(player, index, options) {
   card.append(photo);
 
   const label = el("div", "player-label");
-  label.append(el("span", "player-index", String(index + 1).padStart(2, "0")));
   const nameLengthClass = displayName.length > 24 ? " is-extra-long" : displayName.length > 17 ? " is-long" : "";
   const name = el("div", `player-name${nameLengthClass}`);
   name.append(el("strong", "", displayName));
