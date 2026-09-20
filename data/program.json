@@ -2,8 +2,8 @@
   "season": "2026",
   "programTitle": "Bloomington Kennedy Football",
   "gameLabel": "Game Day Program",
-  "opponent": "St. Louis Park",
-  "gameDate": "Thursday, September 10",
+  "opponent": "Mahtomedi",
+  "gameDate": "Friday, September 25th",
   "gameTime": "6:00PM",
   "teamPhoto": "assets/uploads/team-photograph-1788957487746-txugj.webp",
   "sponsors": [
@@ -28,7 +28,7 @@
     {
       "id": "sponsor-1788988939855",
       "name": "Raising Canes",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1789015532493-buogf.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1788988968213-k0854.webp",
       "url": "https://www.raisingcanes.com/",
       "phone": "",
       "size": "quarter",
@@ -48,7 +48,7 @@
       "name": "BJC Remodeling",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011940750-3x773.webp",
       "url": "",
-      "phone": "(952) 217-1633",
+      "phone": "",
       "size": "quarter",
       "placement": "before-team"
     },
@@ -64,7 +64,7 @@
     {
       "id": "sponsor-1789011744742",
       "name": "Cub Foods",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1789015539889-681yy.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011920007-nl0av.webp",
       "url": "https://www.cub.com/store/cub/pages/lyndale-store-details",
       "phone": "(952) 881-4299",
       "size": "quarter",
@@ -378,7 +378,7 @@
       "firstName": "Bawek",
       "lastName": "Camdan",
       "grade": "sophomore",
-      "photo": "assets/uploads/player-38-bawek-camdan-1788956654528-rfmp7.webp",
+      "photo": "assets/uploads/player-38-bawek-camdan-1789068166788-hztmr.webp",
       "photoFilename": "20260828_0Z8_0430.jpg"
     },
     {
@@ -620,7 +620,7 @@
   },
   "managers": {
     "image": "assets/uploads/team-managers-image-1788956792670-3in2i.webp",
-    "names": "Eddie Jacobson"
+    "names": "Eddie"
   },
   "cheerleaders": {
     "image": "assets/uploads/cheerleaders-image-1788971056614-h61e4.webp",
