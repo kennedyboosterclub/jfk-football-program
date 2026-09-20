@@ -1,3 +1,5 @@
+import { normalizeBreakfast, renderBreakfastPage } from "./breakfast-tickets.js?v=20260920-breakfast1";
+
 const SPONSOR_UNITS = { full: 4, half: 2, quarter: 1 };
 
 const GRADE_LABELS = {
@@ -76,6 +78,7 @@ export function normalizeProgram(input = {}) {
       : season;
   return {
     season,
+    breakfastTickets: normalizeBreakfast(input.breakfastTickets),
     programTitle: input.programTitle || "Bloomington Kennedy Football",
     gameLabel: input.gameLabel || "Game Day Program",
     opponent: input.opponent || "",
@@ -390,6 +393,11 @@ export function renderProgram(input, container, options = {}) {
   let pageNumber = 1;
 
   fragment.append(renderCover(program, pageNumber++, options));
+  if (program.breakfastTickets.enabled) {
+    const page = pageShell("breakfast-page", pageNumber++);
+    renderBreakfastPage(page, program.breakfastTickets, options);
+    fragment.append(page);
+  }
   packSponsors(program.sponsors, "before-team").forEach((sponsors) => fragment.append(renderSponsorPage(sponsors, pageNumber++, options)));
   fragment.append(renderCoaches(program, pageNumber++, options));
   fragment.append(renderCaptainsAndSeniors(program, pageNumber++, options));

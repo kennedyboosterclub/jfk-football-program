@@ -73,3 +73,11 @@ Uploaded images are resized for how they appear in the program and converted to 
 The **Optimize program images** GitHub Actions workflow can be run manually if an older image set needs to be reduced again. It rewrites the image files in place, so the program's image links do not change.
 
 For a large roster, use **Download CSV template** in the Player roster section, enter the names and grades, and import the completed file. Then select the player-photo folder. The editor matches images using `photo_filename`, `001-first-last.jpg`, or `first-last.jpg`, and reports missing, unmatched, or duplicate files before publication.
+
+## Pancake breakfast ticket cart
+
+In `/admin/`, open **Breakfast tickets** and turn **Show pancake breakfast flyer and tickets as Page 2** on or off, then **Publish to GitHub**. The switch defaults to off, including in older saved drafts. When enabled, the flyer occupies Page 2 and all later pages shift forward by one. Turning it off restores the original order. The flyer also prints as Page 2, with a text checkout URL. A Buy breakfast tickets button opens a shared cart dialog. Date, time, and location are editable; corresponding PayPal listing changes must also be made in PayPal.
+
+Both hosted PayPal products use merchant `KDRE2BG6GTXTJ`: Adult `N55XVUGN9YEW8`, Student/Senior `JKW6LXVYFAB8E`. Only the public page loads PayPal, and only when a visitor opens the enabled ticket cart. Admin previews never initiate payments. PayPal handles the cart and checkout; these purchases are not automatically recorded in SumUp by this site.
+
+Before promoting ticket sales, add two Adult and three Student/Senior tickets to the live cart, verify both line items and a $60 subtotal, then confirm card checkout and a completed purchase/receipt using an authorized buyer. Turning the section off hides the storefront; it does not cancel existing PayPal carts or deactivate the hosted PayPal products.

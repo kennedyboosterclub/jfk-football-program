@@ -1,4 +1,4 @@
-import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260910-roster1";
+import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260920-breakfast1";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
@@ -316,6 +316,24 @@ function renderGameSection() {
     inputField("Game time (optional)", ["gameTime"], "text", { placeholder: "7:00 PM" }),
   );
   wrap.append(fields, imageField("Team photograph", ["teamPhoto"]));
+  return wrap;
+}
+
+function renderBreakfastSection() {
+  const wrap = section("breakfast", "Pancake breakfast tickets", "Show the flyer and ticket cart as Page 2. Later pages shift automatically; turning this off restores their original order. Publish to GitHub to make your choice visible to visitors.", "Optional Page 2");
+  const label = h("label", "breakfast-toggle");
+  const checkbox = h("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = program.breakfastTickets.enabled;
+  checkbox.addEventListener("change", () => setAt(["breakfastTickets", "enabled"], checkbox.checked));
+  label.append(checkbox, h("span", "", "Show pancake breakfast flyer and tickets as Page 2"));
+  const fields = h("div", "field-grid two-columns");
+  fields.append(
+    inputField("Breakfast date", ["breakfastTickets", "date"]),
+    inputField("Breakfast time", ["breakfastTickets", "time"]),
+    inputField("Breakfast location", ["breakfastTickets", "location"]),
+  );
+  wrap.append(label, fields, h("p", "", "Adult $15 • Student/Senior $10. These buttons use the existing PayPal listings. If event details or prices change, update those listings in PayPal too."));
   return wrap;
 }
 
@@ -785,11 +803,11 @@ function renderGallerySection() {
 function renderEditor() {
   const intro = h("p", "editor-intro");
   intro.innerHTML = "Changes are saved as a <strong>draft on this computer</strong>. Visitors will not see them until you select <strong>Publish to GitHub</strong>.";
-  editor.replaceChildren(intro, renderGameSection(), renderSponsorsSection(), renderStaffSection(), renderRosterSection(), renderAdditionalTeamsSection(), renderGallerySection());
+  editor.replaceChildren(intro, renderGameSection(), renderBreakfastSection(), renderSponsorsSection(), renderStaffSection(), renderRosterSection(), renderAdditionalTeamsSection(), renderGallerySection());
 }
 
 function renderPreview() {
-  const count = renderProgram(program, preview, { assetBase: "../", assetResolver: assetPreviewUrl });
+  const count = renderProgram(program, preview, { assetBase: "../", assetResolver: assetPreviewUrl, preview: true });
   previewCount.textContent = `${count} pages • preview only`;
 }
 

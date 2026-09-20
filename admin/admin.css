@@ -137,3 +137,7 @@
 }
 
 @media print { .admin-body { display: none !important; } }
+
+.breakfast-toggle { display: flex; align-items: center; gap: 12px; margin: 20px 0; padding: 16px; background: #fff8e6; border-radius: 8px; font-weight: 600; }
+.breakfast-toggle input { width: 22px; height: 22px; flex-shrink: 0; accent-color: #071d3c; }
+.preview-stage .breakfast-tickets { width: min(100%, 570px); flex: 0 0 auto; }
