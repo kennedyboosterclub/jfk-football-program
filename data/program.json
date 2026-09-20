@@ -1,5 +1,11 @@
 {
   "season": "2026",
+  "breakfastTickets": {
+    "enabled": true,
+    "date": "Saturday, October 3, 2026",
+    "time": "8:00 AM – 10:00 AM",
+    "location": "Applebee’s • 9601 Lyndale Ave S, Bloomington, MN 55420"
+  },
   "programTitle": "Bloomington Kennedy Football",
   "gameLabel": "Game Day Program",
   "opponent": "Mahtomedi",
@@ -28,7 +34,7 @@
     {
       "id": "sponsor-1788988939855",
       "name": "Raising Canes",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1788988968213-k0854.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789015532493-buogf.webp",
       "url": "https://www.raisingcanes.com/",
       "phone": "",
       "size": "quarter",
@@ -48,7 +54,7 @@
       "name": "BJC Remodeling",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011940750-3x773.webp",
       "url": "",
-      "phone": "",
+      "phone": "(952) 217-1633",
       "size": "quarter",
       "placement": "before-team"
     },
@@ -64,7 +70,7 @@
     {
       "id": "sponsor-1789011744742",
       "name": "Cub Foods",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011920007-nl0av.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789015539889-681yy.webp",
       "url": "https://www.cub.com/store/cub/pages/lyndale-store-details",
       "phone": "(952) 881-4299",
       "size": "quarter",
@@ -378,7 +384,7 @@
       "firstName": "Bawek",
       "lastName": "Camdan",
       "grade": "sophomore",
-      "photo": "assets/uploads/player-38-bawek-camdan-1789068166788-hztmr.webp",
+      "photo": "assets/uploads/player-38-bawek-camdan-1788956654528-rfmp7.webp",
       "photoFilename": "20260828_0Z8_0430.jpg"
     },
     {
@@ -620,7 +626,7 @@
   },
   "managers": {
     "image": "assets/uploads/team-managers-image-1788956792670-3in2i.webp",
-    "names": "Eddie"
+    "names": "Eddie Jacobson"
   },
   "cheerleaders": {
     "image": "assets/uploads/cheerleaders-image-1788971056614-h61e4.webp",
