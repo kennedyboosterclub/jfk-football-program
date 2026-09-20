@@ -65,12 +65,12 @@ export function renderBreakfast(settings, { preview = false } = {}) {
 export function renderBreakfastPage(page, settings, options = {}) {
   const image = node('img', 'breakfast-flyer');
   image.src = `${options.assetBase || './'}assets/pancake-breakfast-2026.jpg`;
-  image.alt = 'Pancakes & Pigskin: Kennedy Football fundraiser. Saturday, October 3, 2026, 8–10 AM at Applebee’s, 9601 Lyndale Avenue, Bloomington. Students and seniors $10; adults $15. Tickets also available at the door.';
+  image.alt = 'Pancakes & Pigskin: Kennedy Football fundraiser. Saturday, October 3, 2026, 8–10 AM at Applebee’s, 9601 Lyndale Avenue, Bloomington. Students and seniors $10; adults $15.';
   image.loading = 'lazy';
   const footer = node('div', 'breakfast-page-actions');
-  const buy = node('button', 'breakfast-buy-button', 'Buy breakfast tickets');
+  const buy = node('button', 'breakfast-buy-button', 'Buy Tickets');
   buy.type = 'button';
-  footer.append(buy, node('span', '', 'Adults $15 • Students & seniors $10'));
+  footer.append(buy);
   const printLink = node('p', 'breakfast-print-link', 'Buy online: jfkbooster.org/#breakfast-tickets');
   const dialog = node('dialog', 'breakfast-dialog');
   dialog.setAttribute('aria-label', 'Buy pancake breakfast tickets');
