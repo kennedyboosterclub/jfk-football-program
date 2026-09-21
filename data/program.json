@@ -1,7 +1,7 @@
 {
   "season": "2026",
   "breakfastTickets": {
-    "enabled": false,
+    "enabled": true,
     "date": "Saturday, October 3, 2026",
     "time": "8:00 AM – 10:00 AM",
     "location": "Applebee’s • 9601 Lyndale Ave S, Bloomington, MN 55420"
