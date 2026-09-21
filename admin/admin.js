@@ -1,4 +1,4 @@
-import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260920-breakfast2";
+import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260921-breakfast3";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";

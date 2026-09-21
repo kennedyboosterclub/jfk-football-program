@@ -68,8 +68,10 @@ export function renderBreakfastPage(page, settings, options = {}) {
   image.alt = 'Pancakes & Pigskin: Kennedy Football fundraiser. Saturday, October 3, 2026, 8–10 AM at Applebee’s, 9601 Lyndale Avenue, Bloomington. Students and seniors $10; adults $15.';
   image.loading = 'lazy';
   const footer = node('div', 'breakfast-page-actions');
-  const buy = node('button', 'breakfast-buy-button', 'Buy Tickets');
+  const buy = node('button', 'breakfast-buy-button', 'Click Here to Buy Tickets →');
+  buy.append(node('span', 'breakfast-payment-methods', 'PayPal • Venmo • Apple Pay • Credit & Debit Cards'));
   buy.type = 'button';
+  buy.setAttribute('aria-haspopup', 'dialog');
   footer.append(buy);
   const printLink = node('p', 'breakfast-print-link', 'Buy online: jfkbooster.org/#breakfast-tickets');
   const dialog = node('dialog', 'breakfast-dialog');
