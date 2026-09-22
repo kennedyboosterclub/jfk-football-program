@@ -15,6 +15,48 @@ export const sponsorSizeOptions = [
   ["quarter", "Quarter page"],
 ];
 
+export const actionLayoutOptions = [
+  ["full", "Full page • 1 photo"],
+  ["half", "Half page • 2 photos"],
+];
+
+function normalizeActionShot(shot = {}, fallbackId) {
+  return {
+    id: shot.id || fallbackId,
+    image: shot.image || "",
+    caption: shot.caption || "",
+  };
+}
+
+function normalizeActionPages(input) {
+  if (Array.isArray(input.actionPages)) {
+    return input.actionPages.map((page, pageIndex) => {
+      const layout = page?.layout === "half" ? "half" : "full";
+      const neededShots = layout === "half" ? 2 : 1;
+      const shots = (Array.isArray(page?.shots) ? page.shots : [])
+        .slice(0, neededShots)
+        .map((shot, shotIndex) => normalizeActionShot(shot, `action-${pageIndex + 1}-${shotIndex + 1}`));
+      while (shots.length < neededShots) {
+        shots.push(normalizeActionShot({}, `action-${pageIndex + 1}-${shots.length + 1}`));
+      }
+      return {
+        id: page?.id || `action-page-${pageIndex + 1}`,
+        layout,
+        shots,
+      };
+    });
+  }
+
+  const legacyShots = Array.isArray(input.actionShots) && input.actionShots.length
+    ? input.actionShots
+    : [{}, {}];
+  return legacyShots.map((shot, index) => ({
+    id: `legacy-action-page-${index + 1}`,
+    layout: "full",
+    shots: [normalizeActionShot(shot, `legacy-action-${index + 1}`)],
+  }));
+}
+
 function legacySponsorSize(layout, index) {
   if (layout === "full") return "full";
   if (layout === "halves") return "half";
@@ -118,7 +160,7 @@ export function normalizeProgram(input = {}) {
     },
     managers: { image: "", names: "", ...(input.managers || {}) },
     cheerleaders: { image: "", names: "", ...(input.cheerleaders || {}) },
-    actionShots: Array.isArray(input.actionShots) ? input.actionShots : [],
+    actionPages: normalizeActionPages(input),
   };
 }
 
@@ -378,12 +420,23 @@ function renderCheerleaders(program, number, options) {
 }
 
 function renderActionPage(item, index, number, options) {
-  const page = pageShell("action-page", number);
+  const page = pageShell(`action-page action-layout-${item.layout}`, number);
   page.append(sectionTitle("Friday Night Lights", `Action gallery • ${String(index + 1).padStart(2, "0")}`));
-  const media = mediaFrame(item.image, item.caption || `Kennedy football action photograph ${index + 1}`, options, "Action photograph");
-  media.classList.add("action-photo");
-  page.append(media);
-  if (item.caption) page.append(el("p", "action-caption", item.caption));
+  const grid = el("div", "action-grid");
+  item.shots.forEach((shot, shotIndex) => {
+    const feature = el("section", "action-shot");
+    const media = mediaFrame(
+      shot.image,
+      shot.caption || `Kennedy football action photograph ${index + 1}.${shotIndex + 1}`,
+      options,
+      "Action photograph",
+    );
+    media.classList.add("action-photo");
+    feature.append(media);
+    if (shot.caption) feature.append(el("p", "action-caption", shot.caption));
+    grid.append(feature);
+  });
+  page.append(grid);
   return page;
 }
 
@@ -413,8 +466,7 @@ export function renderProgram(input, container, options = {}) {
 
   fragment.append(renderCheerleaders(program, pageNumber++, options));
   packSponsors(program.sponsors, "after-team").forEach((sponsors) => fragment.append(renderSponsorPage(sponsors, pageNumber++, options)));
-  const actionShots = program.actionShots.length ? program.actionShots : [{}, {}];
-  actionShots.forEach((shot, index) => fragment.append(renderActionPage(shot, index, pageNumber++, options)));
+  program.actionPages.forEach((actionPage, index) => fragment.append(renderActionPage(actionPage, index, pageNumber++, options)));
 
   container.replaceChildren(fragment);
   return pageNumber - 1;
