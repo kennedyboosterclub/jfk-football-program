@@ -1,4 +1,4 @@
-import { normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260921-breakfast3";
+import { actionLayoutOptions, normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260922-actions1";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
@@ -787,14 +787,117 @@ function renderRosterSection() {
   return wrap;
 }
 
+async function discardPendingActionShots(shots) {
+  for (const shot of shots) {
+    if (!shot.image || !pendingAssets.has(shot.image)) continue;
+    pendingAssets.delete(shot.image);
+    await assetDb("delete", shot.image).catch(() => {});
+  }
+}
+
 function renderGallerySection() {
-  const wrap = section("gallery", "Action shots", "Each action image receives its own full-page feature after the team photos and any sponsors placed after them.", "Two pages by default");
-  while (program.actionShots.length < 2) program.actionShots.push({ image: "", caption: "" });
-  program.actionShots.forEach((shot, index) => {
+  const wrap = section("gallery", "Action shots", "Choose how many action pages to include. A full-page layout holds one photo; a half-page layout holds two photos. Captions remain optional.", "Flexible gallery pages");
+  const addPage = h("button", "button secondary", "Add action page");
+  addPage.type = "button";
+  addPage.addEventListener("click", () => {
+    program.actionPages.push({
+      id: `action-page-${Date.now()}`,
+      layout: "full",
+      shots: [{ id: `action-${Date.now()}-1`, image: "", caption: "" }],
+    });
+    queueSave(); renderEditor();
+  });
+  wrap.querySelector(".section-title-row").append(addPage);
+
+  const tools = h("div", "action-page-tools");
+  const countField = h("label", "field");
+  countField.append(h("span", "", "Number of action pages"));
+  const count = h("input");
+  count.type = "number";
+  count.min = "0";
+  count.max = "40";
+  count.value = String(program.actionPages.length);
+  countField.append(count);
+  const setCount = h("button", "button secondary", "Set page count");
+  setCount.type = "button";
+  setCount.addEventListener("click", async () => {
+    const requested = Math.max(0, Math.min(40, Number.parseInt(count.value, 10) || 0));
+    const removed = requested < program.actionPages.length ? program.actionPages.slice(requested) : [];
+    if (requested < program.actionPages.length) {
+      const hasContent = removed.some((page) => page.shots.some((shot) => shot.image || shot.caption));
+      if (hasContent && !confirm(`Reducing the page count will remove ${program.actionPages.length - requested} action page(s) and their photos. Continue?`)) {
+        count.value = String(program.actionPages.length);
+        return;
+      }
+    }
+    await discardPendingActionShots(removed?.flatMap((page) => page.shots) || []);
+    while (program.actionPages.length < requested) {
+      const id = Date.now() + program.actionPages.length;
+      program.actionPages.push({ id: `action-page-${id}`, layout: "full", shots: [{ id: `action-${id}-1`, image: "", caption: "" }] });
+    }
+    program.actionPages.splice(requested);
+    queueSave(); renderEditor();
+  });
+  tools.append(countField, setCount, h("span", "", `${program.actionPages.length} page${program.actionPages.length === 1 ? "" : "s"} in the gallery`));
+  wrap.append(tools);
+
+  if (!program.actionPages.length) wrap.append(h("div", "empty-list", "No action-shot pages are currently included."));
+  program.actionPages.forEach((actionPage, pageIndex) => {
     const card = h("div", "subcard");
-    const header = h("div", "subcard-header"); header.append(h("strong", "", `Action page ${index + 1}`)); card.append(header);
-    card.append(imageField(`Action photograph ${index + 1}`, ["actionShots", index, "image"]));
-    card.append(inputField("Caption (optional)", ["actionShots", index, "caption"]));
+    const header = h("div", "subcard-header");
+    header.append(h("strong", "", `Action page ${pageIndex + 1}`));
+    const actions = h("div", "sponsor-order-actions");
+    const moveUp = h("button", "text-button", "Move up");
+    moveUp.type = "button";
+    moveUp.disabled = pageIndex === 0;
+    moveUp.addEventListener("click", () => {
+      [program.actionPages[pageIndex - 1], program.actionPages[pageIndex]] = [program.actionPages[pageIndex], program.actionPages[pageIndex - 1]];
+      queueSave(); renderEditor();
+    });
+    const moveDown = h("button", "text-button", "Move down");
+    moveDown.type = "button";
+    moveDown.disabled = pageIndex === program.actionPages.length - 1;
+    moveDown.addEventListener("click", () => {
+      [program.actionPages[pageIndex], program.actionPages[pageIndex + 1]] = [program.actionPages[pageIndex + 1], program.actionPages[pageIndex]];
+      queueSave(); renderEditor();
+    });
+    const remove = h("button", "danger-button", "Remove page");
+    remove.type = "button";
+    remove.addEventListener("click", async () => {
+      const hasContent = actionPage.shots.some((shot) => shot.image || shot.caption);
+      if (hasContent && !confirm(`Remove Action page ${pageIndex + 1} and its photo${actionPage.shots.length === 1 ? "" : "s"}?`)) return;
+      await discardPendingActionShots(actionPage.shots);
+      program.actionPages.splice(pageIndex, 1);
+      queueSave(); renderEditor();
+    });
+    actions.append(moveUp, moveDown, remove);
+    header.append(actions);
+    card.append(header);
+
+    card.append(selectField("Page layout", actionPage.layout, actionLayoutOptions, async (value) => {
+      if (value === "full" && (actionPage.shots[1]?.image || actionPage.shots[1]?.caption)) {
+        if (!confirm("Changing this page to full page will remove its second photograph and caption. Continue?")) {
+          renderEditor();
+          return;
+        }
+      }
+      actionPage.layout = value;
+      if (value === "half") {
+        while (actionPage.shots.length < 2) actionPage.shots.push({ id: `action-${Date.now()}-2`, image: "", caption: "" });
+      } else {
+        await discardPendingActionShots(actionPage.shots.slice(1));
+        actionPage.shots.splice(1);
+      }
+      queueSave(); renderEditor();
+    }));
+
+    actionPage.shots.forEach((shot, shotIndex) => {
+      const shotEditor = h("div", "action-shot-editor");
+      shotEditor.append(h("strong", "", actionPage.layout === "half" ? `Half-page photograph ${shotIndex + 1}` : "Full-page photograph"));
+      shotEditor.append(imageField(`Action photograph ${pageIndex + 1}.${shotIndex + 1}`, ["actionPages", pageIndex, "shots", shotIndex, "image"]));
+      shotEditor.append(inputField("Caption (optional)", ["actionPages", pageIndex, "shots", shotIndex, "caption"]));
+      card.append(shotEditor);
+    });
     wrap.append(card);
   });
   return wrap;
