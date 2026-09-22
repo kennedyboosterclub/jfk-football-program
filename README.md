@@ -14,7 +14,8 @@ A responsive, print-ready digital program for Bloomington Kennedy Football. The 
 - Full-page 9th Grade, B Squad, and JV team photographs after the player roster
 - Bulk CSV roster import and automatic photo-folder matching for large teams
 - “Not Pictured” list on the final roster page
-- Two action-photo pages
+- Configurable action-photo pages with full-page or two-photo half-page layouts
+- Action-page reordering, optional captions, and image uploads in the admin editor
 - Automatic sponsor-page packing and image scaling without cropping
 - Local drafts, image compression, live preview, JSON backups, and GitHub publishing
 
