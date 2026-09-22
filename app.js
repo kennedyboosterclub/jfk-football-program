@@ -1,4 +1,4 @@
-import { renderProgram } from "./program-renderer.js?v=20260921-breakfast3";
+import { renderProgram } from "./program-renderer.js?v=20260922-actions1";
 
 const container = document.querySelector("#program");
 const pageCount = document.querySelector("#page-count");
