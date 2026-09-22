@@ -34,7 +34,7 @@
     {
       "id": "sponsor-1788988939855",
       "name": "Raising Canes",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1788988968213-k0854.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789015532493-buogf.webp",
       "url": "https://www.raisingcanes.com/",
       "phone": "",
       "size": "quarter",
@@ -54,7 +54,7 @@
       "name": "BJC Remodeling",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011940750-3x773.webp",
       "url": "",
-      "phone": "",
+      "phone": "(952) 217-1633",
       "size": "quarter",
       "placement": "before-team"
     },
@@ -70,7 +70,7 @@
     {
       "id": "sponsor-1789011744742",
       "name": "Cub Foods",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011920007-nl0av.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789015539889-681yy.webp",
       "url": "https://www.cub.com/store/cub/pages/lyndale-store-details",
       "phone": "(952) 881-4299",
       "size": "quarter",
@@ -106,18 +106,18 @@
   ],
   "coaches": {
     "image": "assets/uploads/coaches-image-1788957398287-z2nxs.webp",
-    "names": "Back L-R: Mathew Hamilton, Anthony A Brown, Kedrick L Williams Sr, Cheo Trotter\nFront L-R: Mark DeLeon, Nick Ehret, Isiah, Leslie Hayden"
+    "names": "Kedrick L Williams Sr, Leslie Hayden, Cheo Trotter, Nick Ehret, Matthew Hamilton, Anthony Anderson Brown, Mark DeLeon"
   },
   "schedule": {
     "image": "assets/uploads/season-schedule-image-1788959288280-3q5x3.webp"
   },
   "captains": {
     "image": "assets/uploads/team-captains-image-1788957183242-7rucz.webp",
-    "names": "Xavier Boyd, Joshua Amadi,  Ethan Besch"
+    "names": "Xavier Boyd, Joshua Amadi, Ethan Besch"
   },
   "seniors": {
     "image": "assets/uploads/seniors-image-1788957239226-3npjp.webp",
-    "names": "Back L-R: Xavier Boyd, Joshua Amadi, Ethan Besch\nMiddle L-R: Rayden Rasmussen, Daniel(Shamarr) Johnson-Fleming, Aaron Buchanan Jr, Ayite Michael Dalmeida\nFront L-R: Derek Metcalf, Damari Neal, Lamarion Lewis, Joseph Lange, Caleb Saville",
+    "names": "Joshua Amadi, Damari Neal, Xavier Boyd, Ayite Michael Dalmeida, Derek Metcalf, Ethan Besch, Rayden Rasmussen, Joseph Lange, Aaron Buchanan Jr, Daniel(Shamarr) Johnson-Fleming, Lamarion Lewis, Chigozie Onuzulike",
     "classYear": "2027"
   },
   "players": [
@@ -146,7 +146,7 @@
       "firstName": "Dalmeida",
       "lastName": "Ayite Michael",
       "grade": "senior",
-      "photo": "assets/uploads/player-4-dalmeida-ayite-michael-1790005905590-irklf.webp",
+      "photo": "assets/uploads/player-4-dalmeida-ayite-michael-1788963507978-7x9mp.webp",
       "photoFilename": "004-dalmeida-ayite-michael.jpg"
     },
     {
@@ -202,7 +202,7 @@
       "firstName": "Onuzulike",
       "lastName": "Chigozie",
       "grade": "senior",
-      "photo": "assets/uploads/player-12-onuzulike-chigozie-1790005896244-jb2dc.webp",
+      "photo": "assets/uploads/player-12-onuzulike-chigozie-1788963516164-r2hu8.webp",
       "photoFilename": "012-onuzulike-chigozie.jpg"
     },
     {
@@ -349,7 +349,7 @@
       "firstName": "Borbor",
       "lastName": "Tamba",
       "grade": "sophomore",
-      "photo": "assets/uploads/player-33-borbor-tamba-1788963537824-4f49o.webp",
+      "photo": "assets/uploads/player-33-borbor-tamba-1790083511728-2dqor.webp",
       "photoFilename": "033-borbor-tamba.jpg"
     },
     {
@@ -384,7 +384,7 @@
       "firstName": "Bawek",
       "lastName": "Camdan",
       "grade": "sophomore",
-      "photo": "assets/uploads/player-38-bawek-camdan-1789068166788-hztmr.webp",
+      "photo": "assets/uploads/player-38-bawek-camdan-1788956654528-rfmp7.webp",
       "photoFilename": "20260828_0Z8_0430.jpg"
     },
     {
@@ -426,7 +426,7 @@
       "firstName": "Geyen",
       "lastName": "Colten",
       "grade": "sophomore",
-      "photo": "assets/uploads/player-44-geyen-colten-1788963547868-srytn.webp",
+      "photo": "assets/uploads/player-44-geyen-colten-1790083523006-qijug.webp",
       "photoFilename": "044-geyen-colten.jpg"
     },
     {
@@ -610,13 +610,6 @@
       "grade": "freshman",
       "photo": "assets/uploads/player-64-thomas-criner-skyler-1788956361063-89b6l.webp",
       "photoFilename": "20260828__8JM0197.jpg"
-    },
-    {
-      "firstName": "Christhofer",
-      "lastName": "Jaimes Puello",
-      "grade": "sophomore",
-      "photo": "assets/uploads/player-71-christhofer-jaimes-puello-1790011327568-9mq9d.webp",
-      "photoFilename": ""
     }
   ],
   "notPictured": "",
@@ -633,7 +626,7 @@
   },
   "managers": {
     "image": "assets/uploads/team-managers-image-1788956792670-3in2i.webp",
-    "names": "Eddie"
+    "names": "Eddie Jacobson"
   },
   "cheerleaders": {
     "image": "assets/uploads/cheerleaders-image-1788971056614-h61e4.webp",
