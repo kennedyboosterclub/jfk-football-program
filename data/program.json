@@ -639,14 +639,28 @@
     "image": "assets/uploads/cheerleaders-image-1788971056614-h61e4.webp",
     "names": "Captains: Anijah Robinson & Zekarhia Smith\nLariiya Starr, Jayla Williams, Jasmine Towns, Zayla Smith, Ya Ya Jimenez-Gomez, Ya’Niyah Motley, Cynthia Lynn Washington, Arely Navas, Erykah King-Titus, Lacy Bauer, Shy’Elle Davis, Valeria Pliego Perez\n"
   },
-  "actionShots": [
+  "actionPages": [
     {
-      "image": "assets/uploads/action-photograph-1-1788970686080-hr72s.webp",
-      "caption": ""
+      "id": "legacy-action-page-1",
+      "layout": "full",
+      "shots": [
+        {
+          "id": "legacy-action-1",
+          "image": "assets/uploads/action-photograph-1-1788970686080-hr72s.webp",
+          "caption": ""
+        }
+      ]
     },
     {
-      "image": "assets/uploads/action-photograph-2-1788970700445-kurw9.webp",
-      "caption": ""
+      "id": "legacy-action-page-2",
+      "layout": "full",
+      "shots": [
+        {
+          "id": "legacy-action-2",
+          "image": "assets/uploads/action-photograph-2-1788970700445-kurw9.webp",
+          "caption": ""
+        }
+      ]
     }
   ]
 }
