@@ -105,6 +105,9 @@
 .player-editor { display: grid; grid-template-columns: 32px 1fr 1fr 110px 78px; align-items: center; gap: 7px; padding: 8px 0; border-bottom: 1px solid #e5eaf0; }
 .player-editor:last-child { border-bottom: 0; }
 .player-editor > span { display: grid; height: 26px; place-items: center; color: var(--navy); border-radius: 50%; background: var(--gold); font: 900 11px/1 "Barlow Condensed", sans-serif; }
+.player-editor-header { position: sticky; z-index: 2; top: -1px; padding: 7px 0; color: var(--navy); border-bottom: 2px solid #b8c7d5; background: #f7f9fb; }
+.player-editor-header > span { height: 22px; color: #52677d; background: transparent; }
+.player-editor-header > strong { padding-left: 8px; font-size: 9px; letter-spacing: .035em; text-transform: uppercase; }
 .player-editor input, .player-editor select { width: 100%; min-width: 0; padding: 8px; border: 1px solid #c5d0da; border-radius: 5px; font-size: 10px; }
 .player-photo-button { display: grid; place-items: center; height: 34px; color: var(--blue); border: 1px solid #aebfce; border-radius: 5px; background: white; font-size: 9px; font-weight: 800; cursor: pointer; }
 .player-photo-button.has-photo { color: #fff; border-color: var(--blue); background: var(--blue); }
