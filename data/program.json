@@ -642,22 +642,91 @@
   "actionPages": [
     {
       "id": "legacy-action-page-1",
-      "layout": "full",
+      "layout": "half",
       "shots": [
         {
           "id": "legacy-action-1",
-          "image": "assets/uploads/action-photograph-1-1788970686080-hr72s.webp",
+          "image": "assets/uploads/action-photograph-1-1-1790174861831-ys5v6.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1790174880749-2",
+          "image": "assets/uploads/action-photograph-1-2-1790174901278-95w1r.webp",
           "caption": ""
         }
       ]
     },
     {
       "id": "legacy-action-page-2",
-      "layout": "full",
+      "layout": "half",
       "shots": [
         {
           "id": "legacy-action-2",
-          "image": "assets/uploads/action-photograph-2-1788970700445-kurw9.webp",
+          "image": "assets/uploads/action-photograph-2-1-1790174909181-1dbzh.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1790174904372-2",
+          "image": "assets/uploads/action-photograph-2-2-1790174913432-frv5w.webp",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "id": "action-page-1790174817865",
+      "layout": "half",
+      "shots": [
+        {
+          "id": "action-1790174817865-1",
+          "image": "assets/uploads/action-photograph-3-1-1790174920714-fjpb8.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1790174916312-2",
+          "image": "assets/uploads/action-photograph-3-2-1790174925861-pc8ab.webp",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "id": "action-page-1790174817866",
+      "layout": "half",
+      "shots": [
+        {
+          "id": "action-1790174817866-1",
+          "image": "assets/uploads/action-photograph-4-1-1790174942623-odif0.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1790174929565-2",
+          "image": "assets/uploads/action-photograph-4-2-1790174947354-dio41.webp",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "id": "action-page-1790174817867",
+      "layout": "half",
+      "shots": [
+        {
+          "id": "action-1790174817867-1",
+          "image": "assets/uploads/action-photograph-5-1-1790174952526-1wr1f.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1790174956890-2",
+          "image": "assets/uploads/action-photograph-5-2-1790174970226-xkkov.webp",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "id": "action-page-1790174817868",
+      "layout": "full",
+      "shots": [
+        {
+          "id": "action-1790174817868-1",
+          "image": "assets/uploads/action-photograph-6-1-1790174974861-4z0bi.webp",
           "caption": ""
         }
       ]
