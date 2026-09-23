@@ -352,7 +352,9 @@ function renderCaptainsAndSeniors(program, number, options) {
 
 function renderPlayerCard(player, index, options) {
   const card = el("article", "player-card");
-  const displayName = `${player.firstName || "First"} ${player.lastName || "Last"}`.trim();
+  // Existing roster data stores the surname in firstName and the given name in
+  // lastName. Keep that data compatible while displaying names naturally.
+  const displayName = `${player.lastName || "First"} ${player.firstName || "Last"}`.trim();
   const photo = mediaFrame(player.photo, displayName || `Player ${index + 1}`, options, "Player photo");
   photo.classList.add("player-photo");
   card.append(photo);
@@ -368,7 +370,13 @@ function renderPlayerCard(player, index, options) {
 }
 
 function renderRoster(program, startNumber, options) {
-  const players = program.players.length ? program.players : Array.from({ length: 15 }, () => ({}));
+  const gradeOrder = { senior: 0, junior: 1, sophomore: 2, freshman: 3 };
+  const players = program.players.length
+    ? program.players
+      .map((player, originalIndex) => ({ player, originalIndex }))
+      .sort((a, b) => (gradeOrder[a.player.grade] ?? 4) - (gradeOrder[b.player.grade] ?? 4) || a.originalIndex - b.originalIndex)
+      .map(({ player }) => player)
+    : Array.from({ length: 15 }, () => ({}));
   const pages = [];
   for (let offset = 0; offset < players.length; offset += 15) {
     const page = pageShell("roster-page", startNumber + pages.length);
