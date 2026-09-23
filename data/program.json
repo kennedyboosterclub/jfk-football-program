@@ -91,7 +91,16 @@
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011908725-ppvfe.webp",
       "url": "https://bloomington.alloypersonaltraining.com",
       "phone": "(952) 254-4147",
-      "size": "half",
+      "size": "quarter",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1790182248502",
+      "name": "Chick-fil-A",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1790182267294-bhl1f.webp",
+      "url": "https://www.chick-fil-a.com/locations/mn/bloomington-mn",
+      "phone": "(952)888-0488",
+      "size": "quarter",
       "placement": "before-team"
     },
     {
@@ -102,15 +111,6 @@
       "phone": "(612) 798-7100",
       "size": "half",
       "placement": "before-team"
-    },
-    {
-      "id": "sponsor-1790182248502",
-      "name": "Chick-fil-A",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1790182267294-bhl1f.webp",
-      "url": "https://www.chick-fil-a.com/locations/mn/bloomington-mn",
-      "phone": "(952)888-0488",
-      "size": "full",
-      "placement": "after-team"
     }
   ],
   "coaches": {
