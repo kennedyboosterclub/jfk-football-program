@@ -1,4 +1,4 @@
-import { actionLayoutOptions, normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260923-sponsor-thanks1";
+import { actionLayoutOptions, normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260923-roster-order1";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
@@ -44,6 +44,17 @@ async function assetDb(action, value) {
 
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+const PLAYER_GRADE_ORDER = { senior: 0, junior: 1, sophomore: 2, freshman: 3 };
+
+function sortPlayersByGrade(players = program.players) {
+  const sorted = players
+    .map((player, originalIndex) => ({ player, originalIndex }))
+    .sort((a, b) => (PLAYER_GRADE_ORDER[a.player.grade] ?? 4) - (PLAYER_GRADE_ORDER[b.player.grade] ?? 4) || a.originalIndex - b.originalIndex)
+    .map(({ player }) => player);
+  players.splice(0, players.length, ...sorted);
+  return players;
 }
 
 function getAt(path) {
@@ -411,7 +422,7 @@ function csvValue(value) {
 }
 
 function downloadRosterTemplate() {
-  const rows = [["roster_order", "first_name", "last_name", "grade", "photo_filename"]];
+  const rows = [["roster_order", "last_name", "first_name", "grade", "photo_filename"]];
   for (let index = 1; index <= 80; index += 1) rows.push([index, "", "", "", ""]);
   const csv = rows.map((row) => row.map(csvValue).join(",")).join("\r\n");
   const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
@@ -516,14 +527,16 @@ function parseRosterFile(text) {
   const duplicateOrders = [];
   const seenOrders = new Set();
   const players = rows.slice(1).map((row, sourceIndex) => {
-    const firstName = String(row[columns.firstName] || "").trim();
-    const lastName = String(row[columns.lastName] || "").trim();
+    // Keep compatibility with the existing program data: firstName stores the
+    // surname and lastName stores the given name.
+    const firstName = String(row[columns.lastName] || "").trim();
+    const lastName = String(row[columns.firstName] || "").trim();
     const rawGrade = String(row[columns.grade] || "").trim();
     const parsedOrder = columns.order >= 0 ? Number.parseInt(row[columns.order], 10) : Number.NaN;
     const order = Number.isFinite(parsedOrder) && parsedOrder > 0 ? parsedOrder : sourceIndex + 1;
     if (seenOrders.has(order)) duplicateOrders.push(String(order));
     seenOrders.add(order);
-    if (rawGrade && !normalizedGrade(rawGrade)) invalidGrades.push(`${firstName} ${lastName}`.trim() || `row ${sourceIndex + 2}`);
+    if (rawGrade && !normalizedGrade(rawGrade)) invalidGrades.push(`${lastName} ${firstName}`.trim() || `row ${sourceIndex + 2}`);
     return {
       order,
       sourceIndex,
@@ -537,7 +550,7 @@ function parseRosterFile(text) {
 
   if (!players.length) throw new Error("No player names were found in the CSV.");
   if (players.length > 150) throw new Error("The roster is limited to 150 players.");
-  players.sort((a, b) => a.order - b.order || a.sourceIndex - b.sourceIndex);
+  players.sort((a, b) => (PLAYER_GRADE_ORDER[a.grade] ?? 4) - (PLAYER_GRADE_ORDER[b.grade] ?? 4) || a.order - b.order || a.sourceIndex - b.sourceIndex);
   players.forEach((player, index) => {
     if (!player.photoFilename) player.photoFilename = automaticPhotoFilename(player, index);
     delete player.order;
@@ -651,7 +664,7 @@ async function importRosterPhotos(fileList) {
     try {
       await prepareImage(file, ["players", playerIndex, "photo"], `player-${playerIndex + 1}-${player.firstName}-${player.lastName}`);
       usedPlayers.add(playerIndex);
-      matched.push(`${player.firstName} ${player.lastName}`.trim());
+      matched.push(`${player.lastName} ${player.firstName}`.trim());
     } catch (error) {
       failed.push(`${file.name}: ${error.message}`);
     }
@@ -725,7 +738,7 @@ function resizeRoster(size) {
 }
 
 function renderRosterSection() {
-  const wrap = section("roster", "Player roster", "The program automatically creates one roster page for every 15 players. The display number is the player's position in this list—not a jersey number.", "15 players per page");
+  const wrap = section("roster", "Player roster", "The program automatically creates one roster page for every 15 players. Players are grouped Senior, Junior, Sophomore, then Freshman; their order within each grade stays as entered.", "15 players per page");
   const bulk = h("div", "bulk-roster-tools");
   bulk.append(
     h("strong", "", "Bulk roster setup"),
@@ -742,7 +755,7 @@ function renderRosterSection() {
   );
   bulk.append(bulkActions);
   const naming = h("p", "bulk-roster-note");
-  naming.innerHTML = "Use grades <strong>Freshman, Sophomore, Junior, or Senior</strong> (9–12 also work). If the photo_filename column is blank, name photos like <strong>001-first-last.jpg</strong>. The simpler <strong>first-last.jpg</strong> format also matches when names are unique.";
+  naming.innerHTML = "Use grades <strong>Freshman, Sophomore, Junior, or Senior</strong> (9–12 also work). If the photo_filename column is blank, name photos like <strong>001-last-first.jpg</strong>. The simpler <strong>last-first.jpg</strong> format also matches when names are unique.";
   bulk.append(naming);
   const report = renderRosterReport();
   if (report) bulk.append(report);
@@ -764,18 +777,29 @@ function renderRosterSection() {
   wrap.append(tools);
 
   if (!program.players.length) wrap.append(h("div", "empty-list", "Set the total number of players to begin entering the roster."));
+  if (program.players.length) {
+    const header = h("div", "player-editor player-editor-header");
+    header.append(h("span", "", "#"), h("strong", "", "Last name"), h("strong", "", "First name"), h("strong", "", "Grade"), h("strong", "", "Photo"));
+    wrap.append(header);
+  }
   program.players.forEach((player, index) => {
     const row = h("div", "player-editor");
     row.append(h("span", "", String(index + 1)));
-    const first = h("input"); first.placeholder = "First name"; first.value = player.firstName || "";
-    const last = h("input"); last.placeholder = "Last name"; last.value = player.lastName || "";
+    const first = h("input"); first.placeholder = "Last name"; first.setAttribute("aria-label", `Player ${index + 1} last name`); first.value = player.firstName || "";
+    const last = h("input"); last.placeholder = "First name"; last.setAttribute("aria-label", `Player ${index + 1} first name`); last.value = player.lastName || "";
     first.addEventListener("input", () => { player.firstName = first.value; queueSave(); });
     last.addEventListener("input", () => { player.lastName = last.value; queueSave(); });
     const grade = h("select");
     [["", "Grade"], ["freshman", "Freshman"], ["sophomore", "Sophomore"], ["junior", "Junior"], ["senior", "Senior"]].forEach(([value, label]) => {
       const option = h("option", "", label); option.value = value; option.selected = player.grade === value; grade.append(option);
     });
-    grade.addEventListener("change", () => { player.grade = grade.value; queueSave(); });
+    grade.setAttribute("aria-label", `Player ${index + 1} grade`);
+    grade.addEventListener("change", () => {
+      player.grade = grade.value;
+      sortPlayersByGrade();
+      queueSave();
+      renderEditor();
+    });
     const photo = h("label", `player-photo-button${player.photo ? " has-photo" : ""}`, player.photo ? "Replace photo" : "Add photo");
     const file = h("input"); file.type = "file"; file.accept = "image/jpeg,image/png,image/webp";
     file.addEventListener("change", () => file.files?.[0] && selectImage(file.files[0], ["players", index, "photo"], `player-${index + 1}-${player.firstName}-${player.lastName}`));
@@ -1081,6 +1105,7 @@ async function initialize() {
     storedAssets.forEach((asset) => pendingAssets.set(asset.path, asset.dataUrl));
     const saved = localStorage.getItem(DRAFT_KEY);
     program = saved ? normalizeProgram(JSON.parse(saved)) : clone(liveProgram);
+    sortPlayersByGrade();
     saveState.textContent = saved ? "Local draft restored" : "Live program loaded";
     renderEditor();
     renderPreview();
