@@ -354,6 +354,59 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 .load-error { display: grid; gap: 8px; width: min(560px, calc(100vw - 32px)); padding: 32px; color: #7a271a; border: 1px solid #f4b8ad; border-radius: 12px; background: #fff0ed; }
 .site-footer { display: flex; justify-content: space-between; gap: 16px; padding: 26px clamp(16px, 4vw, 48px); color: #c8d5e5; border-top: 4px solid var(--gold); background: var(--navy); font-size: 12px; }
 
+/* Public feedback */
+.feedback-button {
+  position: fixed;
+  z-index: 40;
+  right: clamp(14px, 2.5vw, 28px);
+  bottom: clamp(14px, 2.5vw, 28px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  color: var(--navy);
+  border: 2px solid rgba(7,29,60,.22);
+  border-radius: 999px;
+  background: var(--gold);
+  box-shadow: 0 8px 24px rgba(7,29,60,.3);
+  cursor: pointer;
+  font: 800 14px/1 Inter, sans-serif;
+}
+.feedback-button:hover { background: #ffda60; transform: translateY(-1px); }
+.feedback-button:focus-visible, .feedback-dialog button:focus-visible, .feedback-dialog input:focus-visible, .feedback-dialog select:focus-visible, .feedback-dialog textarea:focus-visible { outline: 3px solid #2d75bd; outline-offset: 3px; }
+
+.feedback-dialog {
+  width: min(560px, calc(100vw - 24px));
+  max-height: min(760px, calc(100vh - 24px));
+  padding: 0;
+  color: var(--ink);
+  border: 0;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 24px 80px rgba(0,12,30,.45);
+}
+.feedback-dialog::backdrop { background: rgba(0,12,30,.72); backdrop-filter: blur(2px); }
+.feedback-form { display: grid; gap: 10px; padding: clamp(20px, 4vw, 32px); }
+.feedback-heading { display: flex; align-items: start; justify-content: space-between; gap: 20px; }
+.feedback-kicker { margin: 0 0 3px; color: #8a6500; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.feedback-heading h2 { margin: 0; color: var(--navy); font: 900 clamp(30px, 6vw, 42px)/1 "Barlow Condensed", sans-serif; text-transform: uppercase; }
+.feedback-close { width: 38px; height: 38px; padding: 0; color: var(--navy); border: 1px solid var(--line); border-radius: 50%; background: white; cursor: pointer; font-size: 28px; line-height: 1; }
+.feedback-intro { margin: 0 0 6px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+.feedback-form label { color: var(--navy); font-size: 13px; font-weight: 800; }
+.feedback-form label span { color: var(--muted); font-weight: 500; }
+.feedback-form input, .feedback-form select, .feedback-form textarea { width: 100%; padding: 11px 12px; color: var(--ink); border: 1px solid #aebaca; border-radius: 6px; background: white; font: 16px/1.35 Inter, sans-serif; }
+.feedback-form textarea { min-height: 120px; resize: vertical; }
+.feedback-contact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.feedback-contact-grid > div { display: grid; gap: 6px; }
+.feedback-status { min-height: 20px; font-size: 13px; font-weight: 700; line-height: 1.35; }
+.feedback-status.is-success { color: #176534; }
+.feedback-status.is-error { color: #a22618; }
+.feedback-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 2px; }
+.feedback-actions button { padding: 11px 16px; border-radius: 6px; cursor: pointer; font-weight: 800; }
+.feedback-cancel { color: var(--navy); border: 1px solid #aebaca; background: white; }
+.feedback-submit { color: var(--navy); border: 1px solid #d69b13; background: var(--gold); }
+.feedback-submit:disabled { cursor: wait; opacity: .65; }
+
 @media (max-width: 640px) {
   :root { --page-width: calc(100vw - 16px); }
   .site-header { min-height: 64px; padding: 9px 12px; }
@@ -362,6 +415,8 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
   .brand small { font-size: 9px; }
   .page-count { display: none; }
   .print-button { padding: 9px 10px; font-size: 12px; }
+  .feedback-button { right: 10px; bottom: 10px; padding: 11px 14px; font-size: 12px; }
+  .feedback-contact-grid { grid-template-columns: 1fr; }
   main { padding-top: 14px; }
   .program-stack { gap: 18px; }
   .program-page { box-shadow: 0 9px 28px rgba(7,29,60,.18); }
@@ -373,7 +428,7 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 
 @media print {
   html, body { width: 8.5in; margin: 0; background: white; }
-  .site-header, .site-footer { display: none !important; }
+  .site-header, .site-footer, .feedback-button, .feedback-dialog { display: none !important; }
   main { padding: 0; }
   .program-stack { display: block; }
   .program-page { width: 8.5in; height: 11in; margin: 0; break-after: page; box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
