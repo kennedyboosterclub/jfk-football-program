@@ -21,4 +21,71 @@ async function loadProgram() {
 }
 
 document.querySelector("#print-program").addEventListener("click", () => window.print());
+
+const feedbackDialog = document.querySelector("#feedback-dialog");
+const feedbackForm = document.querySelector("#feedback-form");
+const feedbackStatus = document.querySelector("#feedback-status");
+const feedbackSubmit = document.querySelector("#submit-feedback");
+
+function openFeedback() {
+  feedbackStatus.textContent = "";
+  feedbackStatus.className = "feedback-status";
+  document.querySelector("#feedback-page").value = window.location.href;
+  feedbackDialog.showModal();
+}
+
+function closeFeedback() {
+  if (feedbackDialog.open) feedbackDialog.close();
+}
+
+document.querySelector("#open-feedback").addEventListener("click", openFeedback);
+document.querySelector("#close-feedback").addEventListener("click", closeFeedback);
+document.querySelector("#cancel-feedback").addEventListener("click", closeFeedback);
+
+feedbackDialog.addEventListener("click", (event) => {
+  if (event.target === feedbackDialog) closeFeedback();
+});
+
+feedbackForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  feedbackSubmit.disabled = true;
+  feedbackSubmit.textContent = "Sending…";
+  feedbackStatus.textContent = "";
+  feedbackStatus.className = "feedback-status";
+
+  const category = document.querySelector("#feedback-category").value;
+  document.querySelector("#feedback-subject").value = `JFK Booster feedback: ${category}`;
+
+  try {
+    const response = await fetch(feedbackForm.action, {
+      method: "POST",
+      body: new FormData(feedbackForm),
+      headers: { Accept: "application/json" }
+    });
+
+    if (!response.ok) {
+      const result = await response.json().catch(() => ({}));
+      const message = result.errors?.map((item) => item.message).join(" ");
+      throw new Error(message || "Your feedback could not be sent.");
+    }
+
+    feedbackForm.reset();
+    feedbackStatus.textContent = "Thank you! Your feedback has been sent.";
+    feedbackStatus.className = "feedback-status is-success";
+    feedbackSubmit.textContent = "Sent";
+    window.setTimeout(closeFeedback, 1800);
+  } catch (error) {
+    feedbackStatus.textContent = `${error.message} Please try again.`;
+    feedbackStatus.className = "feedback-status is-error";
+    feedbackSubmit.disabled = false;
+    feedbackSubmit.textContent = "Send feedback";
+    return;
+  }
+
+  window.setTimeout(() => {
+    feedbackSubmit.disabled = false;
+    feedbackSubmit.textContent = "Send feedback";
+  }, 2000);
+});
+
 loadProgram();
