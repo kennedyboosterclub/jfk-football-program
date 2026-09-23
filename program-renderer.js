@@ -312,6 +312,7 @@ function sponsorCard(sponsor, index, options) {
 
 function renderSponsorPage(sponsors, number, options) {
   const page = pageShell("sponsor-page", number);
+  page.append(el("p", "sponsor-thanks", "The Kennedy Eagles thank our sponsors for their generous support."));
   const grid = el("div", "sponsor-grid");
   sponsors.forEach((sponsor, index) => grid.append(sponsorCard(sponsor, index, options)));
   page.append(grid);
