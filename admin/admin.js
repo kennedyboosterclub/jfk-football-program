@@ -1,4 +1,4 @@
-import { actionLayoutOptions, normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260922-actions1";
+import { actionLayoutOptions, normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260923-sponsor-thanks1";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
