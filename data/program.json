@@ -209,10 +209,17 @@
     },
     {
       "firstName": "Onuzulike",
-      "lastName": "Chigozie",
+      "lastName": "Chigozie (Victor)",
       "grade": "senior",
-      "photo": "assets/uploads/player-12-onuzulike-chigozie-1790005896244-jb2dc.webp",
+      "photo": "assets/uploads/player-12-onuzulike-chigozie-victor-1790620512863-n2gk9.webp",
       "photoFilename": "012-onuzulike-chigozie.jpg"
+    },
+    {
+      "firstName": "Awote",
+      "lastName": "Nana",
+      "grade": "senior",
+      "photo": "assets/uploads/player-13-awote-nana-1790620561412-c5v9s.webp",
+      "photoFilename": ""
     },
     {
       "firstName": "Copeland",
