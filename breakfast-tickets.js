@@ -27,7 +27,7 @@ export function renderBreakfastPage(page, settings, options = {}) {
   message.append(
     node('p', 'breakfast-venmo-kicker', 'Pancake Breakfast Tickets'),
     node('h2', '', 'Pay with Venmo'),
-    node('p', 'breakfast-venmo-handle', '@KennedyBoosterClub'),
+    node('span', 'breakfast-venmo-handle', '@KennedyBoosterClub'),
     node('p', 'breakfast-venmo-instructions', 'Scan the QR code and include your name and ticket quantities in the payment note.'),
   );
 

@@ -1,4 +1,4 @@
-import { actionLayoutOptions, normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260928-venmo1";
+import { actionLayoutOptions, normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260928-venmo2";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";

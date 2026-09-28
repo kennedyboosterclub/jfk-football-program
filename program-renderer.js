@@ -1,4 +1,4 @@
-import { normalizeBreakfast, renderBreakfastPage } from "./breakfast-tickets.js?v=20260928-venmo1";
+import { normalizeBreakfast, renderBreakfastPage } from "./breakfast-tickets.js?v=20260928-venmo2";
 
 const SPONSOR_UNITS = { full: 4, half: 2, quarter: 1 };
 

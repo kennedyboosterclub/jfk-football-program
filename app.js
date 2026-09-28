@@ -1,4 +1,4 @@
-import { renderProgram } from "./program-renderer.js?v=20260928-venmo1";
+import { renderProgram } from "./program-renderer.js?v=20260928-venmo2";
 
 const container = document.querySelector("#program");
 const pageCount = document.querySelector("#page-count");
