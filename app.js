@@ -1,4 +1,4 @@
-import { renderProgram } from "./program-renderer.js?v=20260928-stripe1";
+import { renderProgram } from "./program-renderer.js?v=20260928-ticket2";
 
 const container = document.querySelector("#program");
 const pageCount = document.querySelector("#page-count");

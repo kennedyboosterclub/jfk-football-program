@@ -25,17 +25,22 @@ export function renderBreakfastPage(page, settings, options = {}) {
   image.loading = 'lazy';
 
   const creditCard = node('a', 'breakfast-credit-card', 'Click here to purchase tickets\nvia credit card');
+  creditCard.textContent = '';
+  creditCard.innerHTML = `<svg class="breakfast-ticket-shape" viewBox="0 0 1100 140" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="breakfast-ticket-gold" x2="0" y2="1"><stop stop-color="#ffc94b"/><stop offset="1" stop-color="#eaaa1b"/></linearGradient></defs><path d="M32 5 H1068 Q1068 28 1095 28 V50 Q1060 70 1095 90 V112 Q1068 112 1068 135 H32 Q32 112 5 112 V90 Q40 70 5 50 V28 Q32 28 32 5Z" fill="url(#breakfast-ticket-gold)" stroke="#d69b13" stroke-width="4"/><path d="M50 16 H1050 V124 H50Z" fill="none" stroke="#071d3c" stroke-width="3"/><path d="M61 24 H1039 V116 H61Z" fill="none" stroke="#a96d0b"/><text x="103" y="87" font-size="48" fill="#071d3c">★</text><text x="955" y="87" font-size="48" fill="#071d3c">★</text></svg>`;
+  const ticketCopy = node('span', 'breakfast-ticket-copy');
+  ticketCopy.append(node('span', '', 'Click here to purchase tickets'), node('strong', '', 'Via credit card'));
+  creditCard.append(ticketCopy);
   creditCard.href = settings.creditCardUrl;
   creditCard.target = '_blank';
   creditCard.rel = 'noopener noreferrer';
   creditCard.setAttribute('aria-label', 'Purchase pancake breakfast tickets by credit card');
-  flyerCard.append(image, creditCard);
+  flyerCard.append(image);
   flyerWrap.append(flyerCard);
 
   const venmo = node('section', 'breakfast-venmo');
   venmo.setAttribute('aria-label', 'Purchase pancake breakfast tickets');
   const message = node('div', 'breakfast-venmo-message');
-  message.append(node('p', 'breakfast-venmo-kicker', 'Pancake Breakfast Tickets'));
+
 
   const door = node('div', 'breakfast-at-door');
   door.append(
@@ -60,5 +65,5 @@ export function renderBreakfastPage(page, settings, options = {}) {
 
   venmo.append(message, qr);
   page.id = 'breakfast-page';
-  page.append(flyerWrap, venmo);
+  page.append(flyerWrap, creditCard, venmo);
 }

@@ -1,4 +1,4 @@
-import { normalizeBreakfast, renderBreakfastPage } from "./breakfast-tickets.js?v=20260928-stripe1";
+import { normalizeBreakfast, renderBreakfastPage } from "./breakfast-tickets.js?v=20260928-ticket2";
 
 const SPONSOR_UNITS = { full: 4, half: 2, quarter: 1 };
 
