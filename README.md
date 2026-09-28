@@ -77,4 +77,4 @@ For a large roster, use **Download CSV template** in the Player roster section, 
 
 ## Pancake breakfast flyer
 
-In `/admin/`, open **Breakfast tickets** and turn **Show pancake breakfast flyer and Venmo QR code as Page 2** on or off, then **Publish to GitHub**. The switch defaults to off, including in older saved drafts. When enabled, the flyer occupies Page 2 and all later pages shift forward by one. Turning it off restores the original order. The flyer displays the Kennedy Football Booster Club Venmo QR code and handle, `@KennedyBoosterClub`. There is no PayPal connection or online checkout button.
+In `/admin/`, open **Breakfast tickets** and turn **Show pancake breakfast flyer and Venmo QR code as Page 2** on or off, then **Publish to GitHub**. The switch defaults to off, including in older saved drafts. When enabled, the flyer occupies Page 2 and all later pages shift forward by one. Turning it off restores the original order. The flyer displays the Kennedy Football Booster Club Venmo QR code and handle, `@KennedyBoosterClub`. There is no online checkout button or external payment script.
