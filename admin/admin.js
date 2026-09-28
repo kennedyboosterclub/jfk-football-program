@@ -1,4 +1,4 @@
-import { actionLayoutOptions, normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260923-roster-order1";
+import { actionLayoutOptions, normalizeProgram, packSponsors, renderProgram, sponsorSizeOptions } from "../program-renderer.js?v=20260928-venmo1";
 
 const DRAFT_KEY = "jfk-program-draft-v1";
 const SETTINGS_KEY = "jfk-program-github-settings-v1";
@@ -331,20 +331,20 @@ function renderGameSection() {
 }
 
 function renderBreakfastSection() {
-  const wrap = section("breakfast", "Pancake breakfast tickets", "Show the flyer and ticket cart as Page 2. Later pages shift automatically; turning this off restores their original order. Publish to GitHub to make your choice visible to visitors.", "Optional Page 2");
+  const wrap = section("breakfast", "Pancake breakfast tickets", "Show the flyer with the Kennedy Football Booster Club Venmo QR code as Page 2. Later pages shift automatically; turning this off restores their original order. Publish to GitHub to make your choice visible to visitors.", "Optional Page 2");
   const label = h("label", "breakfast-toggle");
   const checkbox = h("input");
   checkbox.type = "checkbox";
   checkbox.checked = program.breakfastTickets.enabled;
   checkbox.addEventListener("change", () => setAt(["breakfastTickets", "enabled"], checkbox.checked));
-  label.append(checkbox, h("span", "", "Show pancake breakfast flyer and tickets as Page 2"));
+  label.append(checkbox, h("span", "", "Show pancake breakfast flyer and Venmo QR code as Page 2"));
   const fields = h("div", "field-grid two-columns");
   fields.append(
     inputField("Breakfast date", ["breakfastTickets", "date"]),
     inputField("Breakfast time", ["breakfastTickets", "time"]),
     inputField("Breakfast location", ["breakfastTickets", "location"]),
   );
-  wrap.append(label, fields, h("p", "", "Adult $15 • Student/Senior $10. These buttons use the existing PayPal listings. If event details or prices change, update those listings in PayPal too."));
+  wrap.append(label, fields, h("p", "", "Adult $15 • Student/Senior $10. Visitors pay by scanning the @KennedyBoosterClub Venmo QR code shown on the flyer."));
   return wrap;
 }
 

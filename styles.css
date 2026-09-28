@@ -436,40 +436,13 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 }
 
 /* Optional fundraiser cart and Page 2 flyer. */
-.breakfast-tickets { width: var(--page-width); max-width: 100%; padding: clamp(20px, 4vw, 40px); color: var(--ink); background: var(--paper); border-top: 7px solid var(--gold); border-radius: 12px; box-shadow: 0 10px 32px rgba(7,29,60,.14); scroll-margin-top: 90px; }
-.breakfast-tickets h2 { margin: 4px 0 14px; color: var(--navy); font: 800 clamp(32px, 5vw, 48px)/1.1 'Barlow Condensed', sans-serif; }
-.breakfast-kicker { margin: 0; color: var(--navy-2); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 12px; }
-.breakfast-details { margin: 8px 0; font-weight: 600; }
-.breakfast-tickets p { line-height: 1.6; }
-.breakfast-cart { display: flex; justify-content: flex-end; margin: 18px 0; }
-.breakfast-ticket-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.breakfast-ticket-card { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 10px; background: white; }
-.breakfast-ticket-card h3 { margin: 0; font-size: 20px; }
-.breakfast-price { margin: 8px 0 18px; font-weight: 700; }
-.breakfast-receipt, .breakfast-payment-status { font-size: 13px; color: var(--muted); }
-.breakfast-preview-button { display: inline-block; background: var(--gold); color: var(--navy); padding: 12px 16px; border-radius: 6px; font-weight: 700; }
-@media (max-width: 550px) { .breakfast-ticket-grid { grid-template-columns: 1fr; } }
-@media print { .breakfast-tickets { display: none !important; } }
-
 .breakfast-page { display: flex; flex-direction: column; background: #071d3c; }
-.breakfast-flyer { display: block; width: 100%; height: 90%; flex: 0 0 90%; min-height: 0; object-fit: cover; object-position: center top; }
-.breakfast-page-actions { height: 10%; flex: 0 0 10%; display: flex; padding: 0; border: 8px solid var(--navy); border-top: 0; }
-.breakfast-buy-button { width: 100%; height: 100%; border: 0; border-radius: 8px; padding: 0 12px; box-shadow: inset 0 0 0 3px #d69b13, inset 0 -5px 0 rgba(7,29,60,.18); background: var(--gold); color: var(--navy); cursor: pointer; font: 900 clamp(18px, 4vw, 38px)/1 "Barlow Condensed", sans-serif; text-transform: uppercase; letter-spacing: .045em; }
-.breakfast-buy-button:focus-visible, .breakfast-close:focus-visible { outline: 3px solid #18599a; outline-offset: 3px; }
-.breakfast-dialog { width: min(850px, calc(100vw - 24px)); max-height: 90vh; padding: 0; border: 0; border-radius: 12px; color: var(--ink); background: var(--paper); }
-.breakfast-dialog::backdrop { background: rgba(0, 12, 30, .75); }
-.breakfast-dialog .breakfast-tickets { width: 100%; box-shadow: none; border: 0; }
-.breakfast-close { display: block; margin: 14px 14px 0 auto; border: 1px solid var(--line); background: white; padding: 10px 16px; border-radius: 6px; cursor: pointer; }
-.breakfast-print-link { display: none; }
-
-@media print {
-  .breakfast-page-actions, .breakfast-dialog { display: none !important; }
-  .breakfast-flyer { height: 90%; }
-  .breakfast-print-link { display: flex; align-items: center; justify-content: center; height: 10%; margin: 0; border: 8px solid var(--navy); border-top: 0; text-align: center; color: var(--navy); background: var(--gold); font-size: 14pt; font-weight: 700; }
-}
-
-.breakfast-buy-button:hover { background: #ffda60; text-decoration: underline; }
-.breakfast-buy-button:active { box-shadow: inset 0 3px 6px rgba(7,29,60,.25); }
-
-.breakfast-buy-button { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; }
-.breakfast-payment-methods { font: 600 clamp(8px, 1.7vw, 13px)/1.2 Inter, sans-serif; letter-spacing: 0; text-transform: none; }
+.breakfast-flyer { display: block; width: 100%; height: 70%; flex: 0 0 70%; min-height: 0; object-fit: cover; object-position: center top; }
+.breakfast-venmo { height: 30%; flex: 0 0 30%; display: grid; grid-template-columns: minmax(0, 1fr) 30%; gap: 3%; align-items: center; padding: 2.5% 4%; border: 8px solid var(--navy); border-top: 6px solid var(--gold); color: white; background: var(--navy); }
+.breakfast-venmo-message { min-width: 0; }
+.breakfast-venmo-kicker { margin: 0 0 2%; color: var(--gold); font: 800 clamp(8px, 1.45vw, 15px)/1 Inter, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+.breakfast-venmo h2 { margin: 0; color: white; font: 900 clamp(25px, 5.4vw, 54px)/.92 "Barlow Condensed", sans-serif; letter-spacing: .02em; text-transform: uppercase; }
+.breakfast-venmo-handle { margin: 2% 0 4%; color: var(--gold); font: 800 clamp(12px, 2.25vw, 24px)/1.05 Inter, sans-serif; }
+.breakfast-venmo-instructions { max-width: 34em; margin: 0; font: 650 clamp(8px, 1.45vw, 14px)/1.35 Inter, sans-serif; }
+.breakfast-venmo-qr { width: 100%; aspect-ratio: 1; overflow: hidden; border: clamp(4px, .8vw, 9px) solid white; border-radius: 4%; background: white; box-shadow: 0 3px 14px rgba(0,0,0,.3); }
+.breakfast-venmo-qr img { display: block; width: 100%; height: 100%; object-fit: contain; }
