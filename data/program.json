@@ -34,7 +34,7 @@
     {
       "id": "sponsor-1788988939855",
       "name": "Raising Canes",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1789015532493-buogf.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1790178745413-tnavk.webp",
       "url": "https://www.raisingcanes.com/",
       "phone": "",
       "size": "quarter",
@@ -52,9 +52,9 @@
     {
       "id": "sponsor-1789011733435",
       "name": "BJC Remodeling",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011940750-3x773.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1790179378027-7u05h.webp",
       "url": "",
-      "phone": "(952) 217-1633",
+      "phone": "Brad Cheney (952) 217-1633",
       "size": "quarter",
       "placement": "before-team"
     },
@@ -70,7 +70,7 @@
     {
       "id": "sponsor-1789011744742",
       "name": "Cub Foods",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1789015539889-681yy.webp",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1790178755247-unz01.webp",
       "url": "https://www.cub.com/store/cub/pages/lyndale-store-details",
       "phone": "(952) 881-4299",
       "size": "quarter",
@@ -91,7 +91,16 @@
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011908725-ppvfe.webp",
       "url": "https://bloomington.alloypersonaltraining.com",
       "phone": "(952) 254-4147",
-      "size": "half",
+      "size": "quarter",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1790182248502",
+      "name": "Chick-fil-A",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1790182267294-bhl1f.webp",
+      "url": "https://www.chick-fil-a.com/locations/mn/bloomington-mn",
+      "phone": "(952)888-0488",
+      "size": "quarter",
       "placement": "before-team"
     },
     {
@@ -106,18 +115,18 @@
   ],
   "coaches": {
     "image": "assets/uploads/coaches-image-1788957398287-z2nxs.webp",
-    "names": "Kedrick L Williams Sr, Leslie Hayden, Cheo Trotter, Nick Ehret, Matthew Hamilton, Anthony Anderson Brown, Mark DeLeon"
+    "names": "Back L-R: Mathew Hamilton, Anthony A Brown, Kedrick L Williams Sr, Cheo Trotter\nFront L-R: Mark DeLeon, Nick Ehret, Isiah, Leslie Hayden"
   },
   "schedule": {
     "image": "assets/uploads/season-schedule-image-1788959288280-3q5x3.webp"
   },
   "captains": {
     "image": "assets/uploads/team-captains-image-1788957183242-7rucz.webp",
-    "names": "Xavier Boyd, Joshua Amadi, Ethan Besch"
+    "names": "Xavier Boyd, Joshua Amadi,  Ethan Besch"
   },
   "seniors": {
     "image": "assets/uploads/seniors-image-1788957239226-3npjp.webp",
-    "names": "Joshua Amadi, Damari Neal, Xavier Boyd, Ayite Michael Dalmeida, Derek Metcalf, Ethan Besch, Rayden Rasmussen, Joseph Lange, Aaron Buchanan Jr, Daniel(Shamarr) Johnson-Fleming, Lamarion Lewis, Chigozie Onuzulike",
+    "names": "Back L-R: Xavier Boyd, Joshua Amadi, Ethan Besch\nMiddle L-R: Rayden Rasmussen, Daniel(Shamarr) Johnson-Fleming, Aaron Buchanan Jr, Ayite Michael Dalmeida\nFront L-R: Derek Metcalf, Damari Neal, Lamarion Lewis, Joseph Lange, Caleb Saville",
     "classYear": "2027"
   },
   "players": [
@@ -146,7 +155,7 @@
       "firstName": "Dalmeida",
       "lastName": "Ayite Michael",
       "grade": "senior",
-      "photo": "assets/uploads/player-4-dalmeida-ayite-michael-1788963507978-7x9mp.webp",
+      "photo": "assets/uploads/player-4-dalmeida-ayite-michael-1790005905590-irklf.webp",
       "photoFilename": "004-dalmeida-ayite-michael.jpg"
     },
     {
@@ -202,7 +211,7 @@
       "firstName": "Onuzulike",
       "lastName": "Chigozie",
       "grade": "senior",
-      "photo": "assets/uploads/player-12-onuzulike-chigozie-1788963516164-r2hu8.webp",
+      "photo": "assets/uploads/player-12-onuzulike-chigozie-1790005896244-jb2dc.webp",
       "photoFilename": "012-onuzulike-chigozie.jpg"
     },
     {
@@ -214,7 +223,7 @@
     },
     {
       "firstName": "Kremer",
-      "lastName": "Zachary",
+      "lastName": "Zach",
       "grade": "junior",
       "photo": "assets/uploads/player-14-kremer-zachary-1788956651475-8rhyc.webp",
       "photoFilename": "20260828__8JM0087.jpg"
@@ -349,7 +358,7 @@
       "firstName": "Borbor",
       "lastName": "Tamba",
       "grade": "sophomore",
-      "photo": "assets/uploads/player-33-borbor-tamba-1790083511728-2dqor.webp",
+      "photo": "assets/uploads/player-33-borbor-tamba-1790091234777-9s1zx.webp",
       "photoFilename": "033-borbor-tamba.jpg"
     },
     {
@@ -384,7 +393,7 @@
       "firstName": "Bawek",
       "lastName": "Camdan",
       "grade": "sophomore",
-      "photo": "assets/uploads/player-38-bawek-camdan-1788956654528-rfmp7.webp",
+      "photo": "assets/uploads/player-38-bawek-camdan-1789068166788-hztmr.webp",
       "photoFilename": "20260828_0Z8_0430.jpg"
     },
     {
@@ -426,8 +435,15 @@
       "firstName": "Geyen",
       "lastName": "Colten",
       "grade": "sophomore",
-      "photo": "assets/uploads/player-44-geyen-colten-1790083523006-qijug.webp",
+      "photo": "assets/uploads/player-44-geyen-colten-1790091246791-2qrbd.webp",
       "photoFilename": "044-geyen-colten.jpg"
+    },
+    {
+      "firstName": "Jaimes Puello",
+      "lastName": "Christhofer",
+      "grade": "sophomore",
+      "photo": "assets/uploads/player-71-christhofer-jaimes-puello-1790011327568-9mq9d.webp",
+      "photoFilename": ""
     },
     {
       "firstName": "Powell",
@@ -626,7 +642,7 @@
   },
   "managers": {
     "image": "assets/uploads/team-managers-image-1788956792670-3in2i.webp",
-    "names": "Eddie Jacobson"
+    "names": "Eddie"
   },
   "cheerleaders": {
     "image": "assets/uploads/cheerleaders-image-1788971056614-h61e4.webp",
@@ -635,22 +651,91 @@
   "actionPages": [
     {
       "id": "legacy-action-page-1",
-      "layout": "full",
+      "layout": "half",
       "shots": [
         {
           "id": "legacy-action-1",
-          "image": "assets/uploads/action-photograph-1-1788970686080-hr72s.webp",
+          "image": "assets/uploads/action-photograph-1-1-1790174861831-ys5v6.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1790174880749-2",
+          "image": "assets/uploads/action-photograph-1-2-1790174901278-95w1r.webp",
           "caption": ""
         }
       ]
     },
     {
       "id": "legacy-action-page-2",
-      "layout": "full",
+      "layout": "half",
       "shots": [
         {
           "id": "legacy-action-2",
-          "image": "assets/uploads/action-photograph-2-1788970700445-kurw9.webp",
+          "image": "assets/uploads/action-photograph-2-1-1790174909181-1dbzh.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1790174904372-2",
+          "image": "assets/uploads/action-photograph-2-2-1790174913432-frv5w.webp",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "id": "action-page-1790174817865",
+      "layout": "half",
+      "shots": [
+        {
+          "id": "action-1790174817865-1",
+          "image": "assets/uploads/action-photograph-3-1-1790174920714-fjpb8.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1790174916312-2",
+          "image": "assets/uploads/action-photograph-3-2-1790174925861-pc8ab.webp",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "id": "action-page-1790174817866",
+      "layout": "half",
+      "shots": [
+        {
+          "id": "action-1790174817866-1",
+          "image": "assets/uploads/action-photograph-4-1-1790174942623-odif0.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1790174929565-2",
+          "image": "assets/uploads/action-photograph-4-2-1790174947354-dio41.webp",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "id": "action-page-1790174817867",
+      "layout": "half",
+      "shots": [
+        {
+          "id": "action-1790174817867-1",
+          "image": "assets/uploads/action-photograph-5-1-1790174952526-1wr1f.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1790174956890-2",
+          "image": "assets/uploads/action-photograph-5-2-1790174970226-xkkov.webp",
+          "caption": ""
+        }
+      ]
+    },
+    {
+      "id": "action-page-1790174817868",
+      "layout": "full",
+      "shots": [
+        {
+          "id": "action-1790174817868-1",
+          "image": "assets/uploads/action-photograph-6-1-1790174974861-4z0bi.webp",
           "caption": ""
         }
       ]
