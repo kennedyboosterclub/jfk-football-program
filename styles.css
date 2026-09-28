@@ -438,11 +438,11 @@ main { padding: clamp(22px, 4vw, 48px) 0 64px; }
 /* Optional fundraiser cart and Page 2 flyer. */
 .breakfast-page { display: flex; flex-direction: column; background: #071d3c; }
 .breakfast-flyer { display: block; width: 100%; height: 82%; flex: 0 0 82%; min-height: 0; object-fit: contain; object-position: center; background: var(--navy); }
-.breakfast-venmo { height: 18%; flex: 0 0 18%; display: grid; grid-template-columns: minmax(0, 1fr) 22%; gap: 3%; align-items: center; padding: 1.6% 4%; border: 8px solid var(--navy); border-top: 6px solid var(--gold); color: white; background: var(--navy); }
-.breakfast-venmo-message { min-width: 0; }
-.breakfast-venmo-kicker { margin: 0 0 1.5%; color: var(--gold); font: 800 clamp(7px, 1.2vw, 12px)/1 Inter, sans-serif; letter-spacing: .12em; text-transform: uppercase; }
-.breakfast-venmo h2 { margin: 0; color: white; font: 900 clamp(20px, 4.2vw, 42px)/.92 "Barlow Condensed", sans-serif; letter-spacing: .02em; text-transform: uppercase; }
-.breakfast-venmo-handle { margin: 1.5% 0 2%; color: var(--gold); font: 800 clamp(10px, 1.8vw, 19px)/1.05 Inter, sans-serif; }
+.breakfast-venmo { height: 18%; flex: 0 0 18%; display: grid; grid-template-columns: minmax(0, 1fr) 22%; gap: 3%; align-items: center; padding: 1.6% 4%; border: 8px solid var(--navy); color: white; background: var(--navy); }
+.breakfast-venmo-message { min-width: 0; display: grid; gap: clamp(4px, .7vw, 8px); align-content: center; }
+.breakfast-venmo-kicker { margin: 0; color: var(--gold); font: 900 clamp(10px, 1.8vw, 18px)/1 Inter, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.breakfast-venmo h2 { margin: 0; color: white; font: 900 clamp(20px, 4.2vw, 42px)/.95 "Barlow Condensed", sans-serif; letter-spacing: .02em; text-transform: uppercase; }
+.breakfast-venmo-handle { margin: 0; color: var(--gold); font: 800 clamp(10px, 1.8vw, 19px)/1.05 Inter, sans-serif; }
 .breakfast-venmo-instructions { max-width: 38em; margin: 0; font: 650 clamp(7px, 1.15vw, 12px)/1.3 Inter, sans-serif; }
 .breakfast-venmo-qr { width: 100%; aspect-ratio: 1; overflow: hidden; border: clamp(4px, .8vw, 9px) solid white; border-radius: 4%; background: white; box-shadow: 0 3px 14px rgba(0,0,0,.3); }
 .breakfast-venmo-qr img { display: block; width: 100%; height: 100%; object-fit: contain; }
