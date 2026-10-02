@@ -4,12 +4,13 @@
     "enabled": true,
     "date": "Saturday, October 3, 2026",
     "time": "8:00 AM – 10:00 AM",
-    "location": "Applebee’s • 9601 Lyndale Ave S, Bloomington, MN 55420"
+    "location": "Applebee’s • 9601 Lyndale Ave S, Bloomington, MN 55420",
+    "creditCardUrl": "https://donate.stripe.com/3cI6oA4t7ex51vh23wfMA00"
   },
   "programTitle": "Bloomington Kennedy Football",
   "gameLabel": "Game Day Program",
-  "opponent": "Mahtomedi",
-  "gameDate": "Friday, September 25th",
+  "opponent": "Columbia Heights",
+  "gameDate": "Friday, October 2nd",
   "gameTime": "6:00PM",
   "teamPhoto": "assets/uploads/team-photograph-1788957487746-txugj.webp",
   "sponsors": [
