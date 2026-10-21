@@ -10,10 +10,28 @@
   "programTitle": "Bloomington Kennedy Football",
   "gameLabel": "Game Day Program",
   "opponent": "Columbia Heights",
-  "gameDate": "Friday, October 2nd",
-  "gameTime": "6:00PM",
+  "gameDate": "Wed, Oct 21st",
+  "gameTime": "  6:00PM",
   "teamPhoto": "assets/uploads/team-photograph-1788957487746-txugj.webp",
   "sponsors": [
+    {
+      "id": "sponsor-1789011837772",
+      "name": "My Mn Credit Union",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011897474-82qce.webp",
+      "url": "https://www.mymncu.org/locations/bloomington-lyndale-ave",
+      "phone": "(612) 798-7100",
+      "size": "half",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1790182248502",
+      "name": "Chick-fil-A",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1790182267294-bhl1f.webp",
+      "url": "https://www.chick-fil-a.com/locations/mn/bloomington-mn",
+      "phone": "(952)888-0488",
+      "size": "half",
+      "placement": "before-team"
+    },
     {
       "id": "sponsor-1788988811295",
       "name": "Sports Page",
@@ -60,6 +78,15 @@
       "placement": "before-team"
     },
     {
+      "id": "sponsor-1789011745687",
+      "name": "Rise Up Nutrition",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011915003-bt7wq.webp",
+      "url": "https://www.facebook.com/fb-answers/rise-up-nutrition-bloomington-menu/",
+      "phone": " (952) 888-4539",
+      "size": "quarter",
+      "placement": "before-team"
+    },
+    {
       "id": "sponsor-1789011738024",
       "name": "Chiefs Towing",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011935594-06eug.webp",
@@ -78,39 +105,21 @@
       "placement": "before-team"
     },
     {
-      "id": "sponsor-1789011745687",
-      "name": "Rise Up Nutrition",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011915003-bt7wq.webp",
-      "url": "https://www.facebook.com/fb-answers/rise-up-nutrition-bloomington-menu/",
-      "phone": " (952) 888-4539",
-      "size": "quarter",
-      "placement": "before-team"
-    },
-    {
       "id": "sponsor-1789011815362",
       "name": "Alloy Fitness",
       "image": "assets/uploads/sponsor-advertisement-or-logo-1789011908725-ppvfe.webp",
       "url": "https://bloomington.alloypersonaltraining.com",
       "phone": "(952) 254-4147",
-      "size": "quarter",
-      "placement": "before-team"
-    },
-    {
-      "id": "sponsor-1790182248502",
-      "name": "Chick-fil-A",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1790182267294-bhl1f.webp",
-      "url": "https://www.chick-fil-a.com/locations/mn/bloomington-mn",
-      "phone": "(952)888-0488",
-      "size": "quarter",
-      "placement": "before-team"
-    },
-    {
-      "id": "sponsor-1789011837772",
-      "name": "My Mn Credit Union",
-      "image": "assets/uploads/sponsor-advertisement-or-logo-1789011897474-82qce.webp",
-      "url": "https://www.mymncu.org/locations/bloomington-lyndale-ave",
-      "phone": "(612) 798-7100",
       "size": "half",
+      "placement": "before-team"
+    },
+    {
+      "id": "sponsor-1792546452152",
+      "name": "Hang Out Even rocks",
+      "image": "assets/uploads/sponsor-advertisement-or-logo-1792546474159-d2673.webp",
+      "url": "https://www.facebook.com/hangouteventsrock",
+      "phone": "(507) 766-6959",
+      "size": "full",
       "placement": "before-team"
     }
   ],
