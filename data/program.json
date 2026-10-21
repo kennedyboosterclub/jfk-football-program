@@ -9,7 +9,7 @@
   },
   "programTitle": "Bloomington Kennedy Football",
   "gameLabel": "Game Day Program",
-  "opponent": "Columbia Heights",
+  "opponent": "Jefferson",
   "gameDate": "Wed, Oct 21st",
   "gameTime": "  6:00PM",
   "teamPhoto": "assets/uploads/team-photograph-1788957487746-txugj.webp",
@@ -672,12 +672,12 @@
       "shots": [
         {
           "id": "legacy-action-1",
-          "image": "assets/uploads/action-photograph-1-1-1790955151518-kp4nb.webp",
+          "image": "assets/uploads/action-photograph-1-1-1792598064822-a3mes.webp",
           "caption": ""
         },
         {
           "id": "action-1790955164077-2",
-          "image": "assets/uploads/action-photograph-1-2-1790955177428-2rl60.webp",
+          "image": "assets/uploads/action-photograph-1-2-1792598076734-bieev.webp",
           "caption": ""
         }
       ]
@@ -688,12 +688,12 @@
       "shots": [
         {
           "id": "legacy-action-2",
-          "image": "assets/uploads/action-photograph-2-1-1790955295676-4h6tv.webp",
+          "image": "assets/uploads/action-photograph-2-1-1792598087129-fv2wg.webp",
           "caption": ""
         },
         {
           "id": "action-1790955233846-2",
-          "image": "assets/uploads/action-photograph-2-2-1790955301378-lf0ad.webp",
+          "image": "assets/uploads/action-photograph-2-2-1792598092669-9ezj0.webp",
           "caption": ""
         }
       ]
@@ -704,23 +704,28 @@
       "shots": [
         {
           "id": "action-1790174817865-1",
-          "image": "assets/uploads/action-photograph-3-1-1790955307564-qq0bf.webp",
+          "image": "assets/uploads/action-photograph-3-1-1792598100933-chwqs.webp",
           "caption": ""
         },
         {
           "id": "action-1790174916312-2",
-          "image": "assets/uploads/action-photograph-3-2-1790955313028-t64v1.webp",
+          "image": "assets/uploads/action-photograph-3-2-1792598106276-l6ey7.webp",
           "caption": ""
         }
       ]
     },
     {
-      "id": "action-page-1790174817866",
-      "layout": "full",
+      "id": "action-page-1790174817868",
+      "layout": "half",
       "shots": [
         {
-          "id": "action-1790174817866-1",
-          "image": "assets/uploads/action-photograph-4-1-1790955249334-z9p52.webp",
+          "id": "action-1790174817868-1",
+          "image": "assets/uploads/action-photograph-6-1-1792598130764-8r3ga.webp",
+          "caption": ""
+        },
+        {
+          "id": "action-1792598168813-2",
+          "image": "assets/uploads/action-photograph-4-2-1792598210493-oqvpw.webp",
           "caption": ""
         }
       ]
@@ -731,24 +736,13 @@
       "shots": [
         {
           "id": "action-1790174817867-1",
-          "image": "assets/uploads/action-photograph-5-1-1790955329490-9ddfg.webp",
+          "image": "assets/uploads/action-photograph-5-1-1792598118689-xhxow.webp",
           "caption": ""
         },
         {
           "id": "action-1790174956890-2",
-          "image": "assets/uploads/action-photograph-5-2-1790955115659-44a0m.webp",
-          "caption": "Face Mask penalty? "
-        }
-      ]
-    },
-    {
-      "id": "action-page-1790174817868",
-      "layout": "full",
-      "shots": [
-        {
-          "id": "action-1790174817868-1",
-          "image": "assets/uploads/action-photograph-6-1-1790955084830-6c4gr.webp",
-          "caption": "Is our mascot laying an egg?!?!?"
+          "image": "assets/uploads/action-photograph-5-2-1792598136073-h3arr.webp",
+          "caption": ""
         }
       ]
     }
